@@ -1,0 +1,23 @@
+<div class=" h-52 md:h-72 flex flex-row justify-between my-5 shadow-lg border  ">
+  <button (click)="moveCarousel(50)"  class="h-full w-1/12 bg-enmarcadora-principal flex justify-center items-center ">
+      <span class="text-4xl mx-auto text-white self-center"><</span>
+  </button>
+  <div class="relative overflow-hidden h-full mx-5 py-2">
+    <div class="flex space-x-3 transition-transform duration-300 ease-in-out h-full" [style.transform]="'translateX(' + translateValue + 'px)'">
+      <img *ngFor="let image of images" [src]="image" class=" object-cover rounded w-full" alt="Image">
+    </div>
+  </div>
+  <button (click)="moveCarousel(-50)" class="h-full w-1/12 bg-enmarcadora-principal flex justify-center items-center ">
+      <span class="text-4xl mx-auto text-white self-center">></span>
+  </button>
+ 
+</div>
+
+
+  
+
+
+
+
+
+

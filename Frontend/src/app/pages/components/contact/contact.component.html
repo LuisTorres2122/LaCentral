@@ -1,0 +1,88 @@
+<app-navbar class> </app-navbar>
+<div class="flex flex-col min-h-screen">
+  <div class="flex-1">
+    <app-header 
+    [image]="'../../../../assets/images/enmarcado/enmarcado/ciudad.jpg'"
+    [phrase]="'“Art is the lie that enables us to realize the truth”'"
+    [author]="'-Pablo Picasso'"
+    ></app-header>
+   <br>
+   <br>
+  <div class="flex justify-center">
+    <h3
+    class="font-semibold text-2xl md:text-3xl capitalize first-letter:text-5xl my-5 "
+  >
+    Información
+  </h3>
+</div>
+    <div class="flex  flex-col md:flex-row w-gallryW h-96  mx-auto">
+      <div class="h-full md:w-1/2 ">
+        <div class="  h-full flex flex-col mx-auto bg-black">
+          <label class="text-white mx-auto my-auto">aqui va google maps</label>
+        </div>
+      </div>
+      <div class="h-full md:w-1/2 flex flex-col justify-center">
+        <div class="flex flex-row my-auto ml-28 md:ml-0">
+          <img
+            class="h-8 my-auto mx-1"
+            src="../../../../assets/images/ubicacion.png"
+            alt="imagen de ubicacion"
+          />
+          <p class="text-xs md:text-lg my-auto">20 calle 22-78 Zona 10</p>
+        </div>
+        <div class="flex flex-row my-auto ml-28 md:ml-0">
+          <img
+            class="h-8 my-auto mx-2"
+            src="../../../../assets/images/telefono.png"
+            alt="imagen de ubicacion"
+          />
+          <div class="flex flex-col ">
+            <p class="text-xs md:text-lg my-auto">(502) 23630984</p>
+            <p class="text-xs md:text-lg my-auto">(502) 23335560</p>
+          </div>
+        </div>
+        <div class="flex flex-row my-auto ml-28 md:ml-0">
+          <img
+            class="h-8 my-auto mx-2"
+            src="../../../../assets/images/email.png"
+            alt="imagen de ubicacion"
+          />
+          <p class="text-xs md:text-lg my-auto">lacentralpf@hotmail.com</p>
+        </div>
+        <div class="flex flex-row my-auto ml-28 md:ml-0">
+          <img
+            class="h-8 my-auto mx-2"
+            src="../../../../assets/images/fb.png"
+            alt="imagen de ubicacion"
+          />
+          <p class="text-xs md:text-lg my-auto">Enmarcadora La Central</p>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
+   
+    <div class=" shadow-xl md:shadow-2xl w-full md:w-vlg  mx-auto border rounded-2xl mb-5">
+      <div class="flex justify-center">
+        <h3
+        class="font-semibold text-2xl md:text-3xl capitalize first-letter:text-5xl "
+      >
+        Contacto
+      </h3>
+    </div>
+      <form class="flex flex-col m-5 p-5">
+        <label class="text-xl font-semibold" >Nombre</label>
+        <input type="text" placeholder="Ingrese su nombre" class=" w-full  h-10  p-5 border-2 border-enmarcadora-principal rounded-lg   ">
+      
+        <label class="text-xl font-semibold" >Email</label>
+        <input type="email" placeholder="Ingrese su email" class=" w-full  h-10  p-5 border-2 border-enmarcadora-principal rounded-lg">
+        <label class="text-xl font-semibold" >Asunto</label>
+        <input type="text" placeholder="Ingrese el asunto" class=" w-full  h-10  p-5 border-2 border-enmarcadora-principal rounded-lg">
+        <label class="text-xl font-semibold" >Mensaje</label>
+        <textarea  cols="30" rows="10" class=" w-full  h-48  p-5 border-2 border-enmarcadora-principal rounded-lg" ></textarea>
+        <button class="w-full  bg-enmarcadora-principal my-4 p-2 text-2xl rounded-md text-white mx-auto">Enviar</button>
+      </form>
+    </div>
+  </div>
+  <app-footer></app-footer>
+</div>

@@ -1,0 +1,37 @@
+<app-navbar> </app-navbar>
+<div class="flex flex-col min-h-screen">
+  <app-header
+    [image]="'../../../../assets/images/enmarcado/servicios/enmarcado9.jpg '"
+    [phrase]="'“There is no must in art because art is free”'"
+    [author]="'-Wassily Kandinsky'"
+  ></app-header>
+
+  <div class="flex flex-col justify-center items-center mt-5 mb-2">
+    <div class="flex justify-center">
+      <h3
+        class="font-semibold text-2xl md:text-3xl capitalize first-letter:text-5xl"
+      >
+        Galeria de Arte
+      </h3>
+    </div>
+    <span class="text-2xl mb-1">a la venta</span>
+  </div>
+  <br />
+  <hr />
+
+  <div class="  md:max-w-96 lg:max-w-custom  my-2  ">
+    <section
+      class="  grid grid-cols-2 lg:grid-cols-3 gap-1 md:gap-2 my-4 mx-auto w-80 md:w-vlg lg:w-gallryW  transition duration-500 ">
+      <img
+      *ngFor="let piece of pieces"
+        src="{{ piece.image }}"
+        alt="imagen de galeria"
+        class="h-64 md:h-96 lg:h-custom w-full transition duration-300 hover:scale-105"
+        [routerLink]="'/pagina/galeria/pieza/' + piece.id"
+        [ngClass]="{'col-span-2': !piece.position}"
+      />
+    </section>
+  </div>
+
+  <app-footer></app-footer>
+</div>
