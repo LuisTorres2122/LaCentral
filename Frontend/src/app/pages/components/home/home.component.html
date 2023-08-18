@@ -1,0 +1,103 @@
+<app-navbar> </app-navbar>
+<div class="flex flex-col min-h-screen">
+  <div class="flex-1">
+    <app-header 
+    [image]="'../../../../assets/images/enmarcado/enmarcado/mujer.jpg'"
+    [phrase]="'“Art is what you can get away with”'"
+    [author]="'-Andy Warhol'"
+    ></app-header>
+   
+    <div class="flex flex-col justify-center items-center mt-5 mb-2">
+      <div class="flex justify-center">
+        <h3
+          class="font-semibold text-2xl md:text-3xl capitalize first-letter:text-5xl"
+        >
+          Galeria de Arte
+        </h3>
+      </div>
+      <span class="text-2xl mb-1">destacado</span>
+    </div>
+    <div class="  md:max-w-96 lg:max-w-custom  my-2  ">
+      <section
+        class="  grid grid-cols-2 lg:grid-cols-3 gap-1 md:gap-2 my-4 mx-auto w-80 md:w-vlg lg:w-gallryW  transition duration-500 ">
+        <img
+        *ngFor="let piece of pieces"
+          src="{{ piece.image }}"
+          alt="imagen de galeria"
+          class="h-64 md:h-96 lg:h-custom w-full transition duration-300 hover:scale-105"
+          [routerLink]="'/pagina/galeria/pieza/' + piece.id"
+          [ngClass]="{'col-span-2': !piece.position}"
+        />
+      </section>
+    </div>
+  </div>
+  <div>
+    <a routerLink="/pagina/galeria" class="flex flex-row justify-around text-enmarcadora-principal text-2xl underline">
+      Ver mas
+    </a>
+
+  </div>
+<br>
+<br>
+  <div class="flex flex-row justify-center">
+    <div class="flex justify-center">
+      <h3
+        class="font-semibold text-2xl md:text-3xl capitalize first-letter:text-5xl"
+      >
+        Mas sobre La Central
+      </h3>
+    </div>
+  </div>
+  <section
+        class="w-full h-100vh md:h-[calc(100vh-175px)] my-10 border bg-gradient-to-t from-enmarcadora-principal to-white flex flex-col items-center gap-2 md:flex-row md:justify-center md:gap-0"
+      >
+        <div
+          class="w-40 md:w-80 lg:w-80 md:h-[calc(100vh/2)] lg:h-[calc(100vh/1.5)] xl:h-[calc(100vh/2)] m-3 shadow-lg p-4 border bg-opacity-100 my-auto mb-4 md:mb-auto hover:bg-gradient-to-b from-enmarcadora-principal to-white text-white hover:text-enmarcadora-principal"
+        >
+          <button
+          routerLink="/pagina/enmarcado"
+            class="w-full h-full flex flex-col items-center justify-between font-semibold font-playfair"
+          >
+            <img
+              class="w-3/4 my-auto h-4/6"
+              src="../../../../assets/images/enmarcado/servicios/instalacion3.jpg"
+              alt="imagen cuadro de mujer"
+            />
+            <h3 class="text-2xl md:text-4xl mb-0">Nuestros
+              <BR>Servicios</h3>
+          </button>
+        </div>
+        <div
+          class="w-40 md:w-80 lg:w-80 md:h-[calc(100vh/2)] lg:h-[calc(100vh/1.5)] xl:h-[calc(100vh/2)] m-3 shadow-lg p-4 border bg-opacity-100 my-auto mb-4 md:mb-auto hover:bg-gradient-to-b from-enmarcadora-principal to-white text-white hover:text-enmarcadora-principal"
+        >
+          <button
+          routerLink="/pagina/contacto"
+            class="w-full h-full flex flex-col items-center justify-between font-semibold font-playfair"
+          >
+            <img
+              class="w-3/4 my-auto h-4/6"
+              src="../../../../assets/images/enmarcado/enmarcado/ciudad.jpg"
+              alt="imagen cuadro de mujer"
+            />
+            <h3 class="text-2xl md:text-4xl mb-0">Donde Encontrarnos</h3>
+          </button>
+        </div>
+        <div
+          class="w-40 md:w-80 lg:w-80 md:h-[calc(100vh/2)] lg:h-[calc(100vh/1.5)] xl:h-[calc(100vh/2)] m-3 shadow-lg p-4 border bg-opacity-100 my-auto mb-4 md:mb-auto hover:bg-gradient-to-b from-enmarcadora-principal to-white text-white hover:text-enmarcadora-principal"
+        >
+          <button
+          routerLink="/pagina/nosotros"
+            class="w-full h-full flex flex-col items-center justify-between font-semibold font-playfair"
+          >
+            <img
+              class="w-3/4 my-auto h-4/6"
+              src="../../../../assets/images/enmarcado/enmarcado/Toro-.png"
+              alt="imagen cuadro de mujer"
+            />
+            <h3 class="text-2xl md:text-4xl mb-0">Mas Sobre Nosotros</h3>
+          </button>
+        </div>
+      </section>
+
+  <app-footer></app-footer>
+</div>

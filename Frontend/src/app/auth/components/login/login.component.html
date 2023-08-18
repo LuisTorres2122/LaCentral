@@ -1,0 +1,55 @@
+<div class="flex flex-col min-h-screen">
+  <app-navbar> </app-navbar>
+  <div class="flex-1 flex flex-row justify-center items-center ">
+    <div
+      class="flex flex-row rounded-3xl bg-gradient-to-tl from-white to-enmarcadora-principal border-white  "
+    >
+      <div class="shadow-lg rounded-3xl mx-2 w-full md:mx-auto md:w-custom flex flex-col justify-start ">
+        <div
+          class="w-44 flex flex-row items-center justify-center mx-auto rounded-full bg-white m-5 border border-white"
+        >
+          <img
+            class="cover"
+            src="../../../../assets/images/LogoLaCentral.png"
+            alt=""
+          />
+        </div>
+        <div class="flex h-full w-full">
+          <form class="flex flex-col gap-2 w-full mx-12  ">
+            <label class="text-white font-semibold">Correo</label>
+            <input class=" w-full  h-10  p-5 border-2 border-enmarcadora-principal rounded-lg   " type="text" placeholder="Ingrese su correo" />
+            <label class="text-white font-semibold">Contraseña</label>
+            <input class=" w-full  h-10  p-5 border-2 border-enmarcadora-principal rounded-lg   " [type]="show ? 'text' : 'password'" placeholder="*******" />
+            <div class="flex flex-row items-center gap-2">
+              <input
+                name="checkbox"
+                id="showPassword"
+                aria-describedby="showPassword"
+                type="checkbox"
+                class="w-4 h-4 border border-white"
+                (click)="showPassword()"
+              />
+              <label class="text-white font-semibold">Mostrar Contraseña</label>
+            </div>
+            <button class="w-full bg-enmarcadora-principal rounded-lg h-12 text-white font-semibold my-10 hover:bg-white hover:text-enmarcadora-principal hover:transition-colors">
+              Ingresar
+            </button>
+          </form>
+        </div>
+      </div>
+    
+      <div class="hidden lg:block  flex-col w-vlg h-vlg border-black my-5 justify-center items-center">
+        
+        <img
+          [src]="currentImage"
+          alt="Imagen"
+          class="md:w-9/12 md:h-9/12 mx-auto my-auto transition-opacity duration-500"
+          [style.opacity]="showImage ? 1 : 0"
+        />
+    
+      </div>
+    
+    </div>
+  </div>
+  <app-footer></app-footer>
+</div>
