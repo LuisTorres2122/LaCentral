@@ -1,0 +1,636 @@
+<main class=" flex flex-row my-5">
+  <div class="w-5/6">
+  <section class="flex items-center justify-evenly">
+    <h2 class="text-6xl font-playfair">Pedidos</h2>
+    <label class="text-lg">{{date}}</label>
+  </section>
+  <section
+    class="ml-20 my-20 flex flex-row items-center gap-2 text-lg font-semibold"
+  >
+    <label>Cliente</label>
+    <input class="border-2 border-enmarcadora-principal rounded" type="text" />
+    <button
+      class="border-2 border-enmarcadora-principal rounded-full w-16 bg-enmarcadora-principal text-white"
+    >
+      Buscar
+    </button>
+  </section>
+  <section class="flex flex-col gap-2">
+    <div class="ml-14 border-2 border-gray-300 px-5 py-2 w-orderCard">
+      <div
+        class="flex flex-row gap-2"
+        (click)="changeToggleServices('enmarcado')"
+      >
+        <svg
+          class="w-6"
+          version="1.1"
+          id="Capa_1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          x="0px"
+          y="0px"
+          viewBox="0 0 512 512"
+          style="enable-background: new 0 0 512 512"
+          xml:space="preserve"
+          [ngClass]="{
+            'rotate-180 transition-transform duration-700 ': toggleEnmarcado
+          }"
+        >
+          <g>
+            <g>
+              <path
+                d="M506.157,132.386c-7.803-7.819-20.465-7.831-28.285-0.029l-207.73,207.299c-7.799,7.798-20.486,7.797-28.299-0.015 L34.128,132.357c-7.819-7.803-20.481-7.79-28.285,0.029c-7.802,7.819-7.789,20.482,0.029,28.284l207.701,207.27 c11.701,11.699,27.066,17.547,42.433,17.547c15.358,0,30.719-5.846,42.405-17.533L506.128,160.67 C513.946,152.868,513.959,140.205,506.157,132.386z"
+              ></path>
+            </g>
+          </g>
+        </svg>
+        <h2 class="text-3xl select-none">Enmarcado</h2>
+      </div>
+      <div
+        class="py-2 text-lg font-semibold"
+        [ngClass]="{
+          'transition-all duration-1000 block': toggleEnmarcado,
+          'transition-all duration-1000  hidden': !toggleEnmarcado
+        }"
+      >
+        <label>Medida Pieza</label>
+        <input
+          class="ml-5 border-2 border-enmarcadora-principal rounded"
+          type="text"
+          type="text"
+        />
+        <div class="my-2 px-2 border-2 border-gray-300">
+          <input
+            (click)="changeToggle('passepartout')"
+            class="checked:bg-enmarcadora-principal"
+            type="checkbox"
+            name=""
+            id=""
+          />
+          <label class="ml-2 font-bold" for="">Passepartout</label>
+          <div
+            class="flex flex-col gap-1 my-2 w-2/6"
+            [ngClass]="{
+              'transition duration-700 block': togglePasseparout,
+              'transition duration-700  hidden': !togglePasseparout
+            }"
+          >
+            <label class="">Cantidad</label>
+            <input
+              class="border-2 border-enmarcadora-principal rounded px-2"
+              type="number"
+            />
+            <label class="">Codigo</label>
+            <input
+              class="border-2 border-enmarcadora-principal rounded"
+              type="text"
+            />
+            <label>Precio</label>
+            <input
+              class="border-2 border-enmarcadora-principal rounded"
+              type="text"
+            />
+            <label>Casa</label>
+            <select
+              class="border-2 border-enmarcadora-principal rounded"
+              name=""
+              id=""
+            >
+              <option value=""></option>
+              <option value=""></option>
+            </select>
+          </div>
+        </div>
+        <!----Vidrio------>
+        <div class="my-2 px-2 border-2 border-gray-300">
+          <input
+            (click)="changeToggle('vidrio')"
+            class="checked:bg-enmarcadora-principal"
+            type="checkbox"
+            name=""
+            id=""
+          />
+          <label class="ml-2 font-bold" for="">Vidrio</label>
+          <div
+            class="flex flex-col gap-1 my-2 w-2/6"
+            [ngClass]="{
+              'transition duration-700 block': toggleVidrio,
+              'transition duration-700  hidden': !toggleVidrio
+            }"
+          >
+            <label class="">Cantidad</label>
+            <input
+              class="border-2 border-enmarcadora-principal rounded px-2"
+              type="number"
+            />
+            <label>Tipo</label>
+            <select
+              class="border-2 border-enmarcadora-principal rounded"
+              name=""
+              id=""
+            >
+              <option value=""></option>
+              <option value=""></option>
+            </select>
+            <label>Precio</label>
+            <input
+              class="border-2 border-enmarcadora-principal rounded"
+              type="text"
+            />
+          </div>
+        </div>
+        <!----Filete------>
+        <div class="my-2 px-2 border-2 border-gray-300">
+          <input
+            (click)="changeToggle('filete')"
+            class="checked:bg-enmarcadora-principal"
+            type="checkbox"
+            name=""
+            id=""
+          />
+          <label class="ml-2 font-bold" for="">Filete</label>
+          <div
+            class="flex flex-col gap-1 my-2 w-2/6"
+            [ngClass]="{
+              'transition duration-700 block': toggleFilete,
+              'transition duration-700  hidden': !toggleFilete
+            }"
+          >
+            <label class="">Cantidad</label>
+            <input
+              class="border-2 border-enmarcadora-principal rounded px-2"
+              type="number"
+            />
+            <label>Tipo</label>
+            <select
+              class="border-2 border-enmarcadora-principal rounded"
+              name=""
+              id=""
+            >
+              <option value=""></option>
+              <option value=""></option>
+            </select>
+            <label>Precio</label>
+            <input
+              class="border-2 border-enmarcadora-principal rounded"
+              type="text"
+            />
+          </div>
+        </div>
+        <!----Marco------>
+        <div class="my-2 px-2 border-2 border-gray-300">
+          <input
+            (click)="changeToggle('marco')"
+            class="checked:bg-enmarcadora-principal"
+            type="checkbox"
+            name=""
+            id=""
+          />
+          <label class="ml-2 font-bold" for="">Marco</label>
+          <div
+            class="flex flex-col gap-1 my-2 w-2/6"
+            [ngClass]="{
+              'transition duration-700 block': toggleMarco,
+              'transition duration-700  hidden': !toggleMarco
+            }"
+          >
+            <label class="">Cantidad</label>
+            <input
+              class="border-2 border-enmarcadora-principal rounded px-2"
+              type="number"
+            />
+            <label class="">Codigo</label>
+            <input
+              class="border-2 border-enmarcadora-principal rounded"
+              type="text"
+            />
+            <label>Precio</label>
+            <input
+              class="border-2 border-enmarcadora-principal rounded"
+              type="text"
+            />
+          </div>
+        </div>
+        <!--extras-->
+        <div class="grid grid-cols-2 gap-1">
+          <section class="flex flex-col w-full">
+            <label class="">Mano de obra</label>
+            <input
+              class="border-2 border-enmarcadora-principal rounded"
+              type="text"
+            />
+            <label class="">Utilidad</label>
+            <input
+              class="border-2 border-enmarcadora-principal rounded"
+              type="text"
+            />
+
+            <button
+              class="mt-2 border-2 border-enmarcadora-principal rounded-full bg-enmarcadora-principal text-white"
+            >
+              Cotizar
+            </button>
+            <label class="">Total</label>
+            <input
+              class="border-2 border-enmarcadora-principal rounded"
+              type="text"
+              disabled
+            />
+          </section>
+          <section class="flex flex-row justify-center items-center gap-2">
+            <svg
+              class="w-14"
+              viewBox="0 0 32 32"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"
+            >
+              <g
+                id="Page-1"
+                stroke="none"
+                stroke-width="1"
+                fill="none"
+                fill-rule="evenodd"
+                sketch:type="MSPage"
+              >
+                <g
+                  id="Icon-Set"
+                  sketch:type="MSLayerGroup"
+                  transform="translate(-464.000000, -1087.000000)"
+                  fill="#000000"
+                >
+                  <path
+                    d="M480,1117 C472.268,1117 466,1110.73 466,1103 C466,1095.27 472.268,1089 480,1089 C487.732,1089 494,1095.27 494,1103 C494,1110.73 487.732,1117 480,1117 L480,1117 Z M480,1087 C471.163,1087 464,1094.16 464,1103 C464,1111.84 471.163,1119 480,1119 C488.837,1119 496,1111.84 496,1103 C496,1094.16 488.837,1087 480,1087 L480,1087 Z M486,1102 L481,1102 L481,1097 C481,1096.45 480.553,1096 480,1096 C479.447,1096 479,1096.45 479,1097 L479,1102 L474,1102 C473.447,1102 473,1102.45 473,1103 C473,1103.55 473.447,1104 474,1104 L479,1104 L479,1109 C479,1109.55 479.447,1110 480,1110 C480.553,1110 481,1109.55 481,1109 L481,1104 L486,1104 C486.553,1104 487,1103.55 487,1103 C487,1102.45 486.553,1102 486,1102 L486,1102 Z"
+                    id="plus-circle"
+                    sketch:type="MSShapeGroup"
+                  ></path>
+                </g>
+              </g>
+            </svg>
+            <button>Añadir Tarjeta</button>
+          </section>
+        </div>
+      </div>
+    </div>
+    <!--Here starts other service -->
+    <div class="ml-14 border-2 border-gray-300 px-5 py-2 w-orderCard">
+      <div
+        class="flex flex-row gap-2"
+        (click)="changeToggleServices('restauration')"
+      >
+        <svg
+          class="w-6"
+          version="1.1"
+          id="Capa_1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          x="0px"
+          y="0px"
+          viewBox="0 0 512 512"
+          style="enable-background: new 0 0 512 512"
+          xml:space="preserve"
+          [ngClass]="{
+            'rotate-180 transition-transform duration-700 ': toggleRestauration
+          }"
+        >
+          <g>
+            <g>
+              <path
+                d="M506.157,132.386c-7.803-7.819-20.465-7.831-28.285-0.029l-207.73,207.299c-7.799,7.798-20.486,7.797-28.299-0.015 L34.128,132.357c-7.819-7.803-20.481-7.79-28.285,0.029c-7.802,7.819-7.789,20.482,0.029,28.284l207.701,207.27 c11.701,11.699,27.066,17.547,42.433,17.547c15.358,0,30.719-5.846,42.405-17.533L506.128,160.67 C513.946,152.868,513.959,140.205,506.157,132.386z"
+              ></path>
+            </g>
+          </g>
+        </svg>
+        <h2 class="text-3xl select-none">Restauración</h2>
+      </div>
+      <div
+        class="py-2 text-lg font-semibold"
+        [ngClass]="{
+          'transition-all duration-1000 block': toggleRestauration,
+          'transition-all duration-1000  hidden': !toggleRestauration
+        }"
+      >
+        <div class="grid grid-cols-2 gap-1">
+          <section class="flex flex-col">
+            <label>Descripción</label>
+            <textarea
+              class="border-2 border-enmarcadora-principal rounded"
+              type="text"
+            ></textarea>
+            <label>Precio</label>
+            <input
+              class="border-2 border-enmarcadora-principal rounded"
+              type="number"
+            />
+          </section>
+          <section class="flex flex-row justify-center items-center gap-2">
+            <svg
+              class="w-14"
+              viewBox="0 0 32 32"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"
+            >
+              <g
+                id="Page-1"
+                stroke="none"
+                stroke-width="1"
+                fill="none"
+                fill-rule="evenodd"
+                sketch:type="MSPage"
+              >
+                <g
+                  id="Icon-Set"
+                  sketch:type="MSLayerGroup"
+                  transform="translate(-464.000000, -1087.000000)"
+                  fill="#000000"
+                >
+                  <path
+                    d="M480,1117 C472.268,1117 466,1110.73 466,1103 C466,1095.27 472.268,1089 480,1089 C487.732,1089 494,1095.27 494,1103 C494,1110.73 487.732,1117 480,1117 L480,1117 Z M480,1087 C471.163,1087 464,1094.16 464,1103 C464,1111.84 471.163,1119 480,1119 C488.837,1119 496,1111.84 496,1103 C496,1094.16 488.837,1087 480,1087 L480,1087 Z M486,1102 L481,1102 L481,1097 C481,1096.45 480.553,1096 480,1096 C479.447,1096 479,1096.45 479,1097 L479,1102 L474,1102 C473.447,1102 473,1102.45 473,1103 C473,1103.55 473.447,1104 474,1104 L479,1104 L479,1109 C479,1109.55 479.447,1110 480,1110 C480.553,1110 481,1109.55 481,1109 L481,1104 L486,1104 C486.553,1104 487,1103.55 487,1103 C487,1102.45 486.553,1102 486,1102 L486,1102 Z"
+                    id="plus-circle"
+                    sketch:type="MSShapeGroup"
+                  ></path>
+                </g>
+              </g>
+            </svg>
+            <button>Añadir Tarjeta</button>
+          </section>
+        </div>
+      </div>
+    </div>
+    <!--Here starts Ventaneria-->
+    <div class="ml-14 border-2 border-gray-300 px-5 py-2 w-orderCard">
+      <div
+        class="flex flex-row gap-2"
+        (click)="changeToggleServices('ventaneria')"
+      >
+        <svg
+          class="w-6"
+          version="1.1"
+          id="Capa_1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          x="0px"
+          y="0px"
+          viewBox="0 0 512 512"
+          style="enable-background: new 0 0 512 512"
+          xml:space="preserve"
+          [ngClass]="{
+            'rotate-180 transition-transform duration-700 ': toggleVentaneria
+          }"
+        >
+          <g>
+            <g>
+              <path
+                d="M506.157,132.386c-7.803-7.819-20.465-7.831-28.285-0.029l-207.73,207.299c-7.799,7.798-20.486,7.797-28.299-0.015 L34.128,132.357c-7.819-7.803-20.481-7.79-28.285,0.029c-7.802,7.819-7.789,20.482,0.029,28.284l207.701,207.27 c11.701,11.699,27.066,17.547,42.433,17.547c15.358,0,30.719-5.846,42.405-17.533L506.128,160.67 C513.946,152.868,513.959,140.205,506.157,132.386z"
+              ></path>
+            </g>
+          </g>
+        </svg>
+        <h2 class="text-3xl select-none">Ventanería</h2>
+      </div>
+      <div
+        class="py-2 text-lg font-semibold"
+        [ngClass]="{
+          'transition-all duration-1000 block': toggleVentaneria,
+          'transition-all duration-1000  hidden': !toggleVentaneria
+        }"
+      >
+        <label>Medida Pieza</label>
+        <input
+          class="ml-5 border-2 border-enmarcadora-principal rounded"
+          type="text"
+          type="text"
+        />
+
+        <!----Vidrio------>
+        <div class="my-2 px-2 border-2 border-gray-300">
+          <input
+            (click)="changeToggle('vidrio')"
+            class="checked:bg-enmarcadora-principal"
+            type="checkbox"
+            name=""
+            id=""
+          />
+          <label class="ml-2 font-bold" for="">Vidrio</label>
+          <div
+            class="flex flex-col gap-1 my-2 w-2/6"
+            [ngClass]="{
+              'transition duration-700 block': toggleVidrio,
+              'transition duration-700  hidden': !toggleVidrio
+            }"
+          >
+            <label class="">Cantidad</label>
+            <input
+              class="border-2 border-enmarcadora-principal rounded px-2"
+              type="number"
+            />
+            <label>Tipo</label>
+            <select
+              class="border-2 border-enmarcadora-principal rounded"
+              name=""
+              id=""
+            >
+              <option value=""></option>
+              <option value=""></option>
+            </select>
+            <label>Precio</label>
+            <input
+              class="border-2 border-enmarcadora-principal rounded"
+              type="text"
+            />
+          </div>
+        </div>
+
+        <!----Marco------>
+        <div class="my-2 px-2 border-2 border-gray-300">
+          <input
+            (click)="changeToggle('marco')"
+            class="checked:bg-enmarcadora-principal"
+            type="checkbox"
+            name=""
+            id=""
+          />
+          <label class="ml-2 font-bold" for="">Marco</label>
+          <div
+            class="flex flex-col gap-1 my-2 w-2/6"
+            [ngClass]="{
+              'transition duration-700 block': toggleMarco,
+              'transition duration-700  hidden': !toggleMarco
+            }"
+          >
+            <label class="">Cantidad</label>
+            <input
+              class="border-2 border-enmarcadora-principal rounded px-2"
+              type="number"
+            />
+            <label class="">Codigo</label>
+            <input
+              class="border-2 border-enmarcadora-principal rounded"
+              type="text"
+            />
+            <label>Precio</label>
+            <input
+              class="border-2 border-enmarcadora-principal rounded"
+              type="text"
+            />
+          </div>
+        </div>
+        <!--extras-->
+        <div class="grid grid-cols-2 gap-1">
+          <section class="flex flex-col w-full">
+            <label class="">Mano de obra</label>
+            <input
+              class="border-2 border-enmarcadora-principal rounded"
+              type="text"
+            />
+            <label class="">Utilidad</label>
+            <input
+              class="border-2 border-enmarcadora-principal rounded"
+              type="text"
+            />
+
+            <button
+              class="mt-2 border-2 border-enmarcadora-principal rounded-full bg-enmarcadora-principal text-white"
+            >
+              Cotizar
+            </button>
+            <label class="">Total</label>
+            <input
+              class="border-2 border-enmarcadora-principal rounded"
+              type="text"
+              disabled
+            />
+          </section>
+          <section class="flex flex-row justify-center items-center gap-2">
+            <svg
+              class="w-14"
+              viewBox="0 0 32 32"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"
+            >
+              <g
+                id="Page-1"
+                stroke="none"
+                stroke-width="1"
+                fill="none"
+                fill-rule="evenodd"
+                sketch:type="MSPage"
+              >
+                <g
+                  id="Icon-Set"
+                  sketch:type="MSLayerGroup"
+                  transform="translate(-464.000000, -1087.000000)"
+                  fill="#000000"
+                >
+                  <path
+                    d="M480,1117 C472.268,1117 466,1110.73 466,1103 C466,1095.27 472.268,1089 480,1089 C487.732,1089 494,1095.27 494,1103 C494,1110.73 487.732,1117 480,1117 L480,1117 Z M480,1087 C471.163,1087 464,1094.16 464,1103 C464,1111.84 471.163,1119 480,1119 C488.837,1119 496,1111.84 496,1103 C496,1094.16 488.837,1087 480,1087 L480,1087 Z M486,1102 L481,1102 L481,1097 C481,1096.45 480.553,1096 480,1096 C479.447,1096 479,1096.45 479,1097 L479,1102 L474,1102 C473.447,1102 473,1102.45 473,1103 C473,1103.55 473.447,1104 474,1104 L479,1104 L479,1109 C479,1109.55 479.447,1110 480,1110 C480.553,1110 481,1109.55 481,1109 L481,1104 L486,1104 C486.553,1104 487,1103.55 487,1103 C487,1102.45 486.553,1102 486,1102 L486,1102 Z"
+                    id="plus-circle"
+                    sketch:type="MSShapeGroup"
+                  ></path>
+                </g>
+              </g>
+            </svg>
+            <button>Añadir Tarjeta</button>
+          </section>
+        </div>
+      </div>
+    </div>
+    <!--Here starts Instalation -->
+    <div class="ml-14 border-2 border-gray-300 px-5 py-2 w-orderCard">
+      <div
+        class="flex flex-row gap-2"
+        (click)="changeToggleServices('instalation')"
+      >
+        <svg
+          class="w-6"
+          version="1.1"
+          id="Capa_1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          x="0px"
+          y="0px"
+          viewBox="0 0 512 512"
+          style="enable-background: new 0 0 512 512"
+          xml:space="preserve"
+          [ngClass]="{
+            'rotate-180 transition-transform duration-700 ': toggleInstalation
+          }"
+        >
+          <g>
+            <g>
+              <path
+                d="M506.157,132.386c-7.803-7.819-20.465-7.831-28.285-0.029l-207.73,207.299c-7.799,7.798-20.486,7.797-28.299-0.015 L34.128,132.357c-7.819-7.803-20.481-7.79-28.285,0.029c-7.802,7.819-7.789,20.482,0.029,28.284l207.701,207.27 c11.701,11.699,27.066,17.547,42.433,17.547c15.358,0,30.719-5.846,42.405-17.533L506.128,160.67 C513.946,152.868,513.959,140.205,506.157,132.386z"
+              ></path>
+            </g>
+          </g>
+        </svg>
+        <h2 class="text-3xl select-none">Instalación</h2>
+      </div>
+      <div
+        class="py-2 text-lg font-semibold"
+        [ngClass]="{
+          'transition-all duration-1000 block': toggleInstalation,
+          'transition-all duration-1000  hidden': !toggleInstalation
+        }"
+      >
+        <div class="grid grid-cols-2 gap-1">
+          <section class="flex flex-col">
+            <label>Descripción</label>
+            <textarea
+              class="border-2 border-enmarcadora-principal rounded"
+              type="text"
+            ></textarea>
+            <label>Precio</label>
+            <input
+              class="border-2 border-enmarcadora-principal rounded"
+              type="number"
+            />
+          </section>
+          <section class="flex flex-row justify-center items-center gap-2">
+            <svg
+              class="w-14"
+              viewBox="0 0 32 32"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"
+            >
+              <g
+                id="Page-1"
+                stroke="none"
+                stroke-width="1"
+                fill="none"
+                fill-rule="evenodd"
+                sketch:type="MSPage"
+              >
+                <g
+                  id="Icon-Set"
+                  sketch:type="MSLayerGroup"
+                  transform="translate(-464.000000, -1087.000000)"
+                  fill="#000000"
+                >
+                  <path
+                    d="M480,1117 C472.268,1117 466,1110.73 466,1103 C466,1095.27 472.268,1089 480,1089 C487.732,1089 494,1095.27 494,1103 C494,1110.73 487.732,1117 480,1117 L480,1117 Z M480,1087 C471.163,1087 464,1094.16 464,1103 C464,1111.84 471.163,1119 480,1119 C488.837,1119 496,1111.84 496,1103 C496,1094.16 488.837,1087 480,1087 L480,1087 Z M486,1102 L481,1102 L481,1097 C481,1096.45 480.553,1096 480,1096 C479.447,1096 479,1096.45 479,1097 L479,1102 L474,1102 C473.447,1102 473,1102.45 473,1103 C473,1103.55 473.447,1104 474,1104 L479,1104 L479,1109 C479,1109.55 479.447,1110 480,1110 C480.553,1110 481,1109.55 481,1109 L481,1104 L486,1104 C486.553,1104 487,1103.55 487,1103 C487,1102.45 486.553,1102 486,1102 L486,1102 Z"
+                    id="plus-circle"
+                    sketch:type="MSShapeGroup"
+                  ></path>
+                </g>
+              </g>
+            </svg>
+            <button>Añadir Tarjeta</button>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+  </div>
+
+<aside class="w-max ml-auto">
+  <app-card-management></app-card-management>
+</aside>
+</main>

@@ -28,6 +28,7 @@ module.exports = {
         'custom': '450px',
         'vlg': '600px',
         '144p': '580px',
+        'orderCard': '850px',
         'gallryW': '1000px'
       },
       fontFamily: {

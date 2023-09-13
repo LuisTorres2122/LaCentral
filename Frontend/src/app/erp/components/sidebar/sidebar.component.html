@@ -1,0 +1,165 @@
+<div
+  class="bg-enmarcadora-principal text-white w-44 min-h-screen border-enmarcadora-principal border-2"
+>
+  <section class="flex flex-col gap-1 mx-auto items-center">
+    <div class="flex flex-row my-5">
+      <img
+        src="../../../../assets/images/LogoLaCentral.png"
+        alt=""
+        class="bg-white border-collapse rounded-full border-1p border-white w-16"
+      />
+      <button class="text-lg font-bold p-2 w-full">La Central</button>
+    </div>
+
+    <button
+      class="text-lg font-bold p-2 w-full border-white border-2"
+      (click)="changeToggle('maintenance')"
+    >
+      Manteniminetos
+    </button>
+    <ul
+      class="w-full border-2 border-white"
+      [ngClass]="{
+        'transition duration-700 block': toggleMant,
+        'transition duration-700  hidden': !toggleMant
+      }"
+    >
+    <a routerLink="/erp/mantenimientos/cliente">
+      <li
+        class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
+      >
+        Cliente
+      </li>
+    </a>
+      <a routerLink="/erp/mantenimientos/passepartout">
+        <li
+          class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
+        >
+          Passepartout
+        </li>
+      </a>
+      <a routerLink="/erp/mantenimientos/vidrio">
+        <li
+          class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
+        >
+          Vidrio
+        </li>
+      </a>
+      <a routerLink="/erp/mantenimientos/filete">
+        <li
+          class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
+        >
+          Filete
+        </li>
+      </a>
+      <a routerLink="/erp/mantenimientos/marco">
+        <li
+          class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
+        >
+          Marco
+        </li>
+      </a>
+      <a routerLink="/erp/mantenimientos/desperdicio">
+        <li
+          class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
+        >
+          Desperdicio
+        </li>
+      </a>
+      <a routerLink="/erp/mantenimientos/utilidad">
+        <li
+          class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
+        >
+          Utilidad
+        </li>
+      </a>
+      
+      <a routerLink="/erp/mantenimientos/galeria">
+        <li
+          class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
+        >
+          Galeria
+        </li>
+      </a>
+    </ul>
+    <button
+      class="text-lg font-bold p-2 w-full border-white border-2"
+      (click)="changeToggle('order')"
+    >
+      Pedidos
+    </button>
+    <ul
+      class="w-full border-2 border-white"
+      [ngClass]="{
+        'transition duration-700 block': toggleOrder,
+        'transition duration-700  hidden': !toggleOrder
+      }"
+    >
+      <li
+        class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
+      >
+        <a href="">Creación Pedido</a>
+      </li>
+      <li
+        class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
+      >
+        <a href="">Busqueda Pedido</a>
+      </li>
+      <li
+        class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
+      >
+        <a href="">Pedidos Pendientes</a>
+      </li>
+      <li
+        class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
+      >
+        <a href="">BackUps</a>
+      </li>
+    </ul>
+    <button
+      class="text-lg font-bold p-2 w-full border-white border-2"
+      (click)="changeToggle('user')"
+    >
+      Usuarios
+    </button>
+    <ul
+      class="w-full border-2 border-white"
+      [ngClass]="{
+        'transition duration-700 block': toggleUsers,
+        'transition duration-700  hidden': !toggleUsers
+      }"
+    >
+      <li
+        class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
+      >
+        <a href="">Crear Usuario</a>
+      </li>
+      <li
+        class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
+      >
+        <a href="">Cambio Contraseña</a>
+      </li>
+    </ul>
+    <button
+      class="text-lg font-bold p-2 w-full border-white border-2"
+      (click)="changeToggle('report')"
+    >
+      Reportes
+    </button>
+    <ul
+      class="w-full border-2 border-white"
+      [ngClass]="{
+        'transition duration-700 block': toggleReporters,
+        'transition duration-700  hidden': !toggleReporters
+      }"
+    >
+      <Li
+        class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
+        ><a href="">Pedidos</a></Li
+      >
+    </ul>
+    <button class="text-lg font-bold p-2 w-full border-white border-2">
+      Cerrar Sesión
+    </button>
+  </section>
+</div>
