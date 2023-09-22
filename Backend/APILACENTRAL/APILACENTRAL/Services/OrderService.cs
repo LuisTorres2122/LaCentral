@@ -29,19 +29,34 @@ namespace APILACENTRAL.Services
             return await _laCentralContext.Tblencabezadopedidos.FindAsync(id);
         }
 
-        public async Task<IEnumerable<Tbldetallepedido>> getDetailsOrder(int id)
+        public async Task<OrderDetailsDTO?> getDetailsOrder(int id)
         {
-            return await _laCentralContext.Tbldetallepedidos
-                .Where(p => p.FkIdPedido == id)
-                .ToListAsync();
+            var detail = await _laCentralContext.Tbldetallepedidos.FindAsync(id);
+
+            var foundedDetail = new OrderDetailsDTO();
+
+            foundedDetail.idDetallePedido = detail.PkIdDetallePedido;
+            foundedDetail.idPedido = detail.FkIdPedido;
+            foundedDetail.Descripcion = detail.DescripcionServicio;
+            foundedDetail.Precio = detail.PrecioPedido;
+
+            return foundedDetail;
 
         }
 
-        public async Task<IEnumerable<Tbldetalleservicio>> getDetailsService(int id)
+        public async Task<ServiceDetailsDTO?> getDetailsService(int id)
         {
-            return await _laCentralContext.Tbldetalleservicios
-                .Where(p => p.FkIdDetallePedido == id)
-                .ToListAsync();
+            var services =  await _laCentralContext.Tbldetalleservicios.FindAsync(id);
+            var foundedDetail = new ServiceDetailsDTO();
+
+            foundedDetail.idDetallePedido = services.FkIdDetallePedido;
+            foundedDetail.Linea = services.Linea;
+            foundedDetail.idMaterial = services.FkIdMaterial;
+            foundedDetail.Nombre = services.NombreMaterial;
+            foundedDetail.Precio = services.PrecioMaterial;
+            foundedDetail.Color = services.ColorMaterial;
+
+            return foundedDetail;
 
         }
 
