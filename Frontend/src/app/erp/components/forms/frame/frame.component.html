@@ -1,3 +1,4 @@
+
 <main>
     <div *ngIf="badNotify.length > 0">
       <app-badalert [type]="badNotify"></app-badalert>
@@ -10,8 +11,8 @@
     </section>
     <section>
       <app-layout-mantenance
-        [elements]="passepatouts"
-        [elementsTypes]="elementsPassepartout"
+        [elements]="frames"
+        [elementsTypes]="elementsFrames"
         [headers]="header"
         (toggle)="recieveToggle($event)"
         (updatedForm)="transferData($event)"
@@ -58,7 +59,7 @@
                   <span class="sr-only">Close modal</span>
                 </button>
               </div>
-              <form [formGroup]="formPassCreate" (ngSubmit)="addPass()">
+              <form [formGroup]="formFrameCreate" (ngSubmit)="addFrame()">
                 <div class="grid gap-4 mb-4 sm:grid-cols-2">
                   <div class="col-span-2">
                     <label class="block mb-2 text-sm font-medium text-white"
@@ -68,7 +69,7 @@
                       type="text"
                       class="border text-sm rounded-lg block w-full p-2.5 placeholder:text-black"
                       formControlName="name"
-                      placeholder="passepatout"
+                      placeholder="Marco"
                       readonly
                     />
                   </div>
@@ -78,54 +79,44 @@
                     >
                     <input
                       class="border text-sm rounded-lg block w-full p-2.5"
-                      placeholder="12345"
+                      placeholder="12412"
                       type="number"
                       formControlName="code"
                      
                     />
                     <app-alert
                       [hidden]="
-                      formPassCreate.get('code')?.valid ||
-                      formPassCreate.get('code')?.pristine
+                        formFrameCreate.get('code')?.valid ||
+                        formFrameCreate.get('code')?.pristine
                       "
                       alert="El tipo no es valido"
                     ></app-alert>
                   </div>
                   <div>
                     <label class="block mb-2 text-sm font-medium text-white"
-                      >Casa</label
+                      >Precio</label
                     >
                     <input
                       type="number"
-                      formControlName="home"
+                      formControlName="price"
                       class="border text-sm rounded-lg block w-full p-2.5"
-                      placeholder="casa"
+                      placeholder="0.50"
                     />
                     <app-alert
                       [hidden]="
-                      formPassCreate.get('home')?.valid ||
-                      formPassCreate.get('home')?.pristine
+                      formFrameCreate.get('price')?.valid ||
+                      formFrameCreate.get('price')?.pristine
                       "
-                      alert="La casa no es valida"
+                      alert="El Precio no es valido"
                     ></app-alert>
-                  </div>
-                  <div class="">
-                    <label class="block mb-2 text-sm font-medium text-white"
-                      >Color</label
-                    >
-                    <input
-                      type="color"
-                      class="w-full"
-                      formControlName="color"
-                    />
                   </div>
                 </div>
                 <button
-                  [disabled]="formPassCreate.invalid"
+                  [disabled]="formFrameCreate.invalid"
                   [ngClass]="{
-                    'bg-red-800 text-white': formPassCreate.invalid,
+                    'bg-red-800 text-white': formFrameCreate.invalid,
                     ' bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white ':
-                      !formPassCreate.invalid
+                      !formFrameCreate.invalid
                   }"
                   type="submit"
                   class="flex items-center justify-center rounded-lg text-sm px-4 py-2"
@@ -187,7 +178,7 @@
                   <span class="sr-only">Close modal</span>
                 </button>
               </div>
-              <form [formGroup]="formPassUpdate" (ngSubmit)="updatePass()">
+              <form [formGroup]="formFrameUpdate" (ngSubmit)="updateFrame()">
                 <div class="grid gap-4 mb-4 sm:grid-cols-2">
                   <div class="col-span-2">
                     <label class="block mb-2 text-sm font-medium text-white"
@@ -195,9 +186,9 @@
                     >
                     <input
                       type="text"
-                      class="border text-sm rounded-lg block w-full p-2.5 placeholder:text-black"
+                      class="border text-sm rounded-lg block w-full p-2.5 placeholder:text-white"
                       formControlName="name"
-                      placeholder="passepatout"
+                      placeholder="Marco"
                       readonly
                     />
                   </div>
@@ -206,55 +197,44 @@
                       >Tipo</label
                     >
                     <input
-                      class="border text-sm rounded-lg block w-full p-2.5"
-                      placeholder="12345"
                       type="number"
                       formControlName="code"
-                     
+                      class="border text-sm rounded-lg block w-full p-2.5"
+                      placeholder="12451"
                     />
                     <app-alert
                       [hidden]="
-                      formPassUpdate.get('code')?.valid ||
-                      formPassUpdate.get('code')?.pristine
+                      formFrameUpdate.get('code')?.valid ||
+                      formFrameUpdate.get('code')?.pristine
                       "
                       alert="El tipo no es valido"
                     ></app-alert>
                   </div>
                   <div>
                     <label class="block mb-2 text-sm font-medium text-white"
-                      >Casa</label
+                      >Precio</label
                     >
                     <input
                       type="number"
-                      formControlName="home"
+                      formControlName="price"
                       class="border text-sm rounded-lg block w-full p-2.5"
-                      placeholder="casa"
+                      placeholder="0.50"
                     />
                     <app-alert
                       [hidden]="
-                      formPassUpdate.get('home')?.valid ||
-                      formPassUpdate.get('home')?.pristine
+                        formFrameUpdate.get('price')?.valid ||
+                        formFrameUpdate.get('price')?.pristine
                       "
-                      alert="La casa no es valida"
+                      alert="El Precio no es valido"
                     ></app-alert>
-                  </div>
-                  <div class="">
-                    <label class="block mb-2 text-sm font-medium text-white"
-                      >Color</label
-                    >
-                    <input
-                      type="color"
-                      class="w-full"
-                      formControlName="color"
-                    />
                   </div>
                 </div>
                 <button
-                  [disabled]="formPassUpdate.invalid"
+                  [disabled]="formFrameUpdate.invalid"
                   [ngClass]="{
-                    'bg-red-800 text-white': formPassUpdate.invalid,
+                    'bg-red-800 text-white': formFrameUpdate.invalid,
                     ' bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white ':
-                      !formPassUpdate.invalid
+                      !formFrameUpdate.invalid
                   }"
                   type="submit"
                   class="flex items-center justify-center rounded-lg text-sm px-4 py-2"
@@ -337,7 +317,7 @@
                     No, cancelar
                   </button>
                   <button
-                    (click)="deletePass()"
+                    (click)="deleteFillet()"
                     class="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900"
                   >
                     Si, Estoy seguro

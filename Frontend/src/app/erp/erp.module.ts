@@ -7,16 +7,19 @@ import { OrdersComponent } from './pages/orders/orders.component';
 import { LayouterpComponent } from './pages/layouterp/layouterp.component';
 import { CardManagementComponent } from './components/card-management/card-management.component';
 import { OrderCardComponent } from './components/order-card/order-card.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LayoutMantenanceComponent } from './pages/layout-mantenance/layout-mantenance.component';
+import {  HttpClientModule } from '@angular/common/http';
+import { AlertComponent } from './components/alert/alert.component';
+import { ClientComponent } from './components/forms/client/client.component';
+import { NotifyComponent } from './components/notify/notify.component';
+import { BadalertComponent } from './components/badalert/badalert.component';
+import { GlassComponent } from './components/forms/glass/glass.component';
+import { FilletComponent } from './components/forms/fillet/fillet.component';
+import { FrameComponent } from './components/forms/frame/frame.component';
 import { PassepartoutComponent } from './components/forms/passepartout/passepartout.component';
-import { VidrioComponent } from './components/forms/vidrio/vidrio.component';
-import { FileteComponent } from './components/forms/filete/filete.component';
-import { MarcoComponent } from './components/forms/marco/marco.component';
-import { DesperdicioComponent } from './components/forms/desperdicio/desperdicio.component';
-import { UtilidadComponent } from './components/forms/utilidad/utilidad.component';
-import { ClienteComponent } from './components/forms/cliente/cliente.component';
-import { GaleriaComponent } from './components/forms/galeria/galeria.component';
+import { UtilityComponent } from './components/forms/utility/utility.component';
+
 
 
 @NgModule({
@@ -27,19 +30,22 @@ import { GaleriaComponent } from './components/forms/galeria/galeria.component';
     CardManagementComponent,
     OrderCardComponent,
     LayoutMantenanceComponent,
+    AlertComponent,
+    ClientComponent,
+    NotifyComponent,
+    BadalertComponent,
+    GlassComponent,
+    FilletComponent,
+    FrameComponent,
     PassepartoutComponent,
-    VidrioComponent,
-    FileteComponent,
-    MarcoComponent,
-    DesperdicioComponent,
-    UtilidadComponent,
-    ClienteComponent,
-    GaleriaComponent
+    UtilityComponent
   ],
   imports: [
     CommonModule,
     ERPRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule
   ]
 })
 export class ERPModule { }

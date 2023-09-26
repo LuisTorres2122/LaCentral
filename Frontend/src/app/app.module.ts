@@ -6,6 +6,8 @@ import { PagesModule } from './pages/pages.module';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { SharedModule } from './shared/shared.module';
 import { NgOptimizedImage } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -17,7 +19,9 @@ import { NgOptimizedImage } from '@angular/common';
     AppRoutingModule,
     PagesModule,
     SharedModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
