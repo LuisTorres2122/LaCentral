@@ -7,8 +7,7 @@ import { GlassService } from 'src/app/erp/services/glass.service';
 
 @Component({
   selector: 'app-glass',
-  templateUrl: './glass.component.html',
-  styleUrls: ['./glass.component.css'],
+  templateUrl: './glass.component.html'
 })
 export class GlassComponent {
   title: string = 'Vidrio';

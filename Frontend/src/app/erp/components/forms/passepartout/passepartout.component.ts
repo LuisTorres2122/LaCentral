@@ -7,8 +7,7 @@ import { PassepartoutService } from 'src/app/erp/services/passepartout.service';
 
 @Component({
   selector: 'app-passepartout',
-  templateUrl: './passepartout.component.html',
-  styleUrls: ['./passepartout.component.css']
+  templateUrl: './passepartout.component.html'
 })
 export class PassepartoutComponent {
   title: string = 'Passepartout';

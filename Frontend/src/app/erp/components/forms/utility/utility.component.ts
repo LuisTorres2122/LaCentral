@@ -6,8 +6,7 @@ import { UtilityService } from 'src/app/erp/services/utility.service';
 
 @Component({
   selector: 'app-utility',
-  templateUrl: './utility.component.html',
-  styleUrls: ['./utility.component.css'],
+  templateUrl: './utility.component.html'
 })
 export class UtilityComponent {
   title: string = 'Utilidad';

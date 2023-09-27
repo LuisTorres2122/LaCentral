@@ -1,0 +1,612 @@
+<main>
+  <div *ngIf="badNotify.length > 0">
+    <app-badalert [type]="badNotify"></app-badalert>
+  </div>
+  <div *ngIf="notify.length > 0">
+    <app-notify [type]="notify"> </app-notify>
+  </div>
+  <section class="my-5">
+    <h1 class="text-5xl flex justify-center font-playfair">{{ title }}</h1>
+  </section>
+  <section>
+    <app-layout-mantenance
+      [elements]="pieces"
+      [elementsTypes]="elementsPieces"
+      [headers]="header"
+      [view]="true"
+      (toggle)="recieveToggle($event)"
+      (updatedForm)="transferData($event)"
+      (toggledelete)="showDeleteForm($event)"
+      (ViewForm)="recieveView($event)"
+      [ngClass]="{
+        'opacity-30': toggleForm || toggleUpd || toggleDel || toggleView
+      }"
+    ></app-layout-mantenance>
+    <!-- Form Create -->
+    <div *ngIf="toggleForm">
+      <div
+        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+        [ngClass]="{
+          'absolute flex justify-center items-center': toggleForm,
+          hidden: !toggleForm
+        }"
+      >
+        <div class="relative p-4 w-full max-w-2xl max-h-full">
+          <div
+            class="relative p-4 bg-enmarcadora-principal rounded-lg shadow sm:p-5"
+          >
+            <div
+              class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5"
+            >
+              <h3 class="text-lg font-semibold text-white">Agregar</h3>
+              <button
+                type="button"
+                (click)="closeToggleCreate()"
+                class="bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center hover:text-gray-400 text-white"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="w-5 h-5"
+                  fill="currentColor"
+                  viewbox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span class="sr-only">Close modal</span>
+              </button>
+            </div>
+            <form [formGroup]="formPieceCreate" (ngSubmit)="addPiece()">
+              <div class="grid gap-4 mb-4 sm:grid-cols-2">
+                <div>
+                  <label class="block mb-2 text-sm font-medium text-white"
+                    >Titulo</label
+                  >
+                  <input
+                    type="text"
+                    formControlName="nameTitle"
+                    class="border text-sm rounded-lg block w-full p-2.5"
+                    placeholder="Escribir el titulo"
+                  />
+                  <app-alert
+                    [hidden]="
+                      formPieceCreate.get('nameTitle')?.valid ||
+                      formPieceCreate.get('nameTitle')?.pristine
+                    "
+                    alert="El titulo no es valido"
+                  ></app-alert>
+                </div>
+                <div>
+                  <label class="block mb-2 text-sm font-medium text-white"
+                    >Autor</label
+                  >
+                  <input
+                    type="text"
+                    formControlName="author"
+                    class="border text-sm rounded-lg block w-full p-2.5"
+                    placeholder="La Central"
+                  />
+                  <app-alert
+                    [hidden]="
+                      formPieceCreate.get('author')?.valid ||
+                      formPieceCreate.get('author')?.pristine
+                    "
+                    alert="El author no es valido"
+                  ></app-alert>
+                </div>
+                <div>
+                  <label class="block mb-2 text-sm font-medium text-white"
+                    >Tecnica</label
+                  >
+                  <input
+                    type="text"
+                    formControlName="technique"
+                    class="border text-sm rounded-lg block w-full p-2.5"
+                    placeholder="Oleo"
+                  />
+                  <app-alert
+                    [hidden]="
+                      formPieceCreate.get('technique')?.valid ||
+                      formPieceCreate.get('technique')?.pristine
+                    "
+                    alert="La tecnica no es valida"
+                  ></app-alert>
+                </div>
+                <div>
+                  <label class="block mb-2 text-sm font-medium text-white"
+                    >Medida</label
+                  >
+                  <input
+                    type="text"
+                    formControlName="measure"
+                    class="border text-sm rounded-lg block w-full p-2.5"
+                    placeholder="5x5"
+                  />
+                  <app-alert
+                    [hidden]="
+                      formPieceCreate.get('measure')?.valid ||
+                      formPieceCreate.get('measure')?.pristine
+                    "
+                    alert="La medida no es valida"
+                  ></app-alert>
+                </div>
+                <div>
+                  <label class="block mb-2 text-sm font-medium text-white"
+                    >Precio</label
+                  >
+                  <input
+                    type="number"
+                    formControlName="price"
+                    class="border text-sm rounded-lg block w-full p-2.5"
+                    placeholder="1150.60"
+                  />
+                  <app-alert
+                    [hidden]="
+                      formPieceCreate.get('price')?.valid ||
+                      formPieceCreate.get('price')?.pristine
+                    "
+                    alert="El precio no es valido"
+                  ></app-alert>
+                </div>
+                <div>
+                  <label class="block mb-2 text-sm font-medium text-white"
+                    >Precio</label
+                  >
+                  <input
+                    type="date"
+                    formControlName="dateC"
+                    class="border text-sm rounded-lg block w-full p-2.5"
+                  />
+                  <app-alert
+                    [hidden]="
+                      formPieceCreate.get('dateC')?.valid ||
+                      formPieceCreate.get('dateC')?.pristine
+                    "
+                    alert="El precio no es valido"
+                  ></app-alert>
+                </div>
+                <div>
+                  <label class="block mb-2 text-sm font-medium text-white"
+                    >Position</label
+                  >
+                  <select
+                    formControlName="position"
+                    (change)="updateSelectedPosition($event)"
+                    class="border text-sm rounded-lg block w-full p-2.5"
+                  >
+                    <option value="true">Vertical</option>
+                    <option value="false">Horizontal</option>
+                  </select>
+                  <app-alert
+                    [hidden]="
+                      formPieceCreate.get('position')?.valid ||
+                      formPieceCreate.get('position')?.pristine
+                    "
+                    alert="La posicion no es valido"
+                  ></app-alert>
+                </div>
+                <div>
+                  <label class="block mb-2 text-sm font-medium text-white"
+                    >Importancia</label
+                  >
+                  <input
+                    type="number"
+                    formControlName="importance"
+                    class="border text-sm rounded-lg block w-full p-2.5"
+                  />
+                  <app-alert
+                    [hidden]="
+                      formPieceCreate.get('importance')?.valid ||
+                      formPieceCreate.get('importance')?.pristine
+                    "
+                    alert="El precio no es valido"
+                  ></app-alert>
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="block mb-2 text-sm font-medium text-white"
+                    >Imagen</label
+                  >
+                  <input
+                    type="file"
+                    (change)="onImageChange($event)"
+                    class="border text-sm rounded-lg block w-full p-2.5"
+                  />
+                  <input type="hidden" formControlName="url" />
+
+                  <app-alert
+                    [hidden]="
+                      formPieceCreate.get('url')?.valid ||
+                      formPieceCreate.get('url')?.pristine
+                    "
+                    alert="La dirección es muy larga"
+                  ></app-alert>
+                </div>
+              </div>
+              <button
+                [disabled]="formPieceCreate.invalid"
+                [ngClass]="{
+                  'bg-red-800 text-white': formPieceCreate.invalid,
+                  ' bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white ':
+                    !formPieceCreate.invalid
+                }"
+                type="submit"
+                class="flex items-center justify-center rounded-lg text-sm px-4 py-2"
+              >
+                <svg
+                  class="mr-1 -ml-1 w-6 h-6 my-auto"
+                  fill="currentColor"
+                  viewbox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                Agregar nuevo registro
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Form Update -->
+    <div *ngIf="toggleUpd">
+      <div
+        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+        [ngClass]="{
+          'absolute flex justify-center items-center': toggleUpd,
+          hidden: !toggleUpd
+        }"
+      >
+        <div class="relative p-4 w-full max-w-2xl max-h-full">
+          <div
+            class="relative p-4 bg-enmarcadora-principal rounded-lg shadow sm:p-5"
+          >
+            <!-- Modal header -->
+            <div
+              class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5"
+            >
+              <h3 class="text-lg font-semibold text-white">Actualizar</h3>
+              <button
+                type="button"
+                (click)="closeUpdateToggle()"
+                class="bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center hover:text-gray-400 text-white"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="w-5 h-5"
+                  fill="currentColor"
+                  viewbox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span class="sr-only">Close modal</span>
+              </button>
+            </div>
+            <!-- Modal body -->
+            <form [formGroup]="formPieceUpdate" (ngSubmit)="updatePiece()">
+              <div class="grid gap-4 mb-4 sm:grid-cols-2">
+                <div>
+                  <label class="block mb-2 text-sm font-medium text-white"
+                    >Titulo</label
+                  >
+                  <input
+                    type="text"
+                    formControlName="nameTitle"
+                    class="border text-sm rounded-lg block w-full p-2.5"
+                    placeholder="Escribir el titulo"
+                  />
+                  <app-alert
+                    [hidden]="
+                      formPieceUpdate.get('nameTitle')?.valid ||
+                      formPieceUpdate.get('nameTitle')?.pristine
+                    "
+                    alert="El titulo no es valido"
+                  ></app-alert>
+                </div>
+                <div>
+                  <label class="block mb-2 text-sm font-medium text-white"
+                    >Autor</label
+                  >
+                  <input
+                    type="text"
+                    formControlName="author"
+                    class="border text-sm rounded-lg block w-full p-2.5"
+                    placeholder="La Central"
+                  />
+                  <app-alert
+                    [hidden]="
+                      formPieceUpdate.get('author')?.valid ||
+                      formPieceUpdate.get('author')?.pristine
+                    "
+                    alert="El author no es valido"
+                  ></app-alert>
+                </div>
+                <div>
+                  <label class="block mb-2 text-sm font-medium text-white"
+                    >Tecnica</label
+                  >
+                  <input
+                    type="text"
+                    formControlName="technique"
+                    class="border text-sm rounded-lg block w-full p-2.5"
+                    placeholder="Oleo"
+                  />
+                  <app-alert
+                    [hidden]="
+                      formPieceUpdate.get('technique')?.valid ||
+                      formPieceUpdate.get('technique')?.pristine
+                    "
+                    alert="La tecnica no es valida"
+                  ></app-alert>
+                </div>
+                <div>
+                  <label class="block mb-2 text-sm font-medium text-white"
+                    >Medida</label
+                  >
+                  <input
+                    type="text"
+                    formControlName="measure"
+                    class="border text-sm rounded-lg block w-full p-2.5"
+                    placeholder="5x5"
+                  />
+                  <app-alert
+                    [hidden]="
+                      formPieceUpdate.get('measure')?.valid ||
+                      formPieceUpdate.get('measure')?.pristine
+                    "
+                    alert="La medida no es valida"
+                  ></app-alert>
+                </div>
+                <div>
+                  <label class="block mb-2 text-sm font-medium text-white"
+                    >Precio</label
+                  >
+                  <input
+                    type="number"
+                    formControlName="price"
+                    class="border text-sm rounded-lg block w-full p-2.5"
+                    placeholder="1150.60"
+                  />
+                  <app-alert
+                    [hidden]="
+                      formPieceUpdate.get('price')?.valid ||
+                      formPieceUpdate.get('price')?.pristine
+                    "
+                    alert="El precio no es valido"
+                  ></app-alert>
+                </div>
+                <div>
+                  <label class="block mb-2 text-sm font-medium text-white"
+                    >Precio</label
+                  >
+                  <input
+                    type="date"
+                    formControlName="dateC"
+                    class="border text-sm rounded-lg block w-full p-2.5"
+                  />
+                  <app-alert
+                    [hidden]="
+                      formPieceUpdate.get('dateC')?.valid ||
+                      formPieceUpdate.get('dateC')?.pristine
+                    "
+                    alert="El precio no es valido"
+                  ></app-alert>
+                </div>
+                <div>
+                  <label class="block mb-2 text-sm font-medium text-white"
+                    >Position</label
+                  >
+                  <select
+                    formControlName="position"
+                    (change)="updateSelectedPosition($event)"
+                    class="border text-sm rounded-lg block w-full p-2.5"
+                  >
+                    <option value="true">Vertical</option>
+                    <option value="false">Horizontal</option>
+                  </select>
+                  <app-alert
+                    [hidden]="
+                      formPieceUpdate.get('position')?.valid ||
+                      formPieceUpdate.get('position')?.pristine
+                    "
+                    alert="La posicion no es valido"
+                  ></app-alert>
+                </div>
+                <div>
+                  <label class="block mb-2 text-sm font-medium text-white"
+                    >Importancia</label
+                  >
+                  <input
+                    type="number"
+                    formControlName="importance"
+                    class="border text-sm rounded-lg block w-full p-2.5"
+                  />
+                  <app-alert
+                    [hidden]="
+                      formPieceUpdate.get('importance')?.valid ||
+                      formPieceUpdate.get('importance')?.pristine
+                    "
+                    alert="El precio no es valido"
+                  ></app-alert>
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="block mb-2 text-sm font-medium text-white"
+                    >Imagen</label
+                  >
+                  <input
+                    type="file"
+                    (change)="onImageChange($event)"
+                    class="border text-sm rounded-lg block w-full p-2.5"
+                  />
+                  <input type="hidden" formControlName="url" />
+                  <app-alert
+                    [hidden]="
+                      formPieceUpdate.get('url')?.valid ||
+                      formPieceUpdate.get('url')?.pristine
+                    "
+                    alert="La dirección es muy larga"
+                  ></app-alert>
+                </div>
+              </div>
+              <button
+                [disabled]="formPieceUpdate.invalid"
+                [ngClass]="{
+                  'bg-red-800 text-white': formPieceUpdate.invalid,
+                  ' bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white ':
+                    !formPieceUpdate.invalid
+                }"
+                type="submit"
+                class="flex items-center justify-center rounded-lg text-sm px-4 py-2"
+              >
+                <svg
+                  class="mr-1 -ml-1 w-6 h-6 my-auto"
+                  fill="currentColor"
+                  viewbox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                Actualizar registro
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Form Delete -->
+    <div *ngIf="toggleDel">
+      <div
+        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+        [ngClass]="{
+          'absolute flex justify-center items-center': toggleDel,
+          hidden: !toggleDel
+        }"
+      >
+        <div class="relative p-4 w-full max-w-md max-h-full">
+          <div
+            class="relative p-4 text-center bg-enmarcadora-principal rounded-lg shadow sm:p-5"
+          >
+            <button
+              type="button"
+              (click)="closeDeleteToggle()"
+              class="bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center hover:text-gray-400 text-white absolute top-2.5 right-2.5"
+            >
+              <svg
+                aria-hidden="true"
+                class="w-7 h-7"
+                fill="currentColor"
+                viewbox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <span class="sr-only">Close modal</span>
+            </button>
+            <svg
+              class="text-gray-400 w-11 h-11 mb-3.5 mx-auto"
+              aria-hidden="true"
+              fill="currentColor"
+              viewbox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            <p class="mb-4 text-gray-500 dark:text-gray-300">
+              Esta seguro de eliminar el registro
+            </p>
+            <div class="flex justify-center items-center space-x-4">
+              <button
+                (click)="closeDeleteToggle()"
+                data-modal-toggle="deleteModal"
+                type="button"
+                class="py-2 px-3 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+              >
+                No, cancelar
+              </button>
+              <button
+                (click)="deletePiece()"
+                class="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900"
+              >
+                Si, Estoy seguro
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Form View -->
+    <div *ngIf="toggleView">
+      <div
+        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+        [ngClass]="{
+          'absolute flex justify-center items-center': toggleView,
+          hidden: !toggleView
+        }"
+      >
+        <div class="relative p-4 w-full max-w-2xl max-h-full">
+          <div
+            class="relative p-4 text-center bg-enmarcadora-principal rounded-lg shadow sm:p-5"
+          >
+            <button
+              type="button"
+              (click)="closeToggleView()"
+              class="bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center hover:text-gray-400 text-white absolute top-2.5 right-2.5"
+            >
+              <svg
+                aria-hidden="true"
+                class="w-7 h-7"
+                fill="currentColor"
+                viewbox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <span class="sr-only">Close modal</span>
+            </button>
+            <div class="flex flex-row gap-2">
+              <img
+                class="w-60"
+                [src]="base64ToImage(this.showImage)"
+                alt="imagen"
+              />
+
+              <div class=" flex flex-col justify-center items-center text-white w-full "
+              >
+              <label *ngFor="let image of dataImage" > {{ image }}</label>
+               
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

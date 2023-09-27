@@ -1,25 +1,23 @@
 import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
-import { Client } from '../../models/client.model';
-
-import { Subject } from 'rxjs';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ResponseCRUD } from '../../models/responseCRUD.model';
 
 
 @Component({
   selector: 'app-layout-mantenance',
-  templateUrl: './layout-mantenance.component.html',
-  styleUrls: ['./layout-mantenance.component.css'],
+  templateUrl: './layout-mantenance.component.html'
 })
 export class LayoutMantenanceComponent {
   @Input() headers: string[];
   @Input() elements: any[] ;
   @Input() elementsTypes: string[];
+  @Input() view: boolean = false;
   search: string;
   toggleOpts: boolean[] = [];
   @Output() toggle = new EventEmitter<any>();
   @Output() toggledelete = new EventEmitter<ResponseCRUD>();
   @Output() updatedForm = new EventEmitter<ResponseCRUD>();
+  @Output() ViewForm = new EventEmitter<ResponseCRUD>();
+
   FilterElements: any[] = [];
 
   page: number = 1;
@@ -38,6 +36,11 @@ export class LayoutMantenanceComponent {
     this.updatedForm.emit(newElement);
   }
 
+  sendImage(element: any, toggle: boolean, id: number) {
+    var newElement = { element, toggle, id };
+    this.ViewForm.emit(newElement);
+  }
+
   findIndexList(element: any): number {
     return this.elements.findIndex(
       (el) => el[this.elementsTypes[0]] == element[this.elementsTypes[0]]
@@ -51,6 +54,13 @@ export class LayoutMantenanceComponent {
     this.sendData(element, true, element[this.elementsTypes[0]]);
   }
  
+  transferImage(element: any, index: number): void {
+    this.toggleOpts[index] = false;
+    const indextest = this.findIndexList(element);
+    this.sendImage(element, true, element[this.elementsTypes[0]]);
+
+  }
+
   loadElement(position: number): any[] {
     let sourceArray = this.FilterElements.length > 0 ? this.FilterElements : this.elements;
     let registers = sourceArray.length;

@@ -7,8 +7,7 @@ import { FilletService } from 'src/app/erp/services/fillet.service';
 
 @Component({
   selector: 'app-fillet',
-  templateUrl: './fillet.component.html',
-  styleUrls: ['./fillet.component.css']
+  templateUrl: './fillet.component.html'
 })
 export class FilletComponent {
   title: string = 'Filete';

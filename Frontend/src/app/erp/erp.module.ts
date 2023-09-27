@@ -19,6 +19,11 @@ import { FilletComponent } from './components/forms/fillet/fillet.component';
 import { FrameComponent } from './components/forms/frame/frame.component';
 import { PassepartoutComponent } from './components/forms/passepartout/passepartout.component';
 import { UtilityComponent } from './components/forms/utility/utility.component';
+import { PieceComponent } from './components/forms/piece/piece.component';
+
+import { ChangePasswordComponent } from './components/forms/change-password/change-password.component';
+import { RegisterComponent } from './components/forms/register/register.component';
+import { AlertUserComponent } from './components/alert-user/alert-user.component';
 
 
 
@@ -38,7 +43,11 @@ import { UtilityComponent } from './components/forms/utility/utility.component';
     FilletComponent,
     FrameComponent,
     PassepartoutComponent,
-    UtilityComponent
+    UtilityComponent,
+    PieceComponent,
+    ChangePasswordComponent,
+    RegisterComponent,
+    AlertUserComponent
   ],
   imports: [
     CommonModule,

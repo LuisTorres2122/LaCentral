@@ -165,6 +165,35 @@
                       Borrar
                     </button>
                   </li>
+                  
+                  <li *ngIf="view">
+                    <button
+                    (click)="
+                        transferImage(
+                          element,
+                          loadElement(page).indexOf(element)
+                        )
+                      "
+                      type="button"
+                      class="flex w-full items-center py-2 px-4 text-gray-700 hover:bg-gray-600 hover:text-white"
+                    >
+                      <svg
+                        class="w-5 h-5 mr-2"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewbox="0 0 20 20"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                        />
+                      </svg>
+                      Visualizar
+                    </button>
+                  </li>
                 </ul>
               </div>
             </td>
@@ -183,7 +212,7 @@
           }}<!--range, sheets--></span
         >
         de
-        <span class=" select-none font-semibold"
+        <span class="select-none font-semibold"
           >{{ elementsNumber() }}
           <!--counts--></span
         >
@@ -191,8 +220,8 @@
       <ul class="inline-flex items-stretch -space-x-px">
         <li>
           <a
-            (click)=" previosPage()"
-            class=" select-none flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-300 hover:text-gray-700"
+            (click)="previosPage()"
+            class="select-none flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-300 hover:text-gray-700"
           >
             <span class="sr-only">Previous</span>
             <svg
@@ -228,7 +257,7 @@
         <li>
           <a
             (click)="nextPage()"
-            class=" select-none flex items-center justify-center h-full py-1.5 px-3 leading-tight rounded-r-lg border text-gray-500 bg-white hover:bg-gray-300 hover:text-gray-700"
+            class="select-none flex items-center justify-center h-full py-1.5 px-3 leading-tight rounded-r-lg border text-gray-500 bg-white hover:bg-gray-300 hover:text-gray-700"
           >
             <span class="sr-only">Next</span>
             <svg

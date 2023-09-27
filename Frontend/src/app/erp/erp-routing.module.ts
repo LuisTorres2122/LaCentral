@@ -9,6 +9,9 @@ import { FilletComponent } from './components/forms/fillet/fillet.component';
 import { FrameComponent } from './components/forms/frame/frame.component';
 import { PassepartoutComponent } from './components/forms/passepartout/passepartout.component';
 import { UtilityComponent } from './components/forms/utility/utility.component';
+import { PieceComponent } from './components/forms/piece/piece.component';
+import { RegisterComponent } from './components/forms/register/register.component';
+import { ChangePasswordComponent } from './components/forms/change-password/change-password.component';
 
 
 const routes: Routes = [
@@ -23,6 +26,9 @@ const routes: Routes = [
       {path: 'marco', component: FrameComponent},
       {path: 'passepartout', component: PassepartoutComponent},
       {path: 'utilidad', component: UtilityComponent},
+      {path: 'galeria', component: PieceComponent},
+      {path: 'registrar', component: RegisterComponent},
+      {path: 'cambiarContraseña', component: ChangePasswordComponent},
      
     
       

@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { find } from 'rxjs';
 import { Client } from 'src/app/erp/models/client.model';
 import { ResponseCRUD } from 'src/app/erp/models/responseCRUD.model';
 import { ClientService } from 'src/app/erp/services/client.service';
 
 @Component({
   selector: 'app-client',
-  templateUrl: './client.component.html',
-  styleUrls: ['./client.component.css'],
+  templateUrl: './client.component.html'
 })
 export class ClientComponent {
   header: string[] = ['Id', 'Nombre', 'Email', 'Telefono', 'Dirección', '']; 

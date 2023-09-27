@@ -7,8 +7,7 @@ import { FrameService } from 'src/app/erp/services/frame.service';
 
 @Component({
   selector: 'app-frame',
-  templateUrl: './frame.component.html',
-  styleUrls: ['./frame.component.css']
+  templateUrl: './frame.component.html'
 })
 export class FrameComponent {
   title: string = 'Marco';
