@@ -55,6 +55,10 @@ import { AlertUserComponent } from './components/alert-user/alert-user.component
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule
+  ],
+  exports:[
+    AlertComponent, 
+    BadalertComponent
   ]
 })
 export class ERPModule { }

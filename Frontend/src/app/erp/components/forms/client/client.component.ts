@@ -6,12 +6,12 @@ import { ClientService } from 'src/app/erp/services/client.service';
 
 @Component({
   selector: 'app-client',
-  templateUrl: './client.component.html'
+  templateUrl: './client.component.html',
 })
 export class ClientComponent {
-  header: string[] = ['Id', 'Nombre', 'Email', 'Telefono', 'Dirección', '']; 
-  title: string = "Clientes";
-  notify: string= "";
+  header: string[] = ['Id', 'Nombre', 'Email', 'Telefono', 'Dirección', ''];
+  title: string = 'Clientes';
+  notify: string = '';
   badNotify: string = '';
   clients: Client[] = [];
   toggleForm: boolean = false;
@@ -32,7 +32,7 @@ export class ClientComponent {
 
   deleteNotify() {
     setTimeout(() => {
-      this.notify = "";
+      this.notify = '';
       this.badNotify = '';
     }, 3000);
   }
@@ -83,22 +83,31 @@ export class ClientComponent {
     if (client && client.address) {
       newClient.direccionCliente = client.address;
     }
+    if (this.clients.length < 0) {
+      newClient.pkIdCliente = 1;
+    }
+
     this.clientService.createClient(newClient).subscribe({
-      next:(response) => {
+      next: (response) => {
         console.log('Creado Exitosamente');
-        const lastElement = this.clients[this.clients.length - 1];
-        newClient.pkIdCliente = lastElement.pkIdCliente + 1;
+        if (this.clients.length > 0) {
+          const lastElement = this.clients[this.clients.length - 1];
+          newClient.pkIdCliente = lastElement.pkIdCliente + 1;
+          
+        } else {
+          newClient.pkIdCliente = 1;
+        }
+
         this.clients.push(newClient);
-        this.notify = "creación de cliente";
+        this.notify = 'creación de cliente';
         this.deleteNotify();
       },
-      error:(err) => {
+      error: (err) => {
         console.log(err);
-        this.badNotify = "creación de cliente";
-          this.deleteNotify();
-      }
-    }
-    );
+        this.badNotify = 'creación de cliente';
+        this.deleteNotify();
+      },
+    });
     this.clearInputs();
   }
 
@@ -134,22 +143,21 @@ export class ClientComponent {
     this.clientService
       .updateClient(this.lastIdUpdated, updatedClient)
       .subscribe({
-       next: (response) => {
+        next: (response) => {
           console.log('Actualizado Exitosamente');
 
           this.clients[this.findIndexList(updatedClient)] = updatedClient;
 
           this.closeUpdateToggle();
-          this.notify = "actualización de cliente";
+          this.notify = 'actualización de cliente';
           this.deleteNotify();
         },
-       error: (err) => {
+        error: (err) => {
           console.log(err);
-          this.badNotify = "actualización de cliente";
+          this.badNotify = 'actualización de cliente';
           this.deleteNotify();
-        }
-      }
-      );
+        },
+      });
   }
   findIndexList(client: Client): number {
     return this.clients.findIndex(
@@ -160,30 +168,25 @@ export class ClientComponent {
   showDeleteForm(response: ResponseCRUD): void {
     this.toggleDel = response.toggle;
     this.lastIdDeleted = response.id;
-    this.lastIdDeletedIndex  = this.findIndexList(response.element);
-
+    this.lastIdDeletedIndex = this.findIndexList(response.element);
   }
 
   deleteClient(): void {
+    this.clientService.deleteClient(this.lastIdDeleted).subscribe({
+      next: (response) => {
+        console.log('Eliminado Exitosamente');
 
-    this.clientService
-      .deleteClient(this.lastIdDeleted)
-      .subscribe({
-        next: (response) => {
-          console.log('Eliminado Exitosamente');
-         
-          this.notify = "eliminación de cliente";
-          this.clients.splice(this.lastIdDeletedIndex, 1);
-          this.deleteNotify();
-          this.toggleDel = false;
-        },
-        error: (err) => {
-          console.log(err);
-          this.badNotify = "eliminación de cliente";
-          this.deleteNotify();
-        }
-      }
-      );
+        this.notify = 'eliminación de cliente';
+        this.clients.splice(this.lastIdDeletedIndex, 1);
+        this.deleteNotify();
+        this.toggleDel = false;
+      },
+      error: (err) => {
+        console.log(err);
+        this.badNotify = 'eliminación de cliente';
+        this.deleteNotify();
+      },
+    });
   }
 
   closeDeleteToggle(): void {
@@ -197,7 +200,4 @@ export class ClientComponent {
   clearInputs(): void {
     this.formClientCreate.reset();
   }
-
- 
- 
 }

@@ -112,16 +112,25 @@ export class PassepartoutComponent {
     }
 
     var newShowPass = new Passepartout();
-    newShowPass.nombreMaterial = 'Vidrio';
+    newShowPass.nombreMaterial = 'Passepartout';
     newShowPass.codigoPassepartout = newPass.codigoPassepartout;
     newShowPass.casaPassepartout = newPass.casaPassepartout;
     newShowPass.colorPassepartout = newPass.colorPassepartout;
+    if (this.passepatouts.length < 0) {
+      newShowPass.pkIdPassepartout = 1;
+    }
 
     this.PassService.createPass(newPass).subscribe({
       next: (res) => {
         console.log('Creado Exitosamente', res);
-        const lastElement = this.passepatouts[this.passepatouts.length - 1];
-        newShowPass.pkIdPassepartout = lastElement.pkIdPassepartout + 1;
+        if (this.passepatouts.length > 0) {
+          const lastElement = this.passepatouts[this.passepatouts.length - 1];
+          newShowPass.pkIdPassepartout = lastElement.pkIdPassepartout + 1;
+        }else{
+          newShowPass.pkIdPassepartout = 1;
+          
+        }
+       
         this.passepatouts.push(newShowPass);
         this.notify = 'creación de passepartout';
         this.deleteNotify();

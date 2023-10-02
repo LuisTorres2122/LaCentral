@@ -7,7 +7,7 @@ import { GlassService } from 'src/app/erp/services/glass.service';
 
 @Component({
   selector: 'app-glass',
-  templateUrl: './glass.component.html'
+  templateUrl: './glass.component.html',
 })
 export class GlassComponent {
   title: string = 'Vidrio';
@@ -27,7 +27,7 @@ export class GlassComponent {
     'pkIdVidrio',
     'tipoVidrio',
     'nombreMaterial',
-    'precioVidrio'
+    'precioVidrio',
   ];
 
   constructor(private glassService: GlassService) {}
@@ -107,12 +107,20 @@ export class GlassComponent {
     newShowGlass.nombreMaterial = 'Vidrio';
     newShowGlass.precioVidrio = newGlass.precioVidrio;
     newShowGlass.tipoVidrio = newGlass.tipoVidrio;
+    if (this.glasses.length < 0) {
+      newShowGlass.pkIdVidrio = 1;
+    }
 
     this.glassService.createGlass(newGlass).subscribe({
       next: (res) => {
         console.log('Creado Exitosamente', res);
-        const lastElement = this.glasses[this.glasses.length - 1];
-        newShowGlass.pkIdVidrio = lastElement.pkIdVidrio + 1;
+        if (this.glasses.length > 0) {
+          const lastElement = this.glasses[this.glasses.length - 1];
+          newShowGlass.pkIdVidrio = lastElement.pkIdVidrio + 1;
+        } else {
+          newShowGlass.pkIdVidrio = 1;
+        }
+
         this.glasses.push(newShowGlass);
         this.notify = 'creación de vidrio';
         this.deleteNotify();
@@ -134,7 +142,6 @@ export class GlassComponent {
       price: response.element.precioVidrio,
     });
     this.lastIdUpdated = response.id;
-  
   }
 
   updateGlass(): void {
@@ -157,8 +164,7 @@ export class GlassComponent {
     newShowGlass.pkIdVidrio = updatedGlass.pkIdVidrio;
     console.log(updatedGlass);
     console.log(this.configureMaterial());
-    this.glassService.updateGlass(this.lastIdUpdated, updatedGlass)
-    .subscribe({
+    this.glassService.updateGlass(this.lastIdUpdated, updatedGlass).subscribe({
       next: (response) => {
         console.log('Actualizado Exitosamente');
         this.glasses[this.findIndexList(newShowGlass)] = newShowGlass;
@@ -200,9 +206,8 @@ export class GlassComponent {
         console.log(err);
         this.badNotify = 'eliminación de vidrio';
         this.deleteNotify();
-      }
-    }
-    );
+      },
+    });
   }
 
   closeDeleteToggle(): void {

@@ -7,7 +7,7 @@ import { FrameService } from 'src/app/erp/services/frame.service';
 
 @Component({
   selector: 'app-frame',
-  templateUrl: './frame.component.html'
+  templateUrl: './frame.component.html',
 })
 export class FrameComponent {
   title: string = 'Marco';
@@ -27,9 +27,8 @@ export class FrameComponent {
     'pkIdMarco',
     'codigoMarco',
     'nombreMaterial',
-    'precioMarco'
+    'precioMarco',
   ];
- 
 
   constructor(private frameService: FrameService) {}
 
@@ -42,7 +41,7 @@ export class FrameComponent {
 
   formFrameCreate = new FormGroup({
     name: new FormControl('Marco'),
-    code: new FormControl('', Validators.required,),
+    code: new FormControl('', Validators.required),
     price: new FormControl('', Validators.required),
   });
 
@@ -108,12 +107,19 @@ export class FrameComponent {
     newShowFrame.nombreMaterial = 'Marco';
     newShowFrame.precioMarco = newFrame.precioMarco;
     newShowFrame.codigoMarco = newFrame.codigoMarco;
+    if (this.frames.length < 0) {
+      newShowFrame.pkIdMarco = 1;
+    }
 
     this.frameService.createFrame(newFrame).subscribe({
       next: (res) => {
         console.log('Creado Exitosamente', res);
-        const lastElement = this.frames[this.frames.length - 1];
-        newShowFrame.pkIdMarco = lastElement.pkIdMarco + 1;
+        if (this.frames.length > 0) {
+          const lastElement = this.frames[this.frames.length - 1];
+          newShowFrame.pkIdMarco = lastElement.pkIdMarco + 1;
+        } else {
+          newShowFrame.pkIdMarco = 1;
+        }
         this.frames.push(newShowFrame);
         this.notify = 'creación de marco';
         this.deleteNotify();
@@ -135,7 +141,6 @@ export class FrameComponent {
       price: response.element.precioMarco,
     });
     this.lastIdUpdated = response.id;
-  
   }
 
   updateFrame(): void {
@@ -156,8 +161,7 @@ export class FrameComponent {
     newShowFrame.precioMarco = updatedFrame.precioMarco;
     newShowFrame.codigoMarco = updatedFrame.codigoMarco;
     newShowFrame.pkIdMarco = updatedFrame.pkIdMarco;
-    this.frameService.updateFrame(this.lastIdUpdated, updatedFrame)
-    .subscribe({
+    this.frameService.updateFrame(this.lastIdUpdated, updatedFrame).subscribe({
       next: (response) => {
         console.log('Actualizado Exitosamente');
         this.frames[this.findIndexList(newShowFrame)] = newShowFrame;
@@ -198,9 +202,8 @@ export class FrameComponent {
         console.log(err);
         this.badNotify = 'eliminación de marco';
         this.deleteNotify();
-      }
-    }
-    );
+      },
+    });
   }
 
   closeDeleteToggle(): void {

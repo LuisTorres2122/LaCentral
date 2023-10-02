@@ -16,6 +16,8 @@ import { HomeComponent } from './pages/home/home.component';
 import { PieceComponent } from './pages/piece/piece.component';
 import { LoginComponent } from './pages/login/login.component';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ERPModule } from '../erp/erp.module';
 
 
 @NgModule({
@@ -37,7 +39,9 @@ import { LazyLoadImageModule } from 'ng-lazyload-image';
   imports: [
     CommonModule,
     LandingPageRoutingModule,
-    LazyLoadImageModule
+    LazyLoadImageModule,
+    ReactiveFormsModule,
+    ERPModule
   ]
 })
 export class LandingPageModule { }

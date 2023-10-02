@@ -12,6 +12,8 @@ import { UtilityComponent } from './components/forms/utility/utility.component';
 import { PieceComponent } from './components/forms/piece/piece.component';
 import { RegisterComponent } from './components/forms/register/register.component';
 import { ChangePasswordComponent } from './components/forms/change-password/change-password.component';
+import { OrderCardComponent } from './components/order-card/order-card.component';
+import { CardManagementComponent } from './components/card-management/card-management.component';
 
 
 const routes: Routes = [
@@ -28,11 +30,9 @@ const routes: Routes = [
       {path: 'utilidad', component: UtilityComponent},
       {path: 'galeria', component: PieceComponent},
       {path: 'registrar', component: RegisterComponent},
-      {path: 'cambiarContraseña', component: ChangePasswordComponent},
-     
-    
+      {path: 'cambiarContraseña', component: ChangePasswordComponent}, 
+      {path: 'pedido', component: CardManagementComponent}
       
-      // Agrega más rutas según sea necesario
     ],
   },
 ];

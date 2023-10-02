@@ -7,7 +7,7 @@ import { FilletService } from 'src/app/erp/services/fillet.service';
 
 @Component({
   selector: 'app-fillet',
-  templateUrl: './fillet.component.html'
+  templateUrl: './fillet.component.html',
 })
 export class FilletComponent {
   title: string = 'Filete';
@@ -27,7 +27,7 @@ export class FilletComponent {
     'pkIdFilete',
     'tipoFilete',
     'nombreMaterial',
-    'precioFilete'
+    'precioFilete',
   ];
 
   constructor(private filletService: FilletService) {}
@@ -104,15 +104,24 @@ export class FilletComponent {
     }
 
     var newShowGlass = new Fillet();
-    newShowGlass.nombreMaterial = 'Vidrio';
+    newShowGlass.nombreMaterial = 'Filete';
     newShowGlass.precioFilete = newGlass.precioFilete;
-    newShowGlass.tipoFilete	 = newGlass.tipoFilete;
+    newShowGlass.tipoFilete = newGlass.tipoFilete;
+console.log(this.fillets);
+    if (this.fillets.length < 0) {
+      newShowGlass.pkIdFilete = 1;
+    }
 
     this.filletService.createFillet(newGlass).subscribe({
       next: (res) => {
         console.log('Creado Exitosamente', res);
-        const lastElement = this.fillets[this.fillets.length - 1];
-        newShowGlass.pkIdFilete = lastElement.pkIdFilete + 1;
+        if (this.fillets.length > 0) {
+          const lastElement = this.fillets[this.fillets.length - 1];
+          newShowGlass.pkIdFilete = lastElement.pkIdFilete + 1;
+        } else {
+          newShowGlass.pkIdFilete = 1;
+        }
+
         this.fillets.push(newShowGlass);
         this.notify = 'creación de filete';
         this.deleteNotify();
@@ -134,7 +143,6 @@ export class FilletComponent {
       price: response.element.precioFilete,
     });
     this.lastIdUpdated = response.id;
-  
   }
 
   updateFillet(): void {
@@ -155,21 +163,22 @@ export class FilletComponent {
     newShowFillet.precioFilete = updatedFillet.precioFilete;
     newShowFillet.tipoFilete = updatedFillet.tipoFilete;
     newShowFillet.pkIdFilete = updatedFillet.pkIdFilete;
-    this.filletService.updateFillet(this.lastIdUpdated, updatedFillet)
-    .subscribe({
-      next: (response) => {
-        console.log('Actualizado Exitosamente');
-        this.fillets[this.findIndexList(newShowFillet)] = newShowFillet;
-        this.closeUpdateToggle();
-        this.notify = 'actualización de filete';
-        this.deleteNotify();
-      },
-      error: (err) => {
-        console.log(err);
-        this.badNotify = 'actualización de filete';
-        this.deleteNotify();
-      },
-    });
+    this.filletService
+      .updateFillet(this.lastIdUpdated, updatedFillet)
+      .subscribe({
+        next: (response) => {
+          console.log('Actualizado Exitosamente');
+          this.fillets[this.findIndexList(newShowFillet)] = newShowFillet;
+          this.closeUpdateToggle();
+          this.notify = 'actualización de filete';
+          this.deleteNotify();
+        },
+        error: (err) => {
+          console.log(err);
+          this.badNotify = 'actualización de filete';
+          this.deleteNotify();
+        },
+      });
   }
 
   findIndexList(fillet: Fillet): number {
@@ -197,9 +206,8 @@ export class FilletComponent {
         console.log(err);
         this.badNotify = 'eliminación de filete';
         this.deleteNotify();
-      }
-    }
-    );
+      },
+    });
   }
 
   closeDeleteToggle(): void {

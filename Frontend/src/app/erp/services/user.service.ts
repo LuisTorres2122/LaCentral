@@ -21,10 +21,7 @@ export class UserService {
     return this.http.post<any>(this.urlapi, user);
   }
 
-  public getToken(user: SUser): Observable<any>{
-    let newUrl = this.urlapi + "/Autenticar";
-    return this.http.post<any>(this.urlapi, user);
-  }
+ 
 
   public updateUser(id:number, user: User): Observable<any>{
     let newUrl = this.urlapi + "/"+id;

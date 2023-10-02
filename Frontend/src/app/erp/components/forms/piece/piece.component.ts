@@ -6,7 +6,7 @@ import { PieceService } from 'src/app/erp/services/piece.service';
 
 @Component({
   selector: 'app-piece',
-  templateUrl: './piece.component.html'
+  templateUrl: './piece.component.html',
 })
 export class PieceComponent {
   header: string[] = [
@@ -33,12 +33,12 @@ export class PieceComponent {
   lastIdUpdated: number;
   lastIdDeleted: number;
   lastIdDeletedIndex: number;
-  showImage:any;
+  showImage: any;
   private fileReader: FileReader = new FileReader();
   private fileReader2: FileReader = new FileReader();
   emptyImage: boolean = true;
   position: boolean = true;
-  image64:any;
+  image64: any;
   dataImage: string[] = [];
   elementsPieces: string[] = [
     'pkIdObra',
@@ -87,7 +87,7 @@ export class PieceComponent {
     price: new FormControl(''),
     url: new FormControl('', Validators.required),
     dateC: new FormControl(this.dateWithOutHour(), Validators.required),
-    position: new FormControl( true, Validators.required),
+    position: new FormControl(true, Validators.required),
     importance: new FormControl('', Validators.required),
   });
   ngOnInit(): void {
@@ -101,15 +101,24 @@ export class PieceComponent {
   recieveView(response: ResponseCRUD): void {
     this.toggleView = response.toggle;
     this.showImage = response.element.urlObra;
-    this.dataImage[0] = "Titulo: "+(!response.element.tituloObra ? " " : response.element.tituloObra);
-    this.dataImage[1] = "Autor: "+(!response.element.autorObra ? " " : response.element.autorObra);
-    this.dataImage[2] = "Tecnica: "+(!response.element.tecnicaObra? " " : response.element.tecnicaObra);
-    this.dataImage[3] = "Medida: "+(!response.element.medidaObra ? " " : response.element.medidaObra);
-    this.dataImage[4] = "Precio: "+(!response.element.precioObra ? " " : "Q"+response.element.precioObra);
-
+    this.dataImage[0] =
+      'Titulo: ' +
+      (!response.element.tituloObra ? ' ' : response.element.tituloObra);
+    this.dataImage[1] =
+      'Autor: ' +
+      (!response.element.autorObra ? ' ' : response.element.autorObra);
+    this.dataImage[2] =
+      'Tecnica: ' +
+      (!response.element.tecnicaObra ? ' ' : response.element.tecnicaObra);
+    this.dataImage[3] =
+      'Medida: ' +
+      (!response.element.medidaObra ? ' ' : response.element.medidaObra);
+    this.dataImage[4] =
+      'Precio: ' +
+      (!response.element.precioObra ? ' ' : 'Q' + response.element.precioObra);
   }
 
-  closeToggleView(){
+  closeToggleView() {
     this.toggleView = false;
   }
 
@@ -123,52 +132,42 @@ export class PieceComponent {
     this.clearInputs();
   }
 
-
   updateSelectedPosition(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
     this.position = selectElement.value === 'true';
   }
-  
-onImageChange(event: Event) {
-  const input = event.target as HTMLInputElement;
-  const file = (input.files as FileList)[0];
-  
 
-  if (file) {
+  onImageChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const file = (input.files as FileList)[0];
+
+    if (file) {
       if (this.fileReader.readyState === 2) {
-          this.fileReader = new FileReader(); // Si está ocupado, crea uno nuevo
+        this.fileReader = new FileReader(); // Si está ocupado, crea uno nuevo
       }
 
       this.fileReader.onload = () => {
-          const base64String = (this.fileReader.result as string).split(',')[1];
-          this.image64 = base64String;
-          console.log( this.image64);
-          
-          
-          const urlControl = this.formPieceCreate.get('url');
-          if (urlControl) {
-              urlControl.setValue(base64String);
-              
-          } else {
-              console.log("Control 'url' no encontrado en formPieceCreate.");
-          }
-      };  
-      
-      
-     this.image64 = this.fileReader.readAsDataURL(file);
-     this.emptyImage = false;
-     
+        const base64String = (this.fileReader.result as string).split(',')[1];
+        this.image64 = base64String;
+        console.log(this.image64);
+
+        const urlControl = this.formPieceCreate.get('url');
+        if (urlControl) {
+          urlControl.setValue(base64String);
+        } else {
+          console.log("Control 'url' no encontrado en formPieceCreate.");
+        }
+      };
+
+      this.image64 = this.fileReader.readAsDataURL(file);
+      this.emptyImage = false;
+    }
   }
-}
 
+  base64ToImage(base64: string) {
+    return 'data:image/png;base64,' + base64;
+  }
 
-base64ToImage(base64: string) {
-  
-  return 'data:image/png;base64,' + base64;
-}
-
-
- 
   addPiece(): void {
     var piece = this.formPieceCreate.value;
     var newPiece = new Piece();
@@ -187,26 +186,36 @@ base64ToImage(base64: string) {
     }
     if (piece && piece.price) {
       newPiece.precioObra = piece.price;
-    } 
-   if (piece && piece.url) {
+    }
+    if (piece && piece.url) {
       newPiece.urlObra = this.image64;
     }
     if (piece && piece.dateC) {
       newPiece.fechaPublicacionObra = piece.dateC;
     }
-    if (piece && piece.position != undefined ) {
+    if (piece && piece.position != undefined) {
       newPiece.posicionObra = this.position;
     }
     if (piece && piece.importance) {
       newPiece.importanciaObra = parseInt(piece.importance);
     }
-    console.log(newPiece);
+
+    if (this.pieces.length < 0) {
+      newPiece.pkIdObra = 1;
+    }
 
     this.pieceService.createPiece(newPiece).subscribe({
       next: (response) => {
         console.log('Creado Exitosamente');
-        const lastElement = this.pieces[this.pieces.length - 1];
-        newPiece.pkIdObra = lastElement.pkIdObra + 1;
+
+        if (this.pieces.length > 0) {
+          const lastElement = this.pieces[this.pieces.length - 1];
+          newPiece.pkIdObra = lastElement.pkIdObra + 1;
+          
+        } else {
+          newPiece.pkIdObra = 1;
+        }
+
         this.pieces.push(newPiece);
         this.notify = 'creación de pieza';
         this.deleteNotify();

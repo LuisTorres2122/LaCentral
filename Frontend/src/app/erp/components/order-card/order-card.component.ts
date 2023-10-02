@@ -1,49 +1,27 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
+import { Card } from '../../models/orderHelper.model';
+import { serviceDetails } from '../../models/order.model';
 
 @Component({
   selector: 'app-order-card',
   templateUrl: './order-card.component.html'
 })
-export class OrderCardComponent implements OnInit {
+export class OrderCardComponent {
   cardActivate: boolean[] = [];
+  @Input() Cards: Card[];
+  @Input() Details: serviceDetails[];
+  @Output() UpdatedCards = new EventEmitter<Card[]>();
+  @Output() UpdatedDetails = new EventEmitter<serviceDetails[]>();
 
-  ngOnInit(): void {}
-  Cards: Card[] = [
-    {
-      title: 'Enmarcado personalizado escultura',
-      Materiales: {
-        pasepartout: '2 87078 rojo',
-        vidrio: '1 opaco',
-        filete: '',
-        marco: '1 899869 dorado',
-      },
-      Total: 1500,
-    },
-    {
-      title: 'Instalacion vidrieria obras ',
-      Materiales: {
-        pasepartout: '',
-        vidrio: '',
-        filete: '',
-        marco: '',
-      },
-      Total: 2500,
-    },
-    {
-      title: 'Enmarcado personalizado escultura',
-      Materiales: {
-        pasepartout: '2 87078 rojo',
-        vidrio: '1 opaco',
-        filete: '',
-        marco: '1 899869 dorado',
-      },
-      Total: 1500,
-    },
-  ];
+
 
   deleted(index: number): void {
+    let id = this.Cards[index].id;
+    this.Details = this.Details.filter(x => x.idDetallePedido == id);
     this.Cards.splice(index, 1);
     this.cardActivate.splice(index, 1);
+    this.UpdatedCards.emit(this.Cards);
+    this.UpdatedDetails.emit(this.Details);
   }
 
   changeToggle(index: number): void {
@@ -53,16 +31,6 @@ export class OrderCardComponent implements OnInit {
       this.cardActivate[index] = true;
     }
   }
-}
-export interface Card {
-  title: string;
-  Materiales: {
-    pasepartout: string;
-    vidrio: string;
-    filete: string;
-    marco: string;
-  };
-  Total: number;
 }
 
 export interface displayCard {
