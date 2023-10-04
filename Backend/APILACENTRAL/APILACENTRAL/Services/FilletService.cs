@@ -14,10 +14,28 @@ namespace APILACENTRAL.Services
             _materialService = materialService;
         }
 
-        public async Task<IEnumerable<Tblfilete>> getFillets()
+        public async Task<IEnumerable<SFilletDTO>> getFillets()
         {
-            return await _laCentralContext.Tblfiletes.ToListAsync();
+            var vidriosConNombreMaterial = await _laCentralContext.Tblfiletes
+            .Join(
+        _laCentralContext.Tblmaterials,
+        fillet => fillet.FKIdMaterial,
+        material => material.PkIdMaterial,
+        (fillet, material) => new SFilletDTO
+        {
+            PkIdFilete = fillet.PkIdFilete,
+            NombreMaterial = material.NombreMaterial,
+            TipoFilete = fillet.TipoFilete,
+            PrecioFilete = fillet.PrecioFilete
+
+        })
+        .ToListAsync();
+
+            return vidriosConNombreMaterial;
+
         }
+
+
 
         public async Task<Tblfilete?> getFillet(int id)
         {
@@ -38,8 +56,7 @@ namespace APILACENTRAL.Services
         public async Task updateFillet(int id, FilletDTO fillet)
         {
             var filletFound = await getFillet(id);
-            var materialFound = await findMaterial(id);
-            if (filletFound is not null && materialFound)
+            if (filletFound is not null)
             {
                 filletFound.TipoFilete = fillet.TipoFilete;
                 filletFound.PrecioFilete = fillet.PrecioFilete;
@@ -52,8 +69,8 @@ namespace APILACENTRAL.Services
         public async Task deleteFillet(int id)
         {
             var filletFound = await getFillet(id);
-            var materialFound = await findMaterial(id);
-            if (filletFound is not null && materialFound)
+
+            if (filletFound is not null)
             {
                 _laCentralContext.Tblfiletes.Remove(filletFound);
                 await _laCentralContext.SaveChangesAsync();

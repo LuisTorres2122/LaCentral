@@ -26,12 +26,12 @@ namespace APILACENTRAL.Services
 
         public async Task updateUtility(int id, Tblutilidade utility)
         {
-            var changedUtility = new Tblutilidade();
+            
             var existingUtility = await getUtility(id);
             if(existingUtility is not null)
             {
-                changedUtility.NombreUtilidad = existingUtility.NombreUtilidad;
-                changedUtility.ValorUtilidad = existingUtility.ValorUtilidad;
+                existingUtility.NombreUtilidad = utility.NombreUtilidad;
+                existingUtility.ValorUtilidad = utility.ValorUtilidad;
                 await _laCentralContext.SaveChangesAsync();
             }
         }

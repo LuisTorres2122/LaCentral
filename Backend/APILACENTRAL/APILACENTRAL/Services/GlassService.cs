@@ -1,5 +1,6 @@
 ﻿using APILACENTRAL.Models.DTO_s;
 using APILACENTRAL.Models.ModelsLaCentral;
+using Google.Protobuf.WellKnownTypes;
 using Microsoft.EntityFrameworkCore;
 
 namespace APILACENTRAL.Services
@@ -14,9 +15,26 @@ namespace APILACENTRAL.Services
             _materialService = materialService;
         }
 
-        public async Task<IEnumerable<Tblvidrio>> getGlasses()
+        public async Task<IEnumerable<SGlassDTO>> getGlasses()
         {
-            return await _laCentralContext.Tblvidrios.ToListAsync();
+            var vidriosConNombreMaterial = await _laCentralContext.Tblvidrios
+            .Join(
+        _laCentralContext.Tblmaterials,
+        vidrio => vidrio.FKIdMaterial,
+        material => material.PkIdMaterial,
+        (vidrio, material) => new SGlassDTO
+        {
+            PkIdVidrio = vidrio.PkIdVidrio,
+            NombreMaterial = material.NombreMaterial,
+            TipoVidrio = vidrio.TipoVidrio,
+            PrecioVidrio = vidrio.PrecioVidrio
+            // Agrega otras propiedades si es necesario
+        })
+        .ToListAsync();
+
+            return vidriosConNombreMaterial;
+            /*await _laCentralContext.Tblvidrios.
+            ToListAsync();*/
         }
 
         public async Task<Tblvidrio?> getGlass(int id)
@@ -38,8 +56,7 @@ namespace APILACENTRAL.Services
         public async Task updateGlasss(int id, GlassDTO glass)
         {
             var glassFound = await getGlass(id);
-            var materialFound = await findMaterial(id);
-            if (glassFound is not null && materialFound)
+            if (glassFound is not null )
             {
                 glassFound.TipoVidrio = glass.TipoVidrio;
                 glassFound.PrecioVidrio = glass.PrecioVidrio;
@@ -52,18 +69,16 @@ namespace APILACENTRAL.Services
         public async Task deleteGlass(int id)
         {
             var glassFound = await getGlass(id);
-            var materialFound = await findMaterial(id);
-            if (glassFound is not null && materialFound)
-            {
+            
                 _laCentralContext.Tblvidrios.Remove(glassFound);
                 await _laCentralContext.SaveChangesAsync();
-            }
+            
         }
 
         public async Task<bool> findMaterial(int id)
         {
             var materialFound = await _materialService.getMaterial(id);
-            if(materialFound is not null)
+            if (materialFound is not null)
             {
                 return true;
             }

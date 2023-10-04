@@ -15,4 +15,18 @@ namespace APILACENTRAL.Models.DTO_s
         [MaxLength(15, ErrorMessage = "the color is longer than 15c")]
         public string ColorPassepartout { get; set; } = null!;
     }
+
+    public class SPassepartoutDTO
+    {
+
+        public int PkIdPassepartout { get; set; }
+
+        public string NombreMaterial { get; set; }
+
+        public int CodigoPassepartout { get; set; }
+        [MaxLength(25, ErrorMessage = "the home is longer than 25c")]
+        public string? CasaPassepartout { get; set; }
+        [MaxLength(15, ErrorMessage = "the color is longer than 15c")]
+        public string ColorPassepartout { get; set; } = null!;
+    }
 }

@@ -258,7 +258,7 @@ namespace APILACENTRAL.Services
             return await _laCentralContext.Tblencabezadopedidos.OrderByDescending(i => i.PkIdPedido).Select(i => i.PkIdPedido).FirstOrDefaultAsync();
         }
 
-        public async Task<int?> foundCurrentIdDetails()
+        public async Task<int> foundCurrentIdDetails()
         {
             return await _laCentralContext.Tbldetallepedidos.OrderByDescending(i => i.PkIdDetallePedido).Select(i => i.PkIdDetallePedido).FirstOrDefaultAsync();
         }

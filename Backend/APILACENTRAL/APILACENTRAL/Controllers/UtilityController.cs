@@ -14,7 +14,7 @@ namespace APILACENTRAL.Controllers
 
         public UtilityController(UtilitityService utilityService) { _utilityService =  utilityService; }
 
-        [Authorize]
+       // [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Tblutilidade>>> getUtilities()
         {
@@ -27,7 +27,7 @@ namespace APILACENTRAL.Controllers
             return Ok(utility);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Tblutilidade>> getUtility(int id)
         {
@@ -39,25 +39,24 @@ namespace APILACENTRAL.Controllers
             return Ok(utility);
         }
 
-        [Authorize]
+       // [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult> putUtility(int id, Tblutilidade utility)
         {
-            if(utility.PkUtilidad != id)
-            {
-                return BadRequest(new { message = $"Id = {id} doesn't match with body id = {utility.PkUtilidad}" });
-            }
+            
 
             var existingUtility = await _utilityService.getUtility(id);
-            if(existingUtility is null)
+            if(existingUtility is not null)
             {
-                return utilityNotFound(id);
+                await _utilityService.updateUtility(id, utility);
+                return Ok(new { message = "Utility updated", utility });
             }
 
-                await _utilityService.updateUtility(id, utility);
-                return Ok(new {message = "Utility updated", utility});
-            
-            
+                
+
+            return utilityNotFound(id);
+
+
         }
         private NotFoundObjectResult utilityNotFound(int id)
         {

@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using APILACENTRAL.Models.ModelsLaCentral;
 using APILACENTRAL.Servicios;
 using APILACENTRAL.Models.Tokens;
-using Microsoft.AspNetCore.Authorization;
+
+
 
 using APILACENTRAL.Services;
 
@@ -23,7 +24,7 @@ namespace APILACENTRAL.Controllers
             _userService = userService;
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Tblusuario>>> getUsers()
         {
@@ -39,17 +40,26 @@ namespace APILACENTRAL.Controllers
 
         [HttpPost]
         [Route("Autenticar")]
-        public async Task<IActionResult> autenticate([FromBody] AutorizationRequest autorizacion)
+        public async Task<IActionResult> autenticate( AutorizationRequest autorizacion)
         {
             var resultado_autorizacion = await _autorizationService.DevolverToken(autorizacion);
             if (resultado_autorizacion is null)
-                return Unauthorized(new {message = "you don't have access"});
-
-            return Ok(resultado_autorizacion);
-
+            {
+                return Unauthorized(new { message = "the account doesn't exist" });
+            }
+            else if (resultado_autorizacion.Resultado == false) 
+            {
+                return BadRequest(new { message = resultado_autorizacion.Msg });
+            } 
+            else 
+            {
+                return Ok(resultado_autorizacion);
+            }
         }
 
-        [Authorize]
+        
+
+        //[Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Tblusuario>> getUser(int id)
         {
@@ -63,16 +73,25 @@ namespace APILACENTRAL.Controllers
             return Ok(user);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         public async Task<ActionResult> postUser(Tblusuario user)
         {
+            var existingUsre = await _userService.findUser(user);
 
-            var createdUser = await _userService.addUser(user);
-            return CreatedAtAction("GetUser", new { id = createdUser.PkIdUsuario }, createdUser);
+            if (existingUsre)
+            {
+                var createdUser = await _userService.addUser(user);
+                return CreatedAtAction("GetUser", new { id = createdUser.PkIdUsuario }, createdUser);
+            }
+            else
+            {
+                return BadRequest(new { message = $"User {user.EmailUsuario} already exist" });
+            }
+           
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> putUser(int id, Tblusuario user)
         {
@@ -93,7 +112,7 @@ namespace APILACENTRAL.Controllers
             
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> deleteUser(int id)
         {

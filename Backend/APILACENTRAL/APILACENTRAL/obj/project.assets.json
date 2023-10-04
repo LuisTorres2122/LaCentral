@@ -12107,11 +12107,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "T:\\Proyectos\\La Central\\LaCentral\\Backend\\APILACENTRAL\\APILACENTRAL\\APILACENTRAL.csproj",
+      "projectUniqueName": "C:\\Users\\luist\\Desktop\\currentFrontend\\LaCentral\\Backend\\APILACENTRAL\\APILACENTRAL\\APILACENTRAL.csproj",
       "projectName": "APILACENTRAL",
-      "projectPath": "T:\\Proyectos\\La Central\\LaCentral\\Backend\\APILACENTRAL\\APILACENTRAL\\APILACENTRAL.csproj",
+      "projectPath": "C:\\Users\\luist\\Desktop\\currentFrontend\\LaCentral\\Backend\\APILACENTRAL\\APILACENTRAL\\APILACENTRAL.csproj",
       "packagesPath": "C:\\Users\\luist\\.nuget\\packages\\",
-      "outputPath": "T:\\Proyectos\\La Central\\LaCentral\\Backend\\APILACENTRAL\\APILACENTRAL\\obj\\",
+      "outputPath": "C:\\Users\\luist\\Desktop\\currentFrontend\\LaCentral\\Backend\\APILACENTRAL\\APILACENTRAL\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

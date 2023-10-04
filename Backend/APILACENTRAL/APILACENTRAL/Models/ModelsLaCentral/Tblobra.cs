@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata;
 
 namespace APILACENTRAL.Models.ModelsLaCentral;
 
@@ -17,7 +18,7 @@ public partial class Tblobra
 
     public decimal? PrecioObra { get; set; }
 
-    public string? UrlObra { get; set; }
+    public byte[]? UrlObra { get; set; }
 
     public DateOnly FechaPublicacionObra { get; set; }
 

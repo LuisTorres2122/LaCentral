@@ -3,7 +3,7 @@ using APILACENTRAL.Models.ModelsLaCentral;
 using APILACENTRAL.Services;
 using APILACENTRAL.Servicios;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -53,6 +53,17 @@ namespace APILACENTRAL
                 };
             });
 
+     
+
+            servicios.AddCors(options =>
+            {
+                options.AddPolicy("newPolicy", app =>
+                {
+                    app.WithOrigins("http://localhost:4200")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                });
+            });
 
            //services I've made
             servicios.AddScoped<IAutorizationService, AutorizationService>();
@@ -66,6 +77,7 @@ namespace APILACENTRAL
             servicios.AddScoped<FrameService>();
             servicios.AddScoped<OrderService>();
             servicios.AddScoped<TransactionOrderService>();
+            servicios.AddScoped<PieceService>();
 
 
         }

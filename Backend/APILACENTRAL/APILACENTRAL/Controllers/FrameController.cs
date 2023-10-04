@@ -11,15 +11,17 @@ namespace APILACENTRAL.Controllers
     public class FrameController:ControllerBase
     {
         private readonly FrameService _frameService;
+        private readonly MaterialService _materialService;
 
-        public FrameController(FrameService frameService)
+        public FrameController(FrameService frameService, MaterialService materialService)
         {
             _frameService = frameService;
+            _materialService = materialService;
         }
 
-        [Authorize]
+        // [Authorize]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Tblmarco>>> getFrames()
+        public async Task<ActionResult<IEnumerable<SFrameDTO>>> getFrames()
         {
             var frame = await _frameService.getFrames();
 
@@ -30,7 +32,7 @@ namespace APILACENTRAL.Controllers
             return BadRequest(new { message = "table is empty" });
         }
 
-        [Authorize]
+       // [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Tblmarco>> getFrame(int id)
         {
@@ -44,7 +46,7 @@ namespace APILACENTRAL.Controllers
 
         }
 
-        [Authorize]
+       // [Authorize]
         [HttpPost]
         public async Task<IActionResult> postFrame(FrameDTO frame)
         {
@@ -59,7 +61,7 @@ namespace APILACENTRAL.Controllers
 
         }
 
-        [Authorize]
+      //  [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> putFrame(int id, FrameDTO frame)
         {
@@ -81,7 +83,7 @@ namespace APILACENTRAL.Controllers
             return materialNotFound(id);
         }
 
-        [Authorize]
+       // [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> deleteFrame(int id)
         {
@@ -94,6 +96,20 @@ namespace APILACENTRAL.Controllers
             return materialNotFound(id);
         }
 
+        //[Authorize]
+        [HttpGet]
+        [Route("material")]
+        public async Task<ActionResult<IEnumerable<Tblmaterial>>> getMaterials()
+        {
+            var result = await _materialService.getMaterials();
+
+            if (result is not null)
+            {
+                return Ok(result);
+            }
+            return BadRequest(new { message = "table is empty" });
+
+        }
         private NotFoundObjectResult materialNotFound(int id)
         {
             return NotFound(new { message = $"Material  with Id =  {id} doesn't exist" });

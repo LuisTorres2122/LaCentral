@@ -14,9 +14,24 @@ namespace APILACENTRAL.Services
             _materialService = materialService;
         }
 
-        public async Task<IEnumerable<Tblmarco>> getFrames()
+        public async Task<IEnumerable<SFrameDTO>> getFrames()
         {
-            return await _laCentralContext.Tblmarcos.ToListAsync();
+            var vidriosConNombreMaterial = await _laCentralContext.Tblmarcos
+          .Join(
+      _laCentralContext.Tblmaterials,
+      frame => frame.FKIdMaterial,
+      material => material.PkIdMaterial,
+      (frame, material) => new SFrameDTO
+      {
+          PkIdMarco = frame.PkIdMarco,
+          NombreMaterial = material.NombreMaterial,
+          CodigoMarco = frame.CodigoMarco,
+          PrecioMarco = frame.PrecioMarco
+
+      })
+      .ToListAsync();
+
+            return vidriosConNombreMaterial;
         }
 
         public async Task<Tblmarco?> getFrame(int id)
@@ -38,8 +53,8 @@ namespace APILACENTRAL.Services
         public async Task updateFrame(int id, FrameDTO frame)
         {
             var frameFound = await getFrame(id);
-            var materialFound = await findMaterial(id);
-            if (frameFound is not null && materialFound)
+            
+            if (frameFound is not null )
             {
                 frameFound.FKIdMaterial = frame.FKIdMaterial;
                 frameFound.CodigoMarco = frame.CodigoMarco;
@@ -52,8 +67,8 @@ namespace APILACENTRAL.Services
         public async Task deleteFrame(int id)
         {
             var frameFound = await getFrame(id);
-            var materialFound = await findMaterial(id);
-            if (frameFound is not null && materialFound)
+            
+            if (frameFound is not null )
             {
                 _laCentralContext.Tblmarcos.Remove(frameFound);
                 await _laCentralContext.SaveChangesAsync();

@@ -252,7 +252,6 @@ public partial class LaCentralContext : DbContext
                 .HasMaxLength(50)
                 .HasColumnName("tituloObra");
             entity.Property(e => e.UrlObra)
-                .HasMaxLength(255)
                 .HasColumnName("urlObra");
         });
 

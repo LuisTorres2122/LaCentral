@@ -11,15 +11,17 @@ namespace APILACENTRAL.Controllers
     public class FilletController:ControllerBase
     {
         private readonly FilletService _filletService;
+        private readonly MaterialService _materialService;
 
-        public FilletController(FilletService filletService)
+        public FilletController(FilletService filletService, MaterialService materialService)
         {
             _filletService = filletService;
+            _materialService = materialService;
         }
 
-        [Authorize]
+        // [Authorize]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Tblvidrio>>> getFillets()
+        public async Task<ActionResult<IEnumerable<SFilletDTO>>> getFillets()
         {
             var fillets = await _filletService.getFillets();
 
@@ -30,7 +32,8 @@ namespace APILACENTRAL.Controllers
             return BadRequest(new { message = "table is empty" });
         }
 
-        [Authorize]
+
+    //    [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Tblvidrio>> getFillet(int id)
         {
@@ -44,7 +47,7 @@ namespace APILACENTRAL.Controllers
 
         }
 
-        [Authorize]
+      //  [Authorize]
         [HttpPost]
         public async Task<IActionResult> postGlass(FilletDTO fillet)
         {
@@ -59,7 +62,7 @@ namespace APILACENTRAL.Controllers
 
         }
 
-        [Authorize]
+      //  [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> putGlass(int id, FilletDTO fillet)
         {
@@ -82,7 +85,7 @@ namespace APILACENTRAL.Controllers
 
         }
 
-        [Authorize]
+       // [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> deleteGlass(int id)
         {
@@ -93,6 +96,21 @@ namespace APILACENTRAL.Controllers
                 return Ok(existingMaterial);
             }
             return materialNotFound(id);
+        }
+
+        //[Authorize]
+        [HttpGet]
+        [Route("material")]
+        public async Task<ActionResult<IEnumerable<Tblmaterial>>> getMaterials()
+        {
+            var result = await _materialService.getMaterials();
+
+            if (result is not null)
+            {
+                return Ok(result);
+            }
+            return BadRequest(new { message = "table is empty" });
+
         }
 
         private NotFoundObjectResult materialNotFound(int id)

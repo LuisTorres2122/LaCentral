@@ -10,4 +10,14 @@
 
         public decimal PrecioMarco { get; set; }
     }
+    public class SFrameDTO
+    {
+        public int PkIdMarco { get; set; }
+
+        public string NombreMaterial { get; set; }
+
+        public int CodigoMarco { get; set; }
+
+        public decimal PrecioMarco { get; set; }
+    }
 }

@@ -1,7 +1,7 @@
 ﻿
 using APILACENTRAL.Models.ModelsLaCentral;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+using APILACENTRAL.Utilities;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace APILACENTRAL.Services
@@ -9,40 +9,67 @@ namespace APILACENTRAL.Services
     public class UserService
     {
       private readonly LaCentralContext _laCentralContext;
+        static HashClass encoding = new HashClass();
 
         public UserService(LaCentralContext laCentralContext)
         {
             _laCentralContext = laCentralContext;
         }
 
-       
+
         public async Task<Tblusuario> addUser(Tblusuario user)
         {
-            _laCentralContext.Tblusuarios.Add(user);
+            Tblusuario tblusuario = new Tblusuario();
+            tblusuario.EmailUsuario = user.EmailUsuario;
+            tblusuario.PkIdUsuario = user.PkIdUsuario;
+            tblusuario.PasswordUsuario = encoding.SetHash(user.PasswordUsuario);
+            _laCentralContext.Tblusuarios.Add(tblusuario);
             await _laCentralContext.SaveChangesAsync();
-            return user;
+            return tblusuario;
         }
 
-       
+        public async Task<bool> findUser(Tblusuario user)
+        {
+            bool access = false;
+            var existingUser = await _laCentralContext.Tblusuarios.Where(x => x.EmailUsuario == user.EmailUsuario).ToListAsync();
+            if(existingUser.Count == 0)
+            {
+                access = true;
+            }
+
+            return access;
+        }
+
+        
+
 
         public async Task<IEnumerable<Tblusuario>> getUsers()
         {
-            return await _laCentralContext.Tblusuarios.ToListAsync();
+            var users = await _laCentralContext.Tblusuarios.ToListAsync();
+
+            foreach (var user in users)
+            {
+                user.PasswordUsuario = encoding.GetHash(user.PasswordUsuario);
+            }
+
+            return users;
         }
 
         public async Task<Tblusuario?> getUser(int id)
         {
             return await _laCentralContext.Tblusuarios.FindAsync(id);
+            
+           
         }
 
-    
         public async Task updateUser(int id, Tblusuario user)
         {
             var existingUser = await getUser(id);
             if (existingUser is not null)
             {
                 existingUser.EmailUsuario = user.EmailUsuario;
-                existingUser.PasswordUsuario = user.PasswordUsuario;
+                existingUser.PasswordUsuario = encoding.SetHash(user.PasswordUsuario);
+                existingUser.PkIdUsuario = user.PkIdUsuario;
                 await _laCentralContext.SaveChangesAsync();
             }
 

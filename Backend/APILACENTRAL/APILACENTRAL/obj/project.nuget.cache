@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "rckLiiae9RPrnukKkSu0MEJRBsALlWvVLDgmEWCF9FPpchpQ1wdUmNc7tMJBwYMLXti+V0HoBC6qGMAMyZFKTw==",
+  "dgSpecHash": "C8QK4kPMUyBFxIfc5DQWcwbqiFYRji6VeEnYQd/R7bDv4sPzjPSK3/PvBpHQcgE49C2XCcCly23+sYsDkMHlyQ==",
   "success": true,
-  "projectFilePath": "T:\\Proyectos\\La Central\\LaCentral\\Backend\\APILACENTRAL\\APILACENTRAL\\APILACENTRAL.csproj",
+  "projectFilePath": "C:\\Users\\luist\\Desktop\\currentFrontend\\LaCentral\\Backend\\APILACENTRAL\\APILACENTRAL\\APILACENTRAL.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\luist\\.nuget\\packages\\google.protobuf\\3.21.9\\google.protobuf.3.21.9.nupkg.sha512",
     "C:\\Users\\luist\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",

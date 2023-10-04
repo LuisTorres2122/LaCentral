@@ -14,10 +14,27 @@ namespace APILACENTRAL.Services
             _materialService = materialService;
         }
 
-        public async Task<IEnumerable<Tblpassepartout>> getPassepartouts()
+        public async Task<IEnumerable<SPassepartoutDTO>> getPassepartouts()
         {
-            return await _laCentralContext.Tblpassepartouts.ToListAsync();
+            var list = await _laCentralContext.Tblpassepartouts
+          .Join(
+      _laCentralContext.Tblmaterials,
+      passe => passe.FKIdMaterial,
+      material => material.PkIdMaterial,
+      (passe, material) => new SPassepartoutDTO
+      {
+          PkIdPassepartout = passe.PkIdPassepartout,
+          NombreMaterial = material.NombreMaterial,
+          CodigoPassepartout = passe.CodigoPassepartout,
+          CasaPassepartout = passe.CasaPassepartout,
+          ColorPassepartout = passe.ColorPassepartout
+
+      })
+      .ToListAsync();
+
+            return list;
         }
+    
 
         public async Task<Tblpassepartout?> getPassepartout(int id)
         {

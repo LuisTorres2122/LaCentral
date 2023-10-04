@@ -44,7 +44,7 @@ namespace APILACENTRAL.Controllers
 
         }
 
-        [Authorize]
+       [Authorize]
         [HttpPost]
         public async Task<ActionResult> postClient(Tblcliente client)
         {
@@ -52,7 +52,7 @@ namespace APILACENTRAL.Controllers
             return Ok(cretedClient);
         }
 
-        [Authorize]
+       [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> putClient(int id, Tblcliente client)
         {
@@ -69,7 +69,7 @@ namespace APILACENTRAL.Controllers
             return clientNotFound(id);
         }
 
-        [Authorize]
+       [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> deleteClient(int id)
         {

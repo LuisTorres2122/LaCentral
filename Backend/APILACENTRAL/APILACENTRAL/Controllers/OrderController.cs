@@ -56,8 +56,29 @@ namespace APILACENTRAL.Controllers
             return BadRequest(new { message = "table is empty" });
         }
 
-        
-        
+        [HttpGet]
+        [Route("last")]
+        public async Task<ActionResult<int>> getLastId()
+        {
+            var lastid = await _orderService.foundCurrentIdOrder();
+
+            return Ok(new {lastid = lastid});
+ 
+        }
+
+
+        [HttpGet]
+        [Route("lastDetails")]
+        public async Task<ActionResult<int>> getLastIdDetail()
+        {
+            var lastid = await _orderService.foundCurrentIdDetails();
+
+            return Ok(new { lastid = lastid });
+
+        }
+
+
+
 
 
     }
