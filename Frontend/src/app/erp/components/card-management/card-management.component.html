@@ -1,4 +1,4 @@
-<main class="flex flex-row my-5">
+<main *ngIf="!togglePrint" class="flex flex-row my-5">
   <section class="w-5/6">
     <app-orders
       [passepatouts]="passepatouts"
@@ -23,8 +23,7 @@
         <app-order-card
           [Cards]="cards"
           [Details]="detailsServiceReceive"
-          (UpdatedCards)="UpdateCars($event)"
-          (UpdatedDetails)="UpdateDetails($event)"
+          (updatedData)="UpdateCars($event)"
         ></app-order-card>
       </section>
       <section
@@ -81,7 +80,8 @@
           disabled
         />
         <div class="flex flex-col items-center my-2 gap-3">
-          <div class="flex flex-row gap-2 items-center text-base font-semibold">
+          <button class="flex flex-row gap-2 items-center text-base font-semibold"
+            (click)="changePrint()">
             <svg
               class="w-8"
               viewBox="0 0 24 24"
@@ -99,8 +99,8 @@
                 fill="#0F0F0F"
               />
             </svg>
-            <label>Cancelar </label>
-          </div>
+            Cancelar 
+          </button>
           <button
           (click)="setTransaction()"
            class="flex flex-row gap-2 items-center text-base font-semibold">
@@ -124,3 +124,7 @@
     </div>
   </aside>
 </main>
+<div *ngIf="togglePrint">
+  <app-print></app-print>
+</div>
+

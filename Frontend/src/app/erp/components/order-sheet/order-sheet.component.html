@@ -1,0 +1,107 @@
+<main class="flex flex-col h-screen w-orderCard gap-5 m-5">
+  <section class="flex flex-row justify-between items-center p-2">
+    <div class="flex flex-col gap-1 mr-5 items-center">
+      <img
+        src="../../../../assets/images/LogoLaCentral.png"
+        alt=""
+        class="bg-white border-collapse rounded-full border-1p border-white w-24"
+      />
+      <h2 class="font-semibold text-2xl">La Central</h2>
+    </div>
+    <div class="flex flex-col self-end mb-5">
+      <span class="text-xl">20 calle 22-78, Zona 10</span>
+      <span class="text-xl">Tel: 23630984</span>
+    </div>
+  </section>
+  <section class="grid grid-rows-2 gap-2 p-2">
+    <div class="flex flex-row h-8 gap-2">
+        <div class="w-1/3 flex gap-1">
+          <label class="self-end" for="date">Fecha:</label>
+          <input
+            class="border-b-2 border-enmarcadora-principal w-full"
+            type="text"
+            name="date"
+            disabled
+          />
+        </div>
+  
+        <div class="w-2/3 flex gap-1">
+          <label class="self-end" for="address">Dirección:</label>
+          <input
+            class="border-b-2 border-enmarcadora-principal w-full"
+            type="text"
+            name="address"
+            disabled
+          />
+        </div>
+      </div>
+
+    <div class="flex flex-row h-8 gap-2">
+      <div class="w-2/3 flex gap-1">
+        <label class="self-end" for="client">Cliente:</label>
+        <input
+          class="border-b-2 border-enmarcadora-principal w-full"
+          type="text"
+          name="client"
+          disabled
+        />
+      </div>
+
+      <div class="w-1/3 flex gap-1">
+        <label class="self-end" for="phone">Tel:</label>
+        <input
+          class="border-b-2 border-enmarcadora-principal w-full"
+          type="text"
+          name="phone"
+          disabled
+        />
+      </div>
+    </div>
+  </section>
+  <section class="border-2 border-enmarcadora-principal rounded-xl w-full">
+    <table class=" w-full">
+      <thead class="uppercase rounded-xl">
+        <tr class="border-b-2 border-enmarcadora-principal text-enmarcadora-principal">
+          <th scope="col w-2/3">Descripción</th>
+          <th scope="col w-1/3">Valor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let element of service">
+          <td class="w-2/3 mr-2">descripcion de enmarcado con passapastioasdhpsk doekn topiwelnlas,d aspdoiajhsdkpnalkhnoih</td>
+          <td class="w-1/3 text-center">5000</td>
+        </tr>
+        <tr class="border-t-2 border-enmarcadora-principal">
+        </tr>
+        <tr>
+          <td class="w-2/3 text-end text-enmarcadora-principal">Total: </td>
+          <td class="w-1/3 text-center">Q.500</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section class="mx-auto uppercase text-enmarcadora-principal font-semibold">
+    <label for="des"
+      >NO NOS RESPOSABILIZAMOS POR TRABAJOS DEJADOS MAS DE 30 DIAS.</label
+    >
+  </section>
+  <section class="w-full flex flex-row gap-5 justify-center border-2 border-enmarcadora-principal rounded-xl">
+        <div class="flex flex-col w-1/3 items-center ">
+          <input
+            type="text"
+            class="border-b-2 border-enmarcadora-principal h-14"
+          />
+          <span class="text-enmarcadora-principal">RECIBI CONFORME</span>
+        </div>
+        <div class="flex flex-col w-1/3 items-center">
+          <input
+            type="text "
+            class="border-b-2 border-enmarcadora-principal h-14"
+          />
+          <span class="text-enmarcadora-principal">FECHA DE ENTREGA</span>
+        </div>
+        <div class="self-center">
+          <span class="text-enmarcadora-principal w-1/3 font-semibold">ORDEN: 1452415</span>
+        </div>
+  </section>
+</main>

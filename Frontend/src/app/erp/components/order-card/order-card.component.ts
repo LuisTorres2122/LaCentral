@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
-import { Card } from '../../models/orderHelper.model';
+import { Card, updateCards } from '../../models/orderHelper.model';
 import { serviceDetails } from '../../models/order.model';
 
 @Component({
@@ -9,19 +9,27 @@ import { serviceDetails } from '../../models/order.model';
 export class OrderCardComponent {
   cardActivate: boolean[] = [];
   @Input() Cards: Card[];
-  @Input() Details: serviceDetails[];
-  @Output() UpdatedCards = new EventEmitter<Card[]>();
-  @Output() UpdatedDetails = new EventEmitter<serviceDetails[]>();
+  @Input() Details: serviceDetails[];//no se reciben bien
+  @Output() updatedData = new EventEmitter<updateCards>();
+
+
 
 
 
   deleted(index: number): void {
+    console.log(this.Cards);
+    console.log(this.Details);
     let id = this.Cards[index].id;
-    this.Details = this.Details.filter(x => x.idDetallePedido == id);
+    const data = new updateCards();
+    
+    this.Details = this.Details.filter(x => x.idDetallePedido != id);
+    console.log(this.Details);
     this.Cards.splice(index, 1);
     this.cardActivate.splice(index, 1);
-    this.UpdatedCards.emit(this.Cards);
-    this.UpdatedDetails.emit(this.Details);
+    data.cards = this.Cards;
+    data.Details = this.Details;
+    this.updatedData.emit(data);
+    
   }
 
   changeToggle(index: number): void {

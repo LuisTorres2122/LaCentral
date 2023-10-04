@@ -20,7 +20,7 @@ const routes: Routes = [
   {path:'galeria', component: GalleryComponent},
   {path: 'enmarcado', component: FramedComponent },
   {path:'galeria/pieza/:id', component: PieceComponent},
-  {path:'login', component: LoginComponent},
+  {path:'login', component: LoginComponent, },
 ],
 }
 ];

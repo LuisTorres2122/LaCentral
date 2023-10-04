@@ -239,6 +239,7 @@ export class OrdersComponent {
         ].code.toString()} \n`;
         let detail = new serviceDetails();
         line += 1;
+        
         detail.linea = line;
         detail.idMaterial = 1;
         detail.nombre = "PassPartout Codigo: "+this.passpartoutAdded[pass].code;
@@ -255,6 +256,7 @@ export class OrdersComponent {
         stringCode = `Tipo: ${this.glassAdded[glass].type.toString()} \n`;
         let detail = new serviceDetails();
         line += 1;
+        
         detail.linea = line;
         detail.idMaterial = 2;
         detail.nombre = "Vidrio Tipo: "+this.glassAdded[glass].type;
@@ -271,6 +273,7 @@ export class OrdersComponent {
         stringCode = `Tipo: ${this.filletAdded[fillet].type.toString()} \n`;
         let detail = new serviceDetails();
         line += 1;
+        
         detail.linea = line;
         detail.idMaterial = 3;
         detail.nombre = "Filete Tipo: "+this.filletAdded[fillet].type;
@@ -286,6 +289,7 @@ export class OrdersComponent {
         stringCode = `Codigo: ${this.frameAdded[frame].code.toString()} \n`;
         let detail = new serviceDetails();
         line += 1;
+        
         detail.linea = line;
         detail.idMaterial = 4;
         detail.nombre = "Marco Codigo: "+this.frameAdded[frame].code;
@@ -308,6 +312,7 @@ export class OrdersComponent {
       cardSend.total = parseFloat(total);
     }
     cardSend.id = this.cardId +1;
+    console.log(cardSend);
     this.cardId += 1;
     this.cardEvent.emit(cardSend);
     this.detailsServiceSent.emit(details);
@@ -327,10 +332,11 @@ export class OrdersComponent {
         stringCode = `Tipo: ${this.glassAdded2[glass].type.toString()} \n`;
         let detail = new serviceDetails();
         line += 1;
+        
         detail.linea = line;
         detail.idMaterial = 2;
-        detail.nombre = "Vidrio Tipo: "+this.glassAdded[glass].type;
-        detail.precio = this.glassAdded[glass].price;
+        detail.nombre = "Vidrio Tipo: "+this.glassAdded2[glass].type;
+        detail.precio = this.glassAdded2[glass].price;
         details.push(detail);
       }
       stringFramed[0] = ` ${this.convertNumberToText(
@@ -343,10 +349,11 @@ export class OrdersComponent {
         stringCode = `Codigo: ${this.frameAdded2[frame].code.toString()} \n`;
         let detail = new serviceDetails();
         line += 1;
+        
         detail.linea = line;
         detail.idMaterial = 4;
-        detail.nombre = "Marco Codigo: "+this.frameAdded[frame].code;
-        detail.precio = this.frameAdded[frame].price;
+        detail.nombre = "Marco Codigo: "+this.frameAdded2[frame].code;
+        detail.precio = this.frameAdded2[frame].price;
         details.push(detail);
       }
       stringFramed[1] = ` ${this.convertNumberToText(
@@ -361,7 +368,7 @@ export class OrdersComponent {
         (stringFramed[1] == undefined ? '' : '\n ' + stringFramed[1]);
       cardSend.total = parseFloat(total);
     }
-    cardSend.id = this.cardId +1;
+    cardSend.id = this.cardId +1;//put id into details i didn't and i don't know why
     this.cardId += 1;
     this.cardEvent.emit(cardSend);
     this.detailsServiceSent.emit(details);
@@ -506,20 +513,25 @@ export class OrdersComponent {
   }
 
   buscarPass(): void {
-    this.filterPass = this.passepatouts.filter((ele: Passepartout) => {
-      const value = ele.codigoPassepartout;
-      var code = this.passPartoutForm.get('code')?.value;
-
-      if (code != undefined) {
-        return value.toString() == code;
-      }
-      return null;
-    });
+    const code = this.passPartoutForm.value?.code;
+    if(code){
+      this.filterPass = this.passepatouts.filter((ele: Passepartout) => {
+        const value = ele.codigoPassepartout;
+      
+          return value.toString() == code;
+      
+      });
+    }
+    else {
+      this.filterPass = [];
+    }
+    
     if (this.filterPass.length >= 1) {
       this.passPartoutForm.get('home')?.enable();
     } else {
       this.passPartoutForm.get('home')?.disable();
     }
+    console.log(this.filterPass);
   }
 
   findFrame(): void {

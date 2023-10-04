@@ -1,3 +1,5 @@
+import { serviceDetails } from "./order.model";
+
 export class Cpasspartout{
     code: number;
     price: number;
@@ -20,3 +22,8 @@ export class Card {
     description: string;
     total: number;
   }
+
+export class updateCards{
+    cards: Card[];
+    Details: serviceDetails[];
+}

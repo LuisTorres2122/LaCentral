@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.development';
 import {HttpClient} from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { SUser, User } from '../models/user.model';
+import {  User } from '../models/user.model';
+import {tokenUser } from '../../landing-page/models/user.model';
 
 
 @Injectable({
@@ -19,6 +20,11 @@ export class UserService {
 
   public createUser(user: User): Observable<any>{
     return this.http.post<any>(this.urlapi, user);
+  }
+
+  public login(user: tokenUser): Observable<any>{
+    let newUrl = this.urlapi + "/Autenticar";
+    return this.http.post<any>(newUrl, user);
   }
 
  

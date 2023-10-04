@@ -24,6 +24,8 @@ import { PieceComponent } from './components/forms/piece/piece.component';
 import { ChangePasswordComponent } from './components/forms/change-password/change-password.component';
 import { RegisterComponent } from './components/forms/register/register.component';
 import { AlertUserComponent } from './components/alert-user/alert-user.component';
+import { OrderSheetComponent } from './components/order-sheet/order-sheet.component';
+import { PrintComponent } from './components/print/print.component';
 
 
 
@@ -47,7 +49,9 @@ import { AlertUserComponent } from './components/alert-user/alert-user.component
     PieceComponent,
     ChangePasswordComponent,
     RegisterComponent,
-    AlertUserComponent
+    AlertUserComponent,
+    OrderSheetComponent,
+    PrintComponent
   ],
   imports: [
     CommonModule,

@@ -1,5 +1,5 @@
 <div
-  class="bg-enmarcadora-principal text-white w-44 min-h-screen border-enmarcadora-principal border-2"
+  class="bg-enmarcadora-principal text-white w-44  border-enmarcadora-principal border-2"
 >
   <section class="flex flex-col gap-1 mx-auto items-center">
     <div class="flex flex-row my-5">
@@ -12,7 +12,7 @@
     </div>
 
     <button
-      class="text-lg font-bold p-2 w-full border-white border-2"
+      class="text-lg font-bold p-2 w-full border-white  border-b-2"
       (click)="changeToggle('maintenance')"
     >
       Manteniminetos
@@ -77,7 +77,7 @@
       </a>
     </ul>
     <button
-      class="text-lg font-bold p-2 w-full border-white border-2"
+      class="text-lg font-bold p-2 w-full border-white  border-b-2"
       (click)="changeToggle('order')"
     >
       Pedidos
@@ -113,7 +113,7 @@
       </li>
     </ul>
     <button
-      class="text-lg font-bold p-2 w-full border-white border-2"
+      class="text-lg font-bold p-2 w-full border-white  border-b-2"
       (click)="changeToggle('user')"
     >
       Usuarios
@@ -141,7 +141,7 @@
     </a>
     </ul>
     <button
-      class="text-lg font-bold p-2 w-full border-white border-2"
+      class="text-lg font-bold p-2 w-full border-white  border-b-2"
       (click)="changeToggle('report')"
     >
       Reportes
@@ -158,8 +158,12 @@
         ><a href="">Pedidos</a></Li
       >
     </ul>
-    <button class="text-lg font-bold p-2 w-full border-white border-2">
+    <button class="text-lg font-bold p-2 w-full border-white  border-b-2"
+    (click)="logOut()">
       Cerrar Sesión
     </button>
+  </section>
+  <section class="h-screen">
+
   </section>
 </div>

@@ -137,6 +137,7 @@
                 type="text"
                 formControlName="code"
                 (ngModelChange)="buscarPass()"
+                [ngClass]="{'bg-enmarcadora-second': filterPass.length > 0}"
               />
               <app-alert
                 [hidden]="

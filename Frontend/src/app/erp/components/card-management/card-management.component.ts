@@ -10,7 +10,7 @@ import { Glass } from '../../models/glass.model';
 import { Fillet } from '../../models/fillet.model';
 import { Frame } from '../../models/frame.model';
 import { Utility } from '../../models/utility.models';
-import { Card } from '../../models/orderHelper.model';
+import { Card, updateCards } from '../../models/orderHelper.model';
 import { Client } from '../../models/client.model';
 import { ClientService } from '../../services/client.service';
 import { OrderService } from '../../services/order.service';
@@ -44,6 +44,7 @@ export class CardManagementComponent implements OnInit {
   servicesOption: Card;
   previousTotal: number = 0;
   totalHidden: number;
+  togglePrint: boolean = false;
 
   total: number = 0;
 
@@ -81,46 +82,50 @@ export class CardManagementComponent implements OnInit {
   //modify if later it needed to register more than one
   recieveDetails(DetailsServices: serviceDetails[]): void {
     let length = this.detailsServiceReceive.length;
-    for(let service of DetailsServices){
+    for (let service of DetailsServices) {
       this.detailsServiceReceive.push(service);
     }
-    for (let detail = length; detail < this.detailsServiceReceive.length; detail++) {
+   for (let detail = length; detail < this.detailsServiceReceive.length; detail++
+    ) {
       this.detailsServiceReceive[detail].idDetallePedido =
         this.cards[this.cards.length - 1].id;
     }
+    console.log(this.cards);
+    console.log(this.detailsServiceReceive);
+  }
+  changePrint(): void {
+    this.togglePrint = false;
   }
 
-  UpdateCars(cards: Card[]): void {
-    console.log(cards);
+  UpdateCars(data: updateCards): void {
     this.cards = [];
-    this.cards = cards;
+    this.detailsServiceReceive = [];
+    this.cards = data.cards;
+    this.detailsServiceReceive = data.Details;
+    this
     this.total = 0;
     for (let card of this.cards) {
       this.total += card.total;
     }
     this.totalHidden = this.total;
+    this.prepareServiceDetails();
   }
-  UpdateDetails(serviceDetails: serviceDetails[]):void{
-    this.detailsServiceReceive = serviceDetails;
-    
-  }
+  
 
-  applyDiscount(){
+  applyDiscount() {
     let discount = 0;
-    if(this.discount){
+    if (this.discount) {
       let discountPercentage = this.discount * this.totalHidden;
       discount = discountPercentage / 100;
       this.total = parseFloat((this.totalHidden - discount).toFixed(2));
     } else {
-      this.total = this.totalHidden; 
+      this.total = this.totalHidden;
     }
   }
 
   recieveClient(client: Client): void {
     this.client = client;
   }
-
-  
 
   chargeClients(): void {
     this.clientService.getData().subscribe((data: any) => {
@@ -161,7 +166,6 @@ export class CardManagementComponent implements OnInit {
     if (this.discountEnabled) {
       this.discountEnabled = false;
       this.discount = 0;
-      
     } else {
       this.discountEnabled = true;
       this.discount = 0;
@@ -172,24 +176,61 @@ export class CardManagementComponent implements OnInit {
   getLastId(): void {
     this.orderService.getLastId().subscribe((last: any) => {
       this.lastId = last['lastid'];
-      console.log(this.lastId);
     });
   }
 
-  
   getLastIdDetail(): void {
     this.orderService.getLastIdDetails().subscribe((last: any) => {
       this.lastIdDetails = last['lastid'];
-      console.log(this.lastIdDetails);
     });
   }
 
   prepareServiceDetails(): void {
-   
-      this.cards.sort((a, b) => a.id - b.id);
-      this.detailsServiceReceive.sort((a, b) => a.idDetallePedido - b.idDetallePedido);
+    console.log(this.detailsServiceReceive);
+    this.cards.sort((a, b) => a.id - b.id);
+    this.detailsServiceReceive.sort((a, b) => {
+      /* if (a.idDetallePedido == b.idDetallePedido) {
+          return b.idDetallePedido;
+        }*/
+      return a.idDetallePedido - b.idDetallePedido;
+    });
+    console.log(this.detailsServiceReceive);
 
-    
+    const lastID = this.lastIdDetails + 1;
+    let newId = lastID;
+    let newIdDetail = lastID;
+
+    for (let p = 0; p < this.cards.length; p++) {
+      this.cards[p].id = newId;
+      newId += 1;
+    }
+    if (this.clients.length > 0) {
+      for (let p = 0; p < this.detailsServiceReceive.length; p++) {
+        let before = lastID;
+        let last;
+        if (
+          p > 0 &&
+          this.detailsServiceReceive[p].idDetallePedido ==
+            this.detailsServiceReceive[p - 1].idDetallePedido
+        ) {
+          before = this.detailsServiceReceive[p].idDetallePedido;
+          this.detailsServiceReceive[p].idDetallePedido =
+            this.detailsServiceReceive[p - 1].idDetallePedido;
+          before = this.detailsServiceReceive[p].idDetallePedido;
+          last = this.detailsServiceReceive[p].idDetallePedido;
+        } else if (p == 0) {
+          last = this.detailsServiceReceive[p].idDetallePedido;
+          this.detailsServiceReceive[p].idDetallePedido = before;
+        } else if (last == this.detailsServiceReceive[p].idDetallePedido) {
+          this.detailsServiceReceive[p].idDetallePedido = before;
+        } else {
+          before += 1;
+          last = this.detailsServiceReceive[p].idDetallePedido;
+          this.detailsServiceReceive[p].idDetallePedido = before;
+        }
+      }
+      console.log(this.detailsServiceReceive);
+    }
   }
 
   prepareDetails(): OrderDetails[] {
@@ -207,8 +248,6 @@ export class CardManagementComponent implements OnInit {
 
     return details;
   }
-
-  
 
   prepareHeader(): Order {
     var newHeader = new Order();
@@ -233,7 +272,6 @@ export class CardManagementComponent implements OnInit {
     return newHeader;
   }
 
-
   setTransaction(): void {
     let data = new Transaction();
     data.orderHeader = this.prepareHeader();
@@ -243,7 +281,6 @@ export class CardManagementComponent implements OnInit {
       data.serviceDetails = this.detailsServiceReceive;
     }
 
-
     console.log(data.orderHeader);
     console.log(data.orderDetails);
     console.log(this.detailsServiceReceive);
@@ -251,8 +288,7 @@ export class CardManagementComponent implements OnInit {
       next: (res) => {
         console.log('Registro exitoso');
         console.log(res);
-       this.clear();
-        
+        this.clear();
       },
       error: (err) => {
         console.log(err);
@@ -263,14 +299,14 @@ export class CardManagementComponent implements OnInit {
     });
   }
 
-  clear():void{
+  clear(): void {
     this.getLastId();
     this.getLastIdDetail();
     this.discount = 0;
     this.total = 0;
     this.totalHidden = 0;
     this.advance = 0;
-    this.cards =[];
-    this.detailsServiceReceive =[];
+    this.cards = [];
+    this.detailsServiceReceive = [];
   }
 }

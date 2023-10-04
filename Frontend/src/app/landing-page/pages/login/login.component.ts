@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { UserService } from '../../services/user.service';
-import { User } from '../../models/user.model';
+import { AuthService } from '../../services/auth.service';
+import { tokenUser } from '../../models/user.model';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,12 +13,11 @@ export class LoginComponent {
   badNotify: string = '';
   password: string = '';
   show: boolean = false;
-  currentIndex:number = 0;
+  currentIndex: number = 0;
   currentImage: string = '';
   showImage: boolean = false;
 
-  constructor(private userService: UserService,
-              private router: Router){}
+  constructor(private authService: AuthService, private router: Router) {}
 
   images = [
     './../../../assets/images/enmarcado/enmarcado/mujer.jpg',
@@ -41,10 +40,7 @@ export class LoginComponent {
   }
 
   formUser = new FormGroup({
-    email: new FormControl('', [
-      Validators.email,
-      Validators.required,
-    ]),
+    email: new FormControl('', [Validators.email, Validators.required]),
     password: new FormControl('', [Validators.required]),
   });
 
@@ -62,31 +58,28 @@ export class LoginComponent {
     }, 500);
   }
 
-  login():void{
-      var user = this.formUser.value;
-      var params = new User();
-      if(user && user.email){
-        params.email = user.email;
-      }
-      if(user && user.password){
-        params.password = user.password;
-      }
-      console.log(params);
+  login(): void {
+    var user = this.formUser.value;
+    var params = new tokenUser();
+    if (user && user.email) {
+      params.email = user.email;
+    }
+    if (user && user.password) {
+      params.password = user.password;
+    }
 
-    this.userService.getToken(params).subscribe({
+    this.authService.login(params).subscribe({
       next: (res) => {
         console.log(`Bienvenido ${params.email}`);
         console.log(res);
-        localStorage.setItem("token",res.token);
-        this.router.navigate(['/erp'])
+
       },
       error: (err) => {
         console.log(err);
-        this.badNotify = 'Algo salio mal';
+        this.badNotify = 'Credenciales Incorrectas';
         this.deleteNotify();
-
-      }
+        this.formUser.reset();
+      },
     });
   }
-
 }
