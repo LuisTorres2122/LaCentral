@@ -79,7 +79,7 @@
                     <input
                       class="border text-sm rounded-lg block w-full p-2.5"
                       placeholder="12345"
-                      type="number"
+                      type="text"
                       formControlName="code"
                      
                     />
@@ -93,31 +93,21 @@
                   </div>
                   <div>
                     <label class="block mb-2 text-sm font-medium text-white"
-                      >Casa</label
-                    >
-                    <input
-                      type="text"
-                      formControlName="home"
-                      class="border text-sm rounded-lg block w-full p-2.5"
-                      placeholder="casa"
-                    />
-                    <app-alert
-                      [hidden]="
-                      formPassCreate.get('home')?.valid ||
-                      formPassCreate.get('home')?.pristine
-                      "
-                      alert="La casa no es valida"
-                    ></app-alert>
-                  </div>
-                  <div class="">
-                    <label class="block mb-2 text-sm font-medium text-white"
                       >Color</label
                     >
                     <input
-                      type="color"
-                      class="w-full"
+                      type="text"
                       formControlName="color"
+                      class="border text-sm rounded-lg block w-full p-2.5"
+                      placeholder="color"
                     />
+                    <app-alert
+                      [hidden]="
+                      formPassCreate.get('color')?.valid ||
+                      formPassCreate.get('color')?.pristine
+                      "
+                      alert="El color no es valido"
+                    ></app-alert>
                   </div>
                 </div>
                 <button
@@ -208,7 +198,7 @@
                     <input
                       class="border text-sm rounded-lg block w-full p-2.5"
                       placeholder="12345"
-                      type="number"
+                      type="text"
                       formControlName="code"
                      
                     />
@@ -222,32 +212,23 @@
                   </div>
                   <div>
                     <label class="block mb-2 text-sm font-medium text-white"
-                      >Casa</label
-                    >
-                    <input
-                      type="text"
-                      formControlName="home"
-                      class="border text-sm rounded-lg block w-full p-2.5"
-                      placeholder="casa"
-                    />
-                    <app-alert
-                      [hidden]="
-                      formPassUpdate.get('home')?.valid ||
-                      formPassUpdate.get('home')?.pristine
-                      "
-                      alert="La casa no es valida"
-                    ></app-alert>
-                  </div>
-                  <div class="">
-                    <label class="block mb-2 text-sm font-medium text-white"
                       >Color</label
                     >
                     <input
-                      type="color"
-                      class="w-full"
+                      type="text"
                       formControlName="color"
+                      class="border text-sm rounded-lg block w-full p-2.5"
+                      placeholder="color"
                     />
+                    <app-alert
+                      [hidden]="
+                      formPassUpdate.get('color')?.valid ||
+                      formPassUpdate.get('color')?.pristine
+                      "
+                      alert="El color no es valido"
+                    ></app-alert>
                   </div>
+              
                 </div>
                 <button
                   [disabled]="formPassUpdate.invalid"

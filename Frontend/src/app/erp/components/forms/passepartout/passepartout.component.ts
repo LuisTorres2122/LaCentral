@@ -22,12 +22,11 @@ export class PassepartoutComponent {
   lastIdDeletedIndex: number;
   materials: Materials[] = [];
   UsingMaterial: Materials;
-  header: string[] = ['Id', 'Codigo', 'Material', 'Casa', 'Color' ,' '];
+  header: string[] = ['Id', 'Codigo', 'Material', 'Color' ,' '];
   elementsPassepartout: string[] = [
     'pkIdPassepartout',
     'codigoPassepartout',
     'nombreMaterial',
-    'casaPassepartout',
     'colorPassepartout'
   ];
 
@@ -44,14 +43,12 @@ export class PassepartoutComponent {
   formPassCreate = new FormGroup({
     name: new FormControl('Passepartout'),
     code: new FormControl('', Validators.required),
-    home: new FormControl('', ),
     color: new FormControl('', Validators.required),
   });
 
   formPassUpdate = new FormGroup({
     name: new FormControl('Passepartout'),
     code: new FormControl('', Validators.required),
-    home: new FormControl('', ),
     color: new FormControl('', Validators.required),
   });
 
@@ -96,11 +93,9 @@ export class PassepartoutComponent {
     var pass = this.formPassCreate.value;
     var newPass = new SPassepartout();
     if (pass && pass.code) {
-      newPass.codigoPassepartout = parseInt(pass.code);
+      newPass.codigoPassepartout = pass.code;
     }
-    if (pass && pass.home) {
-      newPass.casaPassepartout = pass.home;
-    }
+
     if (pass && pass.color) {
       newPass.colorPassepartout = pass.color;
     }
@@ -114,7 +109,7 @@ export class PassepartoutComponent {
     var newShowPass = new Passepartout();
     newShowPass.nombreMaterial = 'Passepartout';
     newShowPass.codigoPassepartout = newPass.codigoPassepartout;
-    newShowPass.casaPassepartout = newPass.casaPassepartout;
+
     newShowPass.colorPassepartout = newPass.colorPassepartout;
     if (this.passepatouts.length < 0) {
       newShowPass.pkIdPassepartout = 1;
@@ -149,7 +144,6 @@ export class PassepartoutComponent {
     this.formPassUpdate.patchValue({
       name: response.element.nombreMaterial,
       code: response.element.codigoPassepartout,
-      home: response.element.casaPassepartout,
       color: response.element.colorPassepartout,
     });
     this.lastIdUpdated = response.id;
@@ -162,10 +156,7 @@ export class PassepartoutComponent {
     var updatedPass = new SPassepartout();
 
     if (pass && pass.code) {
-      updatedPass.codigoPassepartout = parseInt(pass.code);
-    }
-    if (pass && pass.home) {
-      updatedPass.casaPassepartout = pass.home;
+      updatedPass.codigoPassepartout = pass.code;
     }
     if (pass && pass.color) {
       updatedPass.colorPassepartout = pass.color;
@@ -175,7 +166,6 @@ export class PassepartoutComponent {
     var newShowPass = new Passepartout();
     newShowPass.nombreMaterial = 'Passepartout';
     newShowPass.codigoPassepartout = updatedPass.codigoPassepartout;
-    newShowPass.casaPassepartout = updatedPass.casaPassepartout;
     newShowPass.pkIdPassepartout = updatedPass.pkIdPassepartout;
     newShowPass.colorPassepartout = updatedPass.colorPassepartout;
     console.log(this.configureMaterial());

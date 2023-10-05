@@ -1,19 +1,22 @@
 import { serviceDetails } from "./order.model";
 
 export class Cpasspartout{
-    code: number;
+    code: string;
+    color: string;
     price: number;
-    home: string;
+    
 }
 
 export class Glass_Fillet{
     type: string;
     price: number;
+    color?: string;
 }
 
 export class Cframe{
-    code: number;
+    code: string;
     price: number;
+    color: string;
 }
 
 export class Card {

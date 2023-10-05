@@ -17,13 +17,9 @@ export class FramedService {
 
   public calcPasspartout(passpartout: Cpasspartout[], measure: string): number {
     let total = 0;
-    let subtotal;
     var measures = this.transformPiece(measure);
 
     if (measures) {
-      let h = measures[0] + 4;
-      let w = measures[1] + 4;
-      let descripcion = h * w;
       for (const pass of passpartout) {
         total +=  pass.price;
       }
@@ -32,13 +28,14 @@ export class FramedService {
     return total;
   }
 
-  public calcGlass(glasses: Glass_Fillet[], measure: string): number {
+  public calcGlass(glasses: Glass_Fillet[], measure: string, border:number): number {
     let total = 0;
     let prices = 0;
+    
     var measures = this.transformPiece(measure);
     if (measures) {
-      let h = measures[0] + 4;
-      let w = measures[1] + 4;
+      let h = measures[0] + (border*2);
+      let w = measures[1] + (border*2);
       let descripcion = h * w;
       console.log(descripcion);
       for (const glass of glasses) {
@@ -80,7 +77,8 @@ export class FramedService {
     frames: Cframe[],
     measure: string,
     pass: boolean,
-    utility: Utility[]
+    utility: Utility[],
+    border:number
   ): number {
     let total = 0;
     var measures = this.transformPiece(measure);
@@ -91,8 +89,8 @@ export class FramedService {
     let descripcion;
     if (measures) {
       if (pass) {
-        h = measures[0] + 4;
-        w = measures[1] + 4;
+        h = measures[0] + (border*2);
+        w = measures[1] + (border*2);
         descripcion = (h + w) * 2;
         
       } else {

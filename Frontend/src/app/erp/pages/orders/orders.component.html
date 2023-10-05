@@ -93,23 +93,52 @@
         'transition-all duration-1000  hidden': !toggleEnmarcado
       }"
     >
-      <label class="text-lg font-semibold">Medida Pieza</label>
+    <div class="flex mb-4">
+      <label class="text-lg font-semibold w-20">Nombre</label>
       <input
-        class="ml-5 border-2 border-enmarcadora-principal rounded pl-2 py-0.5"
+        class="ml-5 border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-72"
+        type="text"
+        formControlName="name"
+        placeholder="nombre"
+      />
+    </div>
+    <app-alert
+      [hidden]="FramedForm.get('name')?.valid || FramedForm.get('name')?.pristine"
+      *ngIf="FramedForm.get('name')?.hasError('required')"
+      alert="El nombre es requerido"
+    ></app-alert>
+    
+    <div class="flex  ">
+      <label class="text-lg font-semibold w-20  ">Medida Pieza</label>
+      <input
+        class="ml-5 border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-72 h-8 self-center"
         type="text"
         formControlName="measure"
         placeholder="5x5"
       />
-      <app-alert
-        [hidden]="FramedForm.get('measure')?.valid"
-        *ngIf="FramedForm.get('measure')?.hasError('pattern')"
-        alert="El patron es incorrecto, debe de ser formato = numeroxnumero"
-      ></app-alert>
-      <app-alert
-        [hidden]="FramedForm.get('measure')?.valid"
-        *ngIf="FramedForm.get('measure')?.hasError('required')"
-        alert="La medida es requerida"
-      ></app-alert>
+    </div>
+    <app-alert
+    class="mb-1"
+      [hidden]="FramedForm.get('measure')?.valid "
+      *ngIf="FramedForm.get('measure')?.hasError('pattern')"
+      alert="El patron es incorrecto, debe de ser formato = numeroxnumero"
+    ></app-alert>
+    <app-alert
+    class="mb-1"
+      [hidden]="FramedForm.get('measure')?.valid"
+      *ngIf="FramedForm.get('measure')?.hasError('required')"
+      alert="La medida es requerida"
+    ></app-alert>
+    
+    <div class="flex mb-4 mt-4">
+      <label class="text-lg font-semibold w-20">Borde</label>
+      <input
+        class="ml-5 border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-72"
+        type="number"
+        formControlName="border"
+        placeholder="1"
+      />
+    </div>
 
       <div class="my-2 px-2 border-2 border-gray-300">
         <input
@@ -157,6 +186,20 @@
                 "
                 alert="El codigo no existe"
               ></app-alert>
+              <label class="text-lg font-semibold">Color</label>
+              <input
+                class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
+                type="text"
+                formControlName="color"
+              />
+              <app-alert
+                [hidden]="
+                  passPartoutForm.get('color')?.valid ||
+                  passPartoutForm.get('color')?.pristine
+                "
+                *ngIf="passPartoutForm.get('color')?.hasError('required')"
+                alert="El color es requerido"
+              ></app-alert>
               <label class="text-lg font-semibold">Precio</label>
               <input
                 class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
@@ -171,23 +214,7 @@
                 *ngIf="passPartoutForm.get('price')?.hasError('required')"
                 alert="El precio es requerido"
               ></app-alert>
-              <label class="text-lg font-semibold">Casa</label>
-              <select
-                class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
-                formControlName="home"
-              >
-                <option
-                  *ngFor="let passe of filterPass"
-                  [value]="passe.casaPassepartout"
-                >
-                  {{ passe.casaPassepartout }}
-                </option>
-              </select>
-              <app-alert
-                [hidden]="passPartoutForm.get('home')?.enabled"
-                *ngIf="passPartoutForm.get('home')?.enabled"
-                alert="Tiene que seleccionar una casa"
-              ></app-alert>
+             
               <button
                 [disabled]="passPartoutForm.invalid"
                 [ngClass]="{
@@ -207,8 +234,8 @@
               <thead class="text-sm bold text-black uppercase bg-gray-100">
                 <tr>
                   <th scope="col" class="px-4 py-3">codigo</th>
+                  <th scope="col" class="px-4 py-3">Color</th>
                   <th scope="col" class="px-4 py-3">precio</th>
-                  <th scope="col" class="px-4 py-3">casa</th>
                   <th scope="col" class="px-4 py-3">-</th>
                 </tr>
               </thead>
@@ -218,11 +245,12 @@
                     {{ pass.code }}
                   </td>
                   <td class="px-4 py-3">
-                    {{ pass.price }}
+                    {{ pass.color }}
                   </td>
                   <td class="px-4 py-3">
-                    {{ pass.home }}
+                    {{ pass.price }}
                   </td>
+                  
                   <td class="px-4 py-3">
                     <svg
                       (click)="
@@ -381,6 +409,12 @@
                 type="text"
                 formControlName="price"
               />
+              <label>Color</label>
+              <input
+                class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
+                type="text"
+                formControlName="color"
+              />
               <button
                 [disabled]="filletForm.invalid"
                 [ngClass]="{
@@ -401,6 +435,7 @@
                 <tr>
                   <th scope="col" class="px-4 py-3">Tipo</th>
                   <th scope="col" class="px-4 py-3">precio</th>
+                  <th scope="col" class="px-4 py-3">color</th>
                   <th scope="col" class="px-4 py-3">-</th>
                 </tr>
               </thead>
@@ -411,6 +446,9 @@
                   </td>
                   <td class="px-4 py-3">
                     {{ fillet.price }}
+                  </td>
+                  <td class="px-4 py-3">
+                    {{ fillet.color }}
                   </td>
 
                   <td class="px-4 py-3">
@@ -491,6 +529,12 @@
                 *ngIf="frameForm.get('price')?.hasError('required')"
                 alert="El precio es requerido"
               ></app-alert>
+              <label class="text-lg font-semibold">Color</label>
+              <input
+                class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
+                type="text"
+                formControlName="color"
+              />
 
               <button
                 [disabled]="frameForm.invalid"
@@ -512,6 +556,7 @@
                 <tr>
                   <th scope="col" class="px-4 py-3">codigo</th>
                   <th scope="col" class="px-4 py-3">precio</th>
+                  <th scope="col" class="px-4 py-3">color</th>
                   <th scope="col" class="px-4 py-3">-</th>
                 </tr>
               </thead>
@@ -522,6 +567,9 @@
                   </td>
                   <td class="px-4 py-3">
                     {{ frame.price }}
+                  </td>
+                  <td class="px-4 py-3">
+                    {{ frame.color }}
                   </td>
 
                   <td class="px-4 py-3">
@@ -547,13 +595,21 @@
       <!--extras-->
       <div class="grid grid-cols-2 gap-1">
         <section class="flex flex-col w-full">
-          <label class="">Mano de obra</label>
-          <input
-            class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
-            type="text"
-            formControlName="labour"
-            (ngModelChange)="addFramed()"
-          />
+          <label class="">Vitrina</label>
+          <select name="vitrina" id="vitrina"
+          formControlName ="vitrina"
+          class="border-2  border-enmarcadora-principal rounded pl-2 py-0.5 w-96">
+            <option value="vitrina">Vitrina</option>
+            <option value="novitrina">No Vitrina</option>
+          </select>
+          <label class="">Flotante</label>
+          <select name="float" id="float"
+          formControlName="float"
+          class="border-2  border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
+          (change)="addFramed()">
+            <option value="flotante">Flotante</option>
+            <option value="noflotante">No flotante</option>
+          </select>
           <label class="">Utilidad</label>
           <input
             class="border-2 bg-enmarcadora-second border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
@@ -745,293 +801,60 @@
         'transition-all duration-1000  hidden': !toggleVentaneria
       }"
     >
-      <label class="text-lg font-semibold">Medida Pieza</label>
-      <input
-        class="ml-5 border-2 border-enmarcadora-principal rounded pl-2 py-0.5"
-        type="text"
-        formControlName="measure"
-        placeholder="5x5"
-      />
-      <app-alert
-        [hidden]="ventaneriaForm.get('measure')?.valid"
-        *ngIf="ventaneriaForm.get('measure')?.hasError('pattern')"
-        alert="El patron es incorrecto, debe de ser formato = numeroxnumero"
-      ></app-alert>
-      <app-alert
-        [hidden]="ventaneriaForm.get('measure')?.valid"
-        *ngIf="ventaneriaForm.get('measure')?.hasError('required')"
-        alert="La medida es requerida"
-      ></app-alert>
-
-      <!----Vidrio------>
-      <div class="my-2 px-2 border-2 border-gray-300">
+    <div class="grid grid-cols-2 gap-1">
+      <section class="flex flex-col">
+        <label class="text-lg font-semibold">Descripción</label>
+        <textarea
+          class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
+          type="text"
+          formControlName="description"
+        ></textarea>
+        <label class="text-lg font-semibold">Precio</label>
         <input
-          (click)="changeToggle('vidrio2')"
-          class="checked:bg-enmarcadora-principal"
-          type="checkbox"
-          name=""
-          id=""
+          class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
+          type="number"
+          formControlName="price"
         />
-        <label class="ml-2 font-bold" for="">Vidrio</label>
-        <section
-          class="flex flex-row gap-2"
-          [ngClass]="{
-            'transition duration-700 block': toggleVidrio2,
-            'transition duration-700  hidden': !toggleVidrio2
-          }"
+      </section>
+      <button
+        class="flex flex-row justify-center items-center gap-2 font-semibold text-2xl"
+        [disabled]="!ventaneriaForm.valid"
+        [ngClass]="{ 'text-red-500': !ventaneriaForm.valid }"
+        type="submit"
+      >
+        <svg
+          class="w-14"
+          viewBox="0 0 32 32"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"
         >
-          <div>
-            <form
-              class="flex flex-col gap-1 my-2"
-              [formGroup]="glassVForm"
-              (ngSubmit)="addGlass2()"
-            >
-              <label>Tipo</label>
-              <select
-                class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
-                formControlName="type"
-                (change)="setPriceGlass2($event)"
-              >
-                <option
-                  *ngFor="let glass of glasses"
-                  [value]="glass.tipoVidrio"
-                >
-                  {{ glass.tipoVidrio }}
-                </option>
-              </select>
-              <label>Precio</label>
-              <input
-                class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
-                type="text"
-                formControlName="price"
-              />
-              <button
-                [disabled]="glassVForm.invalid"
-                [ngClass]="{
-                  'bg-red-800 ': glassVForm.invalid,
-                  '  bg-enmarcadora-principal   hover:bg-white hover:text-enmarcadora-principal':
-                    !glassVForm.invalid
-                }"
-                type="submit"
-                class="self-end mt-2 border-2 border-enmarcadora-principal rounded-full w-20 bg-enmarcadora-principal text-white font-semibold hover:text-enmarcadora-principal hover:bg-white"
-              >
-                Agregar
-              </button>
-            </form>
-          </div>
-          <div *ngIf="glassAdded2.length > 0" class="w-full">
-            <table class="w-full text-sm text-left">
-              <thead class="text-sm bold text-black uppercase bg-gray-100">
-                <tr>
-                  <th scope="col" class="px-4 py-3">Tipo</th>
-                  <th scope="col" class="px-4 py-3">precio</th>
-                  <th scope="col" class="px-4 py-3">-</th>
-                </tr>
-              </thead>
-              <tbody *ngFor="let glass of glassAdded2">
-                <tr class="border-b">
-                  <td class="px-4 py-3">
-                    {{ glass.type }}
-                  </td>
-                  <td class="px-4 py-3">
-                    {{ glass.price }}
-                  </td>
-
-                  <td class="px-4 py-3">
-                    <svg
-                      (click)="deleteGlass2(glassAdded2.indexOf(glass))"
-                      class="w-2 text-black"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M2 12C2 11.4477 2.44772 11 3 11H21C21.5523 11 22 11.4477 22 12C22 12.5523 21.5523 13 21 13H3C2.44772 13 2 12.5523 2 12Z"
-                        fill="#0F0F0F"
-                      />
-                    </svg>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-      </div>
-
-      <!----Marco------>
-      <div class="my-2 px-2 border-2 border-gray-300">
-        <input
-          (click)="changeToggle('marco2')"
-          class="checked:bg-enmarcadora-principal"
-          type="checkbox"
-        />
-        <label class="ml-2 font-bold">Marco</label>
-        <section
-          class="flex flex-row gap-2"
-          [ngClass]="{
-            'transition duration-700 block': toggleMarco2,
-            'transition duration-700  hidden': !toggleMarco2
-          }"
-        >
-          <div>
-            <form
-              [formGroup]="frameVForm"
-              (ngSubmit)="addFrame2()"
-              class="flex flex-col gap-1 my-2 w-full"
-            >
-              <label class="text-lg font-semibold">Codigo</label>
-              <input
-                class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
-                type="text"
-                formControlName="code"
-                (ngModelChange)="findFrame2()"
-              />
-              <app-alert
-                [hidden]="
-                  frameVForm.get('code')?.valid ||
-                  frameVForm.get('code')?.pristine
-                "
-                *ngIf="frameVForm.get('code')?.hasError('required')"
-                alert="El codigo es requerido"
-              ></app-alert>
-              <app-alert
-                [hidden]="
-                  frameVForm.get('code')?.valid ||
-                  frameVForm.get('code')?.pristine
-                "
-                *ngIf="frameVForm.get('code')?.hasError('PassCodeValidator')"
-                alert="El codigo no existe"
-              ></app-alert>
-              <label class="text-lg font-semibold">Precio</label>
-              <input
-                class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
-                type="number"
-                formControlName="price"
-              />
-              <app-alert
-                [hidden]="
-                  frameVForm.get('price')?.valid ||
-                  frameVForm.get('price')?.pristine
-                "
-                *ngIf="frameVForm.get('price')?.hasError('required')"
-                alert="El precio es requerido"
-              ></app-alert>
-
-              <button
-                [disabled]="frameVForm.invalid"
-                [ngClass]="{
-                  'bg-red-800 ': frameVForm.invalid,
-                  '  bg-enmarcadora-principal   hover:bg-white hover:text-enmarcadora-principal':
-                    !frameVForm.invalid
-                }"
-                type="submit"
-                class="self-end mt-2 border-2 border-enmarcadora-principal rounded-full w-20 bg-enmarcadora-principal text-white font-semibold hover:text-enmarcadora-principal hover:bg-white"
-              >
-                Agregar
-              </button>
-            </form>
-          </div>
-          <div *ngIf="frameAdded2.length > 0" class="w-full">
-            <table class="w-full text-sm text-left">
-              <thead class="text-sm bold text-black uppercase bg-gray-100">
-                <tr>
-                  <th scope="col" class="px-4 py-3">codigo</th>
-                  <th scope="col" class="px-4 py-3">precio</th>
-                  <th scope="col" class="px-4 py-3">-</th>
-                </tr>
-              </thead>
-              <tbody *ngFor="let frame of frameAdded2">
-                <tr class="border-b">
-                  <td class="px-4 py-3">
-                    {{ frame.code }}
-                  </td>
-                  <td class="px-4 py-3">
-                    {{ frame.price }}
-                  </td>
-
-                  <td class="px-4 py-3">
-                    <svg
-                      (click)="deleteFrame2(frameAdded2.indexOf(frame))"
-                      class="w-2 text-black"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M2 12C2 11.4477 2.44772 11 3 11H21C21.5523 11 22 11.4477 22 12C22 12.5523 21.5523 13 21 13H3C2.44772 13 2 12.5523 2 12Z"
-                        fill="#0F0F0F"
-                      />
-                    </svg>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-      </div>
-      <!--extras-->
-      <div class="grid grid-cols-2 gap-1">
-        <section class="flex flex-col w-full">
-          <label class="">Mano de obra</label>
-          <input
-            class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
-            type="text"
-            formControlName="labour"
-            (ngModelChange)="addVentaneria()"
-          />
-          <label class="">Utilidad</label>
-          <input
-            class="border-2 bg-enmarcadora-second border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
-            type="text"
-            formControlName="utility"
-          />
-          <label class="">Total</label>
-          <input
-            class="border-2 bg-enmarcadora-second border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
-            type="text"
-            formControlName="total"
-          />
-        </section>
-
-        <button
-          class="flex flex-row justify-center items-center gap-2 font-semibold text-2xl"
-          [disabled]="!ventaneriaForm.valid"
-          [ngClass]="{ 'text-red-500': !ventaneriaForm.valid }"
-          type="submit"
-        >
-          <svg
-            class="w-14"
-            viewBox="0 0 32 32"
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"
+          <g
+            id="Page-1"
+            stroke="none"
+            stroke-width="1"
+            fill="currentColor"
+            fill-rule="evenodd"
+            sketch:type="MSPage"
           >
             <g
-              id="Page-1"
-              stroke="none"
-              stroke-width="1"
+              id="Icon-Set"
+              sketch:type="MSLayerGroup"
+              transform="translate(-464.000000, -1087.000000)"
               fill="currentColor"
-              fill-rule="evenodd"
-              sketch:type="MSPage"
             >
-              <g
-                id="Icon-Set"
-                sketch:type="MSLayerGroup"
-                transform="translate(-464.000000, -1087.000000)"
-                fill="currentColor"
-              >
-                <path
-                  d="M480,1117 C472.268,1117 466,1110.73 466,1103 C466,1095.27 472.268,1089 480,1089 C487.732,1089 494,1095.27 494,1103 C494,1110.73 487.732,1117 480,1117 L480,1117 Z M480,1087 C471.163,1087 464,1094.16 464,1103 C464,1111.84 471.163,1119 480,1119 C488.837,1119 496,1111.84 496,1103 C496,1094.16 488.837,1087 480,1087 L480,1087 Z M486,1102 L481,1102 L481,1097 C481,1096.45 480.553,1096 480,1096 C479.447,1096 479,1096.45 479,1097 L479,1102 L474,1102 C473.447,1102 473,1102.45 473,1103 C473,1103.55 473.447,1104 474,1104 L479,1104 L479,1109 C479,1109.55 479.447,1110 480,1110 C480.553,1110 481,1109.55 481,1109 L481,1104 L486,1104 C486.553,1104 487,1103.55 487,1103 C487,1102.45 486.553,1102 486,1102 L486,1102 Z"
-                  id="plus-circle"
-                  sketch:type="MSShapeGroup"
-                ></path>
-              </g>
+              <path
+                d="M480,1117 C472.268,1117 466,1110.73 466,1103 C466,1095.27 472.268,1089 480,1089 C487.732,1089 494,1095.27 494,1103 C494,1110.73 487.732,1117 480,1117 L480,1117 Z M480,1087 C471.163,1087 464,1094.16 464,1103 C464,1111.84 471.163,1119 480,1119 C488.837,1119 496,1111.84 496,1103 C496,1094.16 488.837,1087 480,1087 L480,1087 Z M486,1102 L481,1102 L481,1097 C481,1096.45 480.553,1096 480,1096 C479.447,1096 479,1096.45 479,1097 L479,1102 L474,1102 C473.447,1102 473,1102.45 473,1103 C473,1103.55 473.447,1104 474,1104 L479,1104 L479,1109 C479,1109.55 479.447,1110 480,1110 C480.553,1110 481,1109.55 481,1109 L481,1104 L486,1104 C486.553,1104 487,1103.55 487,1103 C487,1102.45 486.553,1102 486,1102 L486,1102 Z"
+                id="plus-circle"
+                sketch:type="MSShapeGroup"
+              ></path>
             </g>
-          </svg>
-          Añadir Tarjeta
-        </button>
-      </div>
+          </g>
+        </svg>
+        Añadir Tarjeta
+      </button>
+    </div>
     </form>
   </div>
   <!--Here starts Instalation -->

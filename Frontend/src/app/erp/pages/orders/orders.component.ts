@@ -32,8 +32,6 @@ export class OrdersComponent {
   toggleVidrio: boolean = false;
   toggleFilete: boolean = false;
   toggleMarco: boolean = false;
-  toggleVidrio2: boolean = false;
-  toggleMarco2: boolean = false;
   toggleOptions: string[] = [
     'enmarcado',
     'restauration',
@@ -51,33 +49,28 @@ export class OrdersComponent {
   currentDate: Date = new Date();
   date: string = this.currentDate.toDateString();
   passpartoutAdded: Cpasspartout[] = [];
-  filterPass: any[] = [];
+  filterPass: Passepartout[] = [];
   @Input() passepatouts: Passepartout[];
   allowPass: boolean = false;
 
   glassAdded: Glass_Fillet[] = [];
-  glassAdded2: Glass_Fillet[] = [];
-  frameAdded2: Cframe[] = [];
   selectedGlass: string;
-  selectedGlass2: string;
+  selectedPass: string;
   @Input() glasses: Glass[];
   @Input() clients: Client[];
-  filterClients: Client[]=[];
+  filterClients: Client[] = [];
 
   filletAdded: Glass_Fillet[] = [];
   selectedfillet: string;
   @Input() fillets: Fillet[];
   filterFrame: Frame[] = [];
-  filterFrame2: Frame[] = [];
   allowFrame: boolean = false;
   frameAdded: Cframe[] = [];
   @Input() frames: Frame[];
   selectedframe: string;
-  selectedframe2: string;
   selectedUtility: string;
-  selectedUtility2: string;
   selectedClient: Client;
-  detailsService: serviceDetails[] =[];
+  detailsService: serviceDetails[] = [];
   @Input() cardId: number;
 
   framedCard: Card[] = [];
@@ -97,50 +90,31 @@ export class OrdersComponent {
     }, 3000);
   }
   FramedForm = new FormGroup({
+    name: new FormControl('', Validators.required),
     measure: new FormControl('', [
       Validators.required,
       Validators.pattern(/^\d+x\d+$/),
     ]),
-    labour: new FormControl('', Validators.required),
+    border: new FormControl(''),
+    vitrina: new FormControl('', Validators.required),
+    float: new FormControl('', Validators.required),
     utility: new FormControl(
       { value: '', disabled: true },
       Validators.required
     ),
     total: new FormControl({ value: '', disabled: true }, Validators.required),
-  });
-
-  ventaneriaForm = new FormGroup({
-    measure: new FormControl('', [
-      Validators.required,
-      Validators.pattern(/^\d+x\d+$/),
-    ]),
-    labour: new FormControl('', Validators.required),
-    utility: new FormControl(
-      { value: '', disabled: true },
-      Validators.required
-    ),
-    total: new FormControl({ value: '', disabled: true }, Validators.required),
-  });
-
-  frameVForm = new FormGroup({
-    code: new FormControl('', Validators.required),
-    price: new FormControl({ value: '', disabled: true }, Validators.required),
-  });
-
-  glassVForm = new FormGroup({
-    type: new FormControl('', Validators.required),
-    price: new FormControl({ value: '', disabled: true }, Validators.required),
   });
 
   passPartoutForm = new FormGroup({
     code: new FormControl('', Validators.required),
     price: new FormControl('', Validators.required),
-    home: new FormControl({ value: '', disabled: true }),
+    color: new FormControl({ value: '', disabled: true }),
   });
 
   frameForm = new FormGroup({
     code: new FormControl('', Validators.required),
     price: new FormControl({ value: '', disabled: true }, Validators.required),
+    color: new FormControl('', Validators.required),
   });
 
   glassForm = new FormGroup({
@@ -151,6 +125,16 @@ export class OrdersComponent {
   filletForm = new FormGroup({
     type: new FormControl('', Validators.required),
     price: new FormControl({ value: '', disabled: true }, Validators.required),
+    color: new FormControl('', Validators.required),
+  });
+
+  ventaneriaForm = new FormGroup({
+    description: new FormControl('', Validators.required),
+    price: new FormControl('', Validators.required),
+  });
+  instalationForm = new FormGroup({
+    description: new FormControl('', Validators.required),
+    price: new FormControl('', Validators.required),
   });
 
   restaurationForm = new FormGroup({
@@ -158,33 +142,29 @@ export class OrdersComponent {
     price: new FormControl('', Validators.required),
   });
 
-  instalationForm = new FormGroup({
-    description: new FormControl('', Validators.required),
-    price: new FormControl('', Validators.required),
-  });
-
-  findClient(): void { 
-    
+  findClient(): void {
     this.filterClients = this.clients.filter((client: Client) => {
-      return client.nombreCliente.toLowerCase().trim().includes(this.client.toLowerCase().trim());
+      return client.nombreCliente
+        .toLowerCase()
+        .trim()
+        .includes(this.client.toLowerCase().trim());
     });
-    if(this.client.length == 0){
+    if (this.client.length == 0) {
       this.filterClients = [];
     }
   }
 
-  prepareClient():void{
+  prepareClient(): void {
     let client = new Client();
-    if(this.client.length >= 0){
+    if (this.client.length >= 0) {
       this.filterClients = [];
       client.nombreCliente = this.client;
       this.selectedClient = client;
       this.sendClient.emit(this.selectedClient);
     }
-   
   }
 
-  selectClient(client: Client):void{
+  selectClient(client: Client): void {
     this.selectedClient = client;
     this.client = client.nombreCliente;
     this.filterClients = [];
@@ -201,14 +181,14 @@ export class OrdersComponent {
       cardSend.total = parseFloat(formRestauration.price);
     }
     cardSend.title = 'Restauración';
-    cardSend.id = this.cardId +1;
+    cardSend.id = this.cardId + 1;
     this.cardId += 1;
     this.cardEvent.emit(cardSend);
     this.clearForm(this.restaurationForm);
     this.toggleRestauration = false;
   }
   addCardinstalation(): void {
-    let formInstalation = this.instalationForm.value;
+    let formInstalation = this.ventaneriaForm.value;
     let cardSend = new Card();
     if (formInstalation && formInstalation.description) {
       cardSend.description = formInstalation.description;
@@ -216,163 +196,158 @@ export class OrdersComponent {
     if (formInstalation && formInstalation.price) {
       cardSend.total = parseFloat(formInstalation.price);
     }
-    cardSend.id = this.cardId +1;
+    cardSend.id = this.cardId + 1;
     this.cardId += 1;
     cardSend.title = 'Instalación';
     this.cardEvent.emit(cardSend);
-    this.clearForm(this.instalationForm);
+    this.clearForm(this.ventaneriaForm);
     this.toggleInstalation = false;
+  }
+
+  addCardVentaneria(): void {
+    let formVentaneria = this.ventaneriaForm.value;
+    let cardSend = new Card();
+    if (formVentaneria && formVentaneria.description) {
+      cardSend.description = formVentaneria.description;
+    }
+    if (formVentaneria && formVentaneria.price) {
+      cardSend.total = parseFloat(formVentaneria.price);
+    }
+    cardSend.id = this.cardId + 1;
+    this.cardId += 1;
+    cardSend.title = 'Ventaneria';
+    this.cardEvent.emit(cardSend);
+    this.clearForm(this.ventaneriaForm);
+    this.toggleVentaneria = false;
   }
 
   addCardFramed(): void {
     let stringFramed: string[] = [];
-    let details : serviceDetails[] =[];
+    let details: serviceDetails[] = [];
     let stringCode = '';
     let line = 0;
     let cardSend = new Card();
     let total = this.FramedForm.get('total')?.value;
+    let form = this.FramedForm.value;
+
+    if(form){
+      if(form.border){
+        stringFramed[0] = `Enmarcado: ${form.name} ${form.measure} borde ${form.border}" \n`;
+      }else{
+        stringFramed[0] = `Enmarcado: ${form.name} ${form.measure} \n`;
+      }
+      
+    }
 
     if (this.passpartoutAdded.length > 0) {
+      stringCode = `${this.convertNumberToText(
+        this.passpartoutAdded.length 
+      )} Passepartout `;
       for (let pass = 0; pass < this.passpartoutAdded.length; pass++) {
-        stringCode = `Codigo: ${this.passpartoutAdded[
+        stringCode += ` ${this.passpartoutAdded[
           pass
-        ].code.toString()} \n`;
+        ].code.toString()}, ${this.passpartoutAdded[
+          pass
+        ].color.toString()} \n`;
         let detail = new serviceDetails();
         line += 1;
-        
+
         detail.linea = line;
         detail.idMaterial = 1;
-        detail.nombre = "PassPartout Codigo: "+this.passpartoutAdded[pass].code;
+        detail.nombre =
+          'PassPartout Codigo: ' + this.passpartoutAdded[pass].code;
         detail.precio = this.passpartoutAdded[pass].price;
+        detail.color = this.passpartoutAdded[pass].color;
         details.push(detail);
       }
-      stringFramed[0] = ` ${this.convertNumberToText(
-        this.passpartoutAdded.length
-      )} Passepartout \n ${stringCode}`;
+      stringFramed[1] = stringCode;
     }
 
     if (this.glassAdded.length > 0) {
+      stringCode = `${this.convertNumberToText(
+        this.glassAdded.length 
+      )} Vidrio `;
       for (let glass = 0; glass < this.glassAdded.length; glass++) {
-        stringCode = `Tipo: ${this.glassAdded[glass].type.toString()} \n`;
+        stringCode += ` ${this.glassAdded[glass].type.toString()} \n`;
         let detail = new serviceDetails();
         line += 1;
-        
+
         detail.linea = line;
         detail.idMaterial = 2;
-        detail.nombre = "Vidrio Tipo: "+this.glassAdded[glass].type;
+        detail.nombre = 'Vidrio Tipo: ' + this.glassAdded[glass].type;
         detail.precio = this.glassAdded[glass].price;
         details.push(detail);
       }
-      stringFramed[1] = ` ${this.convertNumberToText(
-        this.glassAdded.length
-      )} Vidrio \n ${stringCode}`;
+      stringFramed[2] = stringCode;
     }
 
     if (this.filletAdded.length > 0) {
+      stringCode = `${this.convertNumberToText(
+        this.filletAdded.length 
+      )} Filete `;
       for (let fillet = 0; fillet < this.filletAdded.length; fillet++) {
-        stringCode = `Tipo: ${this.filletAdded[fillet].type.toString()} \n`;
+        stringCode += ` ${this.filletAdded[fillet].type.toString()}, ${this.filletAdded[fillet].color} \n`;
         let detail = new serviceDetails();
         line += 1;
-        
+
         detail.linea = line;
         detail.idMaterial = 3;
-        detail.nombre = "Filete Tipo: "+this.filletAdded[fillet].type;
+        detail.nombre = 'Filete Tipo: ' + this.filletAdded[fillet].type;
         detail.precio = this.filletAdded[fillet].price;
+        detail.color = this.filletAdded[fillet].color;
         details.push(detail);
       }
-      stringFramed[2] = ` ${this.convertNumberToText(
-        this.filletAdded.length
-      )} Filete \n ${stringCode}`;
+      stringFramed[3] = stringCode;
     }
     if (this.frameAdded.length > 0) {
+      stringCode = `${this.convertNumberToText(
+        this.frameAdded.length 
+      )} Marco `;
       for (let frame = 0; frame < this.frameAdded.length; frame++) {
-        stringCode = `Codigo: ${this.frameAdded[frame].code.toString()} \n`;
+        stringCode += ` ${this.frameAdded[frame].code.toString()}, ${this.frameAdded[frame].color} \n`;
         let detail = new serviceDetails();
         line += 1;
-        
+
         detail.linea = line;
         detail.idMaterial = 4;
-        detail.nombre = "Marco Codigo: "+this.frameAdded[frame].code;
+        detail.nombre = 'Marco Codigo: ' + this.frameAdded[frame].code;
         detail.precio = this.frameAdded[frame].price;
+        detail.color = this.frameAdded[frame].color;
         details.push(detail);
-        
       }
-      stringFramed[3] = ` ${this.convertNumberToText(
-        this.frameAdded.length
-      )} Marco \n ${stringCode}`;
+      stringFramed[4] = stringCode;
     }
 
+    if(form){
+      let vit="";
+      let flo="";
+      if(form.vitrina?.toLowerCase() == "vitrina"){
+        vit ="en vitrina";
+      }
+      if(form.vitrina?.toLowerCase() == "flotante"){
+        flo ="flotante";
+      }
+      stringFramed[5] = `${vit} ${flo}`
+    }
+    
+    
     if (total) {
       cardSend.title = 'Enmarcado';
       cardSend.description =
         (stringFramed[0] == undefined ? '' : '\n ' + stringFramed[0]) +
         (stringFramed[1] == undefined ? '' : '\n ' + stringFramed[1]) +
         (stringFramed[2] == undefined ? '' : '\n ' + stringFramed[2]) +
-        (stringFramed[3] == undefined ? '' : '\n ' + stringFramed[3]);
+        (stringFramed[3] == undefined ? '' : '\n ' + stringFramed[3]) +  
+        (stringFramed[4] == undefined ? '' : '\n ' + stringFramed[4]) +
+        (stringFramed[5] == undefined ? '' : '\n ' + stringFramed[5]);
       cardSend.total = parseFloat(total);
     }
-    cardSend.id = this.cardId +1;
+    cardSend.id = this.cardId + 1;
     console.log(cardSend);
     this.cardId += 1;
     this.cardEvent.emit(cardSend);
     this.detailsServiceSent.emit(details);
     this.clearFramed();
-  }
-
-  addCardVentaneria(): void {
-    let stringFramed: string[] = [];
-    let details : serviceDetails[] =[];
-    let stringCode = '';
-    let line = 0;
-    let cardSend = new Card();
-    let total = this.ventaneriaForm.get('total')?.value;
-
-    if (this.glassAdded2.length > 0) {
-      for (let glass = 0; glass < this.glassAdded2.length; glass++) {
-        stringCode = `Tipo: ${this.glassAdded2[glass].type.toString()} \n`;
-        let detail = new serviceDetails();
-        line += 1;
-        
-        detail.linea = line;
-        detail.idMaterial = 2;
-        detail.nombre = "Vidrio Tipo: "+this.glassAdded2[glass].type;
-        detail.precio = this.glassAdded2[glass].price;
-        details.push(detail);
-      }
-      stringFramed[0] = ` ${this.convertNumberToText(
-        this.glassAdded2.length
-      )} Vidrio \n ${stringCode}`;
-    }
-
-    if (this.frameAdded2.length > 0) {
-      for (let frame = 0; frame < this.frameAdded2.length; frame++) {
-        stringCode = `Codigo: ${this.frameAdded2[frame].code.toString()} \n`;
-        let detail = new serviceDetails();
-        line += 1;
-        
-        detail.linea = line;
-        detail.idMaterial = 4;
-        detail.nombre = "Marco Codigo: "+this.frameAdded2[frame].code;
-        detail.precio = this.frameAdded2[frame].price;
-        details.push(detail);
-      }
-      stringFramed[1] = ` ${this.convertNumberToText(
-        this.frameAdded2.length
-      )} Marco \n ${stringCode}`;
-    }
-
-    if (total) {
-      cardSend.title = 'Ventaneria';
-      cardSend.description =
-        (stringFramed[0] == undefined ? '' : '\n ' + stringFramed[0]) +
-        (stringFramed[1] == undefined ? '' : '\n ' + stringFramed[1]);
-      cardSend.total = parseFloat(total);
-    }
-    cardSend.id = this.cardId +1;//put id into details i didn't and i don't know why
-    this.cardId += 1;
-    this.cardEvent.emit(cardSend);
-    this.detailsServiceSent.emit(details);
-    this.clearVentaneria();
   }
 
   convertNumberToText(numero: number): string {
@@ -411,6 +386,8 @@ export class OrdersComponent {
     let total = 0;
 
     let measure = this.FramedForm.get('measure')?.value;
+    let border = this.FramedForm.get('border')?.value;
+
     if (this.passpartoutAdded.length > 0 && measure) {
       totalPass = this.framedService.calcPasspartout(
         this.passpartoutAdded,
@@ -420,7 +397,15 @@ export class OrdersComponent {
     }
 
     if (this.glassAdded.length > 0 && measure) {
-      totalGlass = this.framedService.calcGlass(this.glassAdded, measure);
+      if (border) {
+        totalGlass = this.framedService.calcGlass(
+          this.glassAdded,
+          measure,
+          parseFloat(border)
+        );
+      } else {
+        totalGlass = this.framedService.calcGlass(this.glassAdded, measure, 0);
+      }
       console.log('glass' + totalGlass);
     }
 
@@ -435,103 +420,82 @@ export class OrdersComponent {
 
     if (this.frameAdded.length > 0 && measure) {
       if (this.passpartoutAdded.length > 0) {
-        totalFrame = this.framedService.calcFrame(
-          this.frameAdded,
-          measure,
-          true,
-          this.utility
-        );
+        if (border) {
+          totalFrame = this.framedService.calcFrame(
+            this.frameAdded,
+            measure,
+            true,
+            this.utility,
+            parseFloat(border)
+          );
+        } else {
+          totalFrame = this.framedService.calcFrame(
+            this.frameAdded,
+            measure,
+            true,
+            this.utility,
+            0
+          );
+        }
+
         console.log('frame w ' + totalFrame);
       } else {
-        totalFrame = this.framedService.calcFrame(
-          this.frameAdded,
-          measure,
-          false,
-          this.utility
-        );
+        if (border) {
+          totalFrame = this.framedService.calcFrame(
+            this.frameAdded,
+            measure,
+            false,
+            this.utility,
+            parseFloat(border)
+          );
+        } else {
+          totalFrame = this.framedService.calcFrame(
+            this.frameAdded,
+            measure,
+            false,
+            this.utility,
+            0
+          );
+        }
         console.log('frame wo ' + totalFrame);
       }
     }
 
     subtotal = totalPass + totalGlass + totalFillet + totalFrame;
 
-    let labour = this.FramedForm.get('labour')?.value;
     let utilty = this.FramedForm.get('utility')?.value;
-    let totalWlabour = 0;
     let totalWutility = 0;
-    if (labour) {
-      totalWlabour = parseFloat(labour);
-    }
+
     if (utilty) {
       totalWutility = parseFloat(utilty);
     }
-
-    total = (subtotal + totalWlabour) * totalWutility;
+    console.log('utilidad ' + totalWutility);
+    total = subtotal * totalWutility;
 
     this.FramedForm.patchValue({ total: total.toFixed(2) });
   }
 
-  addVentaneria(): void {
-    let totalGlass = 0;
-    let totalFrame = 0;
-    let subtotal = 0;
-    let total = 0;
-
-    let measure = this.ventaneriaForm.get('measure')?.value;
-
-    if (this.glassAdded2.length > 0 && measure) {
-      totalGlass = this.framedService.calcGlass(this.glassAdded2, measure);
-      console.log('glass' + totalGlass);
-    }
-
-    if (this.frameAdded2.length > 0 && measure) {
-      totalFrame = this.framedService.calcFrame(
-        this.frameAdded2,
-        measure,
-        false,
-        this.utility
-      );
-      console.log('frame wo ' + totalFrame);
-    }
-
-    subtotal = totalGlass + totalFrame;
-
-    let labour = this.ventaneriaForm.get('labour')?.value;
-    let utilty = this.ventaneriaForm.get('utility')?.value;
-    let totalWlabour = 0;
-    let totalWutility = 0;
-    if (labour) {
-      totalWlabour = parseFloat(labour);
-    }
-    if (utilty) {
-      totalWutility = parseFloat(utilty);
-    }
-
-    total = (subtotal + totalWlabour) * totalWutility;
-
-    this.ventaneriaForm.patchValue({ total: total.toString() });
-  }
-
   buscarPass(): void {
     const code = this.passPartoutForm.value?.code;
-    if(code){
+    if (code) {
       this.filterPass = this.passepatouts.filter((ele: Passepartout) => {
         const value = ele.codigoPassepartout;
-      
-          return value.toString() == code;
-      
+
+        return value.toString() == code;
       });
-    }
-    else {
+    } else {
       this.filterPass = [];
     }
-    
-    if (this.filterPass.length >= 1) {
-      this.passPartoutForm.get('home')?.enable();
+    if (this.filterPass.length > 0) {
+      this.selectedPass = this.filterPass[0].colorPassepartout.toString();
+      this.passPartoutForm.patchValue({
+        color: this.filterPass[0].colorPassepartout.toString(),
+      });
     } else {
-      this.passPartoutForm.get('home')?.disable();
+      this.passPartoutForm.patchValue({
+        color: '',
+      });
     }
-    console.log(this.filterPass);
   }
 
   findFrame(): void {
@@ -572,21 +536,6 @@ export class OrdersComponent {
     this.glassForm.patchValue({ price: glassFound[0].precioVidrio.toString() });
   }
 
-  setPriceGlass2(event: Event) {
-    const selectElement = event.target as HTMLSelectElement;
-    var type = selectElement.value;
-    var glassFound = this.glasses.filter((glass: Glass) => {
-      return (
-        glass.tipoVidrio.toLowerCase().trim() === type.toLowerCase().trim()
-      );
-    });
-    this.selectedGlass2 = glassFound[0].precioVidrio.toString();
-
-    this.glassVForm.patchValue({
-      price: glassFound[0].precioVidrio.toString(),
-    });
-  }
-
   setPriceFillet(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
     var type = selectElement.value;
@@ -607,21 +556,19 @@ export class OrdersComponent {
     var newPass = new Cpasspartout();
 
     if (pass && pass.code) {
-      newPass.code = parseInt(pass.code);
+      newPass.code = pass.code;
 
-      if (
-        this.filterPass.length > 0 &&
-        this.filterPass[0].codigoPassepartout == pass.code
-      ) {
+      if (this.filterPass.length > 0) {
         this.allowPass = true;
       }
     }
+
+    newPass.color = this.selectedPass;
+
     if (pass && pass.price) {
       newPass.price = parseFloat(pass.price);
     }
-    if (pass && pass.home) {
-      newPass.home = pass.home;
-    }
+
     if (this.allowPass) {
       this.passpartoutAdded.push(newPass);
       this.clearForm(this.passPartoutForm);
@@ -630,14 +577,12 @@ export class OrdersComponent {
       this.deleteNotify();
       this.clearForm(this.passPartoutForm);
     }
+    this.FramedForm.patchValue({ float: '' });
   }
 
   deleteFrame(index: number): void {
     this.frameAdded.splice(index, 1);
-  }
-
-  deleteFrame2(index: number): void {
-    this.frameAdded2.splice(index, 1);
+    this.FramedForm.patchValue({ float: '' });
   }
 
   addFrame(): void {
@@ -645,7 +590,7 @@ export class OrdersComponent {
     var newFrame = new Cframe();
 
     if (frame && frame.code) {
-      newFrame.code = parseInt(frame.code);
+      newFrame.code = frame.code;
 
       if (this.filterFrame.length > 0) {
         this.allowFrame = true;
@@ -653,6 +598,10 @@ export class OrdersComponent {
     }
 
     newFrame.price = parseFloat(this.selectedframe);
+
+    if (frame && frame.color) {
+      newFrame.color = frame.color;
+    }
 
     if (this.allowFrame) {
       this.frameAdded.push(newFrame);
@@ -663,64 +612,17 @@ export class OrdersComponent {
       this.deleteNotify();
       this.clearForm(this.frameForm);
     }
-  }
-
-  findFrame2(): void {
-    const frameCode = this.frameVForm.value?.code;
-
-    if (frameCode) {
-      this.filterFrame2 = this.frames.filter((frame: Frame) => {
-        const value = frame.codigoMarco;
-
-        return value == frameCode;
-      });
-    } else {
-      this.filterFrame2 = [];
-    }
-    console.log(this.filterFrame2);
-    if (this.filterFrame2.length > 0) {
-      this.selectedframe2 = this.filterFrame2[0].precioMarco.toString();
-      this.frameVForm.patchValue({
-        price: this.filterFrame2[0].precioMarco.toString(),
-      });
-    } else {
-      this.frameVForm.patchValue({
-        price: '',
-      });
-    }
-  }
-
-  addFrame2(): void {
-    var frame = this.frameVForm.value;
-    var newFrame = new Cframe();
-
-    if (frame && frame.code) {
-      newFrame.code = parseInt(frame.code);
-
-      if (this.filterFrame2.length > 0) {
-        this.allowFrame = true;
-      }
-    }
-
-    newFrame.price = parseFloat(this.selectedframe2);
-
-    if (this.allowFrame) {
-      this.frameAdded2.push(newFrame);
-      this.clearForm(this.frameVForm);
-    } else {
-      console.log(newFrame);
-      this.badNotify = ' No existe el codigo';
-      this.deleteNotify();
-      this.clearForm(this.frameVForm);
-    }
+    this.FramedForm.patchValue({ float: '' });
   }
 
   deletePasspartout(index: number): void {
     this.passpartoutAdded.splice(index, 1);
+    this.FramedForm.patchValue({ float: '' });
   }
 
   deleteGlass(index: number): void {
     this.glassAdded.splice(index, 1);
+    this.FramedForm.patchValue({ float: '' });
   }
 
   addGlass(): void {
@@ -736,28 +638,12 @@ export class OrdersComponent {
     console.log(glass);
     this.glassAdded.push(newGlass);
     this.clearForm(this.glassForm);
-  }
-  deleteGlass2(index: number): void {
-    this.glassAdded2.splice(index, 1);
-  }
-
-  addGlass2(): void {
-    var glass = this.glassVForm.value;
-    var newGlass = new Glass_Fillet();
-
-    if (glass && glass.type) {
-      newGlass.type = glass.type;
-    }
-
-    newGlass.price = parseFloat(this.selectedGlass2);
-
-    console.log(glass);
-    this.glassAdded2.push(newGlass);
-    this.clearForm(this.glassVForm);
+    this.FramedForm.patchValue({ float: '' });
   }
 
   deleteFillet(index: number): void {
     this.filletAdded.splice(index, 1);
+    this.FramedForm.patchValue({ float: '' });
   }
 
   addFillet(): void {
@@ -769,10 +655,13 @@ export class OrdersComponent {
     }
 
     newFillet.price = parseFloat(this.selectedfillet);
-
+    if (fillet && fillet.color) {
+      newFillet.color = fillet.color;
+    }
     console.log(fillet);
     this.filletAdded.push(newFillet);
     this.clearForm(this.filletForm);
+    this.FramedForm.patchValue({ float: '' });
   }
 
   clearForm(group: FormGroup): void {
@@ -786,17 +675,11 @@ export class OrdersComponent {
     this.glassAdded = [];
     this.FramedForm.reset();
     this.toggleEnmarcado = false;
-  }
-
-  clearVentaneria(): void {
-    this.frameAdded2 = [];
-    this.glassAdded2 = [];
-    this.ventaneriaForm.reset();
-    this.toggleVentaneria = false;
+    this.FramedForm.patchValue({ float: '', vitrina: '' });
   }
 
   clearInstalation(): void {
-    this.clearForm(this.instalationForm);
+    this.clearForm(this.ventaneriaForm);
   }
 
   setUpFramed(): void {
@@ -807,19 +690,6 @@ export class OrdersComponent {
     if (utility.length > 0) {
       this.selectedUtility = utility[0].valorUtilidad.toString();
       this.FramedForm.patchValue({
-        utility: utility[0].valorUtilidad.toString(),
-      });
-    }
-  }
-
-  setUpVentaneria(): void {
-    var utility = this.utility.filter(
-      (ut: Utility) => ut.nombreUtilidad.toLowerCase().trim() == "utilidad"
-    );
-    
-    if (utility.length > 0) {
-      this.selectedUtility2 = utility[0].valorUtilidad.toString();
-      this.ventaneriaForm.patchValue({
         utility: utility[0].valorUtilidad.toString(),
       });
     }
@@ -855,20 +725,6 @@ export class OrdersComponent {
           this.toggleMarco = true;
         }
         break;
-      case this.toggleOptionsMaterials[4]:
-        if (this.toggleVidrio2) {
-          this.toggleVidrio2 = false;
-        } else {
-          this.toggleVidrio2 = true;
-        }
-        break;
-      case this.toggleOptionsMaterials[5]:
-        if (this.toggleMarco2) {
-          this.toggleMarco2 = false;
-        } else {
-          this.toggleMarco2 = true;
-        }
-        break;
     }
   }
 
@@ -894,10 +750,9 @@ export class OrdersComponent {
       case this.toggleOptions[2]:
         if (this.toggleVentaneria) {
           this.toggleVentaneria = false;
-          this.clearVentaneria();
         } else {
           this.toggleVentaneria = true;
-          this.setUpVentaneria();
+          this.clearForm(this.ventaneriaForm);
         }
         break;
       case this.toggleOptions[3]:
@@ -905,7 +760,7 @@ export class OrdersComponent {
           this.toggleInstalation = false;
         } else {
           this.toggleInstalation = true;
-          this.clearForm(this.instalationForm);
+          this.clearForm(this.ventaneriaForm);
         }
         break;
     }
