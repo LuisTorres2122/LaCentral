@@ -25,7 +25,7 @@ export class FramedService {
       let w = measures[1] + 4;
       let descripcion = h * w;
       for (const pass of passpartout) {
-        total += descripcion + pass.price;
+        total +=  pass.price;
       }
     }
 

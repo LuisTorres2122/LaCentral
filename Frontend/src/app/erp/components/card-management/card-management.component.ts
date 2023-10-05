@@ -94,7 +94,7 @@ export class CardManagementComponent implements OnInit {
     console.log(this.detailsServiceReceive);
   }
   changePrint(): void {
-    this.togglePrint = false;
+    this.togglePrint = true;
   }
 
   UpdateCars(data: updateCards): void {
