@@ -1,7 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { PassepartoutService } from '../../services/passepartout.service';
 import { FrameService } from '../../services/frame.service';
-import { FramedService } from '../../services/Framed.service';
 import { FilletService } from '../../services/fillet.service';
 import { GlassService } from '../../services/glass.service';
 import { UtilityService } from '../../services/utility.service';
@@ -20,19 +19,29 @@ import {
   Transaction,
   serviceDetails,
 } from '../../models/order.model';
+import { DefaultUrlSerializer } from '@angular/router';
+import { OrdersComponent } from '../../pages/orders/orders.component';
+import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-card-management',
   templateUrl: './card-management.component.html',
 })
 export class CardManagementComponent implements OnInit {
+  private labourSubject = new Subject<number>();
+  @ViewChild('OrdersC') hijoComponent: OrdersComponent;
   passepatouts: Passepartout[] = [];
+  currentOrderSheet: Transaction;
+  showOrderSheet: boolean = false;
   detailsServiceReceive: serviceDetails[] = [];
   glasses: Glass[] = [];
+  labour:number = 0;
+  badNotify: string ='';
   fillets: Fillet[] = [];
   frames: Frame[] = [];
   utility: Utility[] = [];
   cardSent: Card;
+  Pastcards: Card[] = [];
   cards: Card[] = [];
   clients: Client[] = [];
   discount: number = 0;
@@ -62,6 +71,12 @@ export class CardManagementComponent implements OnInit {
     this.chargeClients();
     this.getLastId();
     this.getLastIdDetail();
+    this.labourSubject.pipe(
+      debounceTime(1000), // Espera 1 segundo después de la última emisión
+      distinctUntilChanged() // Solo emite si el valor es diferente al anterior
+    ).subscribe(value => {
+      this.sumLabour(value);
+    });
   }
 
   constructor(
@@ -74,23 +89,24 @@ export class CardManagementComponent implements OnInit {
     private orderService: OrderService
   ) {}
 
+
+  deleteNotify() {
+    setTimeout(() => {
+      this.badNotify = '';
+    }, 3000);
+  }
+
   recieveCard(card: Card): void {
     this.cards.push(card);
     this.total += card.total;
     this.totalHidden = this.total;
-  }
-  //modify if later it needed to register more than one
-  recieveDetails(DetailsServices: serviceDetails[]): void {
-    let length = this.detailsServiceReceive.length;
-    for (let service of DetailsServices) {
-      this.detailsServiceReceive.push(service);
-    }
-   for (let detail = length; detail < this.detailsServiceReceive.length; detail++
-    ) {
-      this.detailsServiceReceive[detail].idDetallePedido =
-        this.cards[this.cards.length - 1].id;
-    }
     console.log(this.cards);
+  }
+
+  recieveDetails(DetailsServices: serviceDetails[]): void {
+    for (let detail of DetailsServices) {
+      this.detailsServiceReceive.push(detail);
+    }
     console.log(this.detailsServiceReceive);
   }
   changePrint(): void {
@@ -98,33 +114,79 @@ export class CardManagementComponent implements OnInit {
   }
 
   UpdateCars(data: updateCards): void {
-    this.cards = [];
     this.detailsServiceReceive = [];
-    this.cards = data.cards;
     this.detailsServiceReceive = data.Details;
-    this
     this.total = 0;
     for (let card of this.cards) {
       this.total += card.total;
     }
     this.totalHidden = this.total;
-    this.prepareServiceDetails();
+   this.prepareServiceDetails();
   }
-  
 
-  applyDiscount() {
-    let discount = 0;
-    if (this.discount) {
-      let discountPercentage = this.discount * this.totalHidden;
-      discount = discountPercentage / 100;
-      this.total = parseFloat((this.totalHidden - discount).toFixed(2));
+  sumLabour(value: number): void {
+    if(value){
+      this.total += value;
     } else {
       this.total = this.totalHidden;
     }
   }
 
+  onLabourChange(value: number): void {
+    this.labourSubject.next(value);
+  }
+
+  applyDiscount() {
+    let discount = 0;
+    if (this.discount) {
+      let discountPercentage;
+      if(this.labour){
+        let newtotal = this.totalHidden+this.labour;
+        console.log(newtotal);
+        discountPercentage = this.discount * newtotal;
+        console.log(discountPercentage);
+        discount = discountPercentage / 100;
+        console.log(discount);
+      this.total = parseFloat((newtotal - discount).toFixed(2));
+      }else{
+        discountPercentage = this.discount * this.totalHidden;
+        discount = discountPercentage / 100;
+      this.total = parseFloat((this.totalHidden - discount).toFixed(2));
+      }
+      
+    } else {
+      if(this.labour){
+        this.total = this.totalHidden + this.labour;
+      }else{
+        this.total = this.totalHidden;
+      }
+      
+    }
+  }
+
   recieveClient(client: Client): void {
-    this.client = client;
+    let lastIdClient = this.clients.length;
+    
+    if(client.pkIdCliente == null || client.pkIdCliente == undefined){
+      this.clientService.createClient(client).subscribe({
+        next: res => {
+          console.log('Cliente Creado');
+          this.client = res;
+          console.log(client);
+          console.log(client.pkIdCliente);
+          client.pkIdCliente = this.clients[lastIdClient-1].pkIdCliente+1;
+          this.client = client;
+        },
+        error: err =>{
+          console.log(err);
+          this.badNotify = ' Cliente no creado';
+          this.deleteNotify();
+          this.hijoComponent.clearClient();
+        }
+      });
+    }else{
+      this.client = client;
+    }
   }
 
   chargeClients(): void {
@@ -169,7 +231,12 @@ export class CardManagementComponent implements OnInit {
     } else {
       this.discountEnabled = true;
       this.discount = 0;
-      this.total = this.totalHidden;
+      if(this.labour){
+        this.total = this.totalHidden + this.labour;
+      }else{
+        this.total = this.totalHidden;
+      }
+      
     }
   }
 
@@ -185,52 +252,41 @@ export class CardManagementComponent implements OnInit {
     });
   }
 
+  recievePastCards(cards: Card[]) {
+    this.Pastcards = cards;
+   
+  }
   prepareServiceDetails(): void {
-    console.log(this.detailsServiceReceive);
-    this.cards.sort((a, b) => a.id - b.id);
-    this.detailsServiceReceive.sort((a, b) => {
-      /* if (a.idDetallePedido == b.idDetallePedido) {
-          return b.idDetallePedido;
-        }*/
-      return a.idDetallePedido - b.idDetallePedido;
-    });
-    console.log(this.detailsServiceReceive);
+  
 
     const lastID = this.lastIdDetails + 1;
     let newId = lastID;
-    let newIdDetail = lastID;
+    let newIdDetail: serviceDetails[] = [];
+    let newCards: Card[] = [];
+    
 
-    for (let p = 0; p < this.cards.length; p++) {
-      this.cards[p].id = newId;
-      newId += 1;
-    }
-    if (this.clients.length > 0) {
-      for (let p = 0; p < this.detailsServiceReceive.length; p++) {
-        let before = lastID;
-        let last;
-        if (
-          p > 0 &&
-          this.detailsServiceReceive[p].idDetallePedido ==
-            this.detailsServiceReceive[p - 1].idDetallePedido
-        ) {
-          before = this.detailsServiceReceive[p].idDetallePedido;
-          this.detailsServiceReceive[p].idDetallePedido =
-            this.detailsServiceReceive[p - 1].idDetallePedido;
-          before = this.detailsServiceReceive[p].idDetallePedido;
-          last = this.detailsServiceReceive[p].idDetallePedido;
-        } else if (p == 0) {
-          last = this.detailsServiceReceive[p].idDetallePedido;
-          this.detailsServiceReceive[p].idDetallePedido = before;
-        } else if (last == this.detailsServiceReceive[p].idDetallePedido) {
-          this.detailsServiceReceive[p].idDetallePedido = before;
-        } else {
-          before += 1;
-          last = this.detailsServiceReceive[p].idDetallePedido;
-          this.detailsServiceReceive[p].idDetallePedido = before;
-        }
+    for (let p = 0; p < this.Pastcards.length; p++) {
+      let card = new Card();
+      let id = this.Pastcards[p].id;
+
+      card = this.Pastcards[p];
+      card.id = newId;
+    
+      let filter = this.detailsServiceReceive.filter(
+        (x) => x.idDetallePedido === id
+      );
+      
+      for (let det of filter) {
+        det.idDetallePedido = newId;
+        newIdDetail.push(det);
       }
-      console.log(this.detailsServiceReceive);
+      newId += 1;
+      newCards.push(card);
     }
+    this.detailsServiceReceive = newIdDetail;
+    this.cards = newCards;
+     console.log(this.cards);
+    console.log(this.detailsServiceReceive);
   }
 
   prepareDetails(): OrderDetails[] {
@@ -252,20 +308,18 @@ export class CardManagementComponent implements OnInit {
   prepareHeader(): Order {
     var newHeader = new Order();
     newHeader.idPedido = this.lastId + 1;
-    let discount = this.discount.toFixed(2);
+    let discount = this.discount;
     let total = this.total.toFixed(2);
     let payment = this.advance.toFixed(2);
     let estatus = true;
     if (total === payment) {
       estatus = false;
     }
-    if (!this.client.pkIdCliente) {
-      //doesn't exist
-    }
+    
     newHeader.idCliente = this.client.pkIdCliente;
     newHeader.nombre = this.client.nombreCliente;
     newHeader.fecha = this.formatedDate;
-    newHeader.descuento = parseFloat(discount);
+    newHeader.descuento = discount;
     newHeader.total = parseFloat(total);
     newHeader.abono = parseFloat(payment);
     newHeader.estatus = estatus;
@@ -273,30 +327,39 @@ export class CardManagementComponent implements OnInit {
   }
 
   setTransaction(): void {
-    let data = new Transaction();
-    data.orderHeader = this.prepareHeader();
-    data.orderDetails = this.prepareDetails();
-    this.prepareServiceDetails();
-    if (this.detailsServiceReceive.length > 0) {
-      data.serviceDetails = this.detailsServiceReceive;
+    if( this.client){
+      let data = new Transaction();
+      data.orderHeader = this.prepareHeader();
+      data.orderDetails = this.prepareDetails();
+      if (this.detailsServiceReceive.length > 0) {
+        data.serviceDetails = this.detailsServiceReceive;
+      }
+  
+      console.log(data.orderHeader);
+      console.log(data.orderDetails);
+      console.log(this.detailsServiceReceive);
+      this.orderService.createOrder(data).subscribe({
+        next: (res) => {
+          console.log('Registro exitoso');
+          console.log(res);
+          this.clear();
+          this.currentOrderSheet = data;
+          this.showOrderSheet = true;
+        },
+        error: (err) => {
+          console.log(err);
+          console.log(data.orderHeader);
+          console.log(data.orderDetails);
+          console.log(this.detailsServiceReceive);
+          this.badNotify = ' No se realizo el pedido';
+          this.deleteNotify();
+        },
+      });
+    }else{
+      this.badNotify=' Por favor llene todos los campos';
+      this.deleteNotify();
     }
-
-    console.log(data.orderHeader);
-    console.log(data.orderDetails);
-    console.log(this.detailsServiceReceive);
-    this.orderService.createOrder(data).subscribe({
-      next: (res) => {
-        console.log('Registro exitoso');
-        console.log(res);
-        this.clear();
-      },
-      error: (err) => {
-        console.log(err);
-        console.log(data.orderHeader);
-        console.log(data.orderDetails);
-        console.log(this.detailsServiceReceive);
-      },
-    });
+   
   }
 
   clear(): void {
@@ -306,7 +369,9 @@ export class CardManagementComponent implements OnInit {
     this.total = 0;
     this.totalHidden = 0;
     this.advance = 0;
+    this.labour = 0;
     this.cards = [];
     this.detailsServiceReceive = [];
+    this.hijoComponent.clearClient();
   }
 }

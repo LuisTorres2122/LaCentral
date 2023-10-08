@@ -96,21 +96,21 @@
         Creación Pedido
       </li>
     </a>
+    <a routerLink="/erp/busqueda">
       <li
         class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
       >
-        <a href="">Busqueda Pedido</a>
+        Busqueda Pedidos
       </li>
-      <li
-        class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
-      >
-        <a href="">Pedidos Pendientes</a>
-      </li>
-      <li
-        class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
-      >
-        <a href="">BackUps</a>
-      </li>
+    </a>
+      <a routerLink="/erp/pendiente">
+        <li
+          class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
+        >
+          Pedidos Pendientes
+        </li>
+      </a>
+    
     </ul>
     <button
       class="text-lg font-bold p-2 w-full border-white  border-b-2"
@@ -153,10 +153,13 @@
         'transition duration-700  hidden': !toggleReporters
       }"
     >
-      <Li
+    <a routerLink="/erp/reporte">
+      <li
         class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
-        ><a href="">Pedidos</a></Li
       >
+        Pedidos
+      </li>
+    </a>
     </ul>
     <button class="text-lg font-bold p-2 w-full border-white  border-b-2"
     (click)="logOut()">

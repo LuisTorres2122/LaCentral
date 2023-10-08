@@ -1,0 +1,214 @@
+<main>
+    <section class="my-5"
+    [ngClass]="{
+        'opacity-30': toggleUpd 
+      }">
+        <h1 class="text-5xl flex justify-center font-playfair">Ordenes Pendientes</h1>
+      </section>
+    <section class="mt-14"
+    [ngClass]="{
+        'opacity-30': toggleUpd 
+      }">
+        <table class="w-5/6 text-sm text-left mx-auto">
+            <thead class="text-sm bold text-white uppercase bg-enmarcadora-principal">
+              <tr>
+                <th scope="col" class="px-4 py-3" *ngFor="let header of headers">
+                  {{ header }}
+                </th>
+                <th scope="col" class="px-4 py-3">
+                  <span class="sr-only">Actions</span>
+                </th>
+              </tr>
+            </thead>
+    
+            <tbody *ngFor="let element of elements">
+              <tr class="border-b">
+                <td  class="px-4 py-3">
+                  {{ element.idPedido }}
+                </td>
+                <td  class="px-4 py-3">
+                    {{ element.idCliente }}
+                  </td>
+                  <td  class="px-4 py-3">
+                    {{ element.nombre }}
+                  </td>
+                  <td  class="px-4 py-3">
+                    {{ element.fecha }}
+                  </td>
+                  <td  class="px-4 py-3">
+                    {{ element.descuento | currency:'Q' }}
+                  </td>
+                  <td  class="px-4 py-3">
+                    {{ element.total | currency:'Q' }}
+                  </td>
+                  <td  class="px-4 py-3">
+                    {{ element.abono | currency:'Q' }}
+                  </td>
+                  <td  class="px-4 py-3">
+                    {{ element.estatus }}
+                  </td>
+    
+                <td class="px-4 py-3 flex items-center justify-end">
+                  <button
+                    (click)="
+                      switchToggleOptions(elements.indexOf(element))
+                    "
+                    class="inline-flex items-center text-sm font-medium p-1.5 text-center hover:text-gray-400 rounded-lg focus:outline-none"
+                    type="button"
+                  >
+                    <svg
+                      class="w-5 h-5"
+                      aria-hidden="true"
+                      fill="currentColor"
+                      viewbox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
+                      />
+                    </svg>
+                  </button>
+    
+                  <div
+                    class="z-10 w-44 bg-white rounded divide-y divide-gray-300 shadow absolute mt-15 mr-10"
+                    *ngIf="toggleOpts[elements.indexOf(element)]"
+                  >
+                    <ul class="py-1 text-sm">
+                      <li>
+                        <button
+                          (click)="
+                            transferData(
+                              element,
+                              elements.indexOf(element)
+                            )
+                          "
+                          type="button"
+                          class="flex w-full items-center py-2 px-4 text-gray-700 hover:bg-gray-600 hover:text-white"
+                        >
+                          <svg
+                            class="w-5 h-5 mr-2"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewbox="0 0 20 20"
+                            fill="currentColor"
+                            aria-hidden="true"
+                          >
+                            <path
+                              d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
+                            />
+                            <path
+                              fill-rule="evenodd"
+                              clip-rule="evenodd"
+                              d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                            />
+                          </svg>
+                          Editar
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    </section>
+    <section>
+        <div *ngIf="toggleUpd">
+            <div
+              class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+              [ngClass]="{
+                'absolute flex justify-center items-center': toggleUpd,
+                hidden: !toggleUpd
+              }"
+            >
+              <div class="relative p-4 w-full max-w-2xl max-h-full">
+                <div
+                  class="relative p-4 bg-enmarcadora-principal rounded-lg shadow sm:p-5"
+                >
+                  <!-- Modal header -->
+                  <div
+                    class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5"
+                  >
+                    <h3 class="text-lg font-semibold text-white">Actualizar</h3>
+                    <button
+                      type="button"
+                      (click)="closeUpdateToggle()"
+                      class="bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center hover:text-gray-400 text-white"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="w-5 h-5"
+                        fill="currentColor"
+                        viewbox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      <span class="sr-only">Close modal</span>
+                    </button>
+                  </div>
+                  <!-- Modal body -->
+                  <form [formGroup]="formUpdate" (ngSubmit)="updateOrder()">
+                    <div class="grid gap-4 mb-4 sm:grid-cols-2">
+                      <div class="col-span-2">
+                        <label class="block mb-2 text-sm font-medium text-white"
+                          >Total</label
+                        >
+                        <input
+                          type="text"
+                          formControlName="total"
+                          class="border text-sm rounded-lg block w-full p-2.5 text-white font-semibold"
+                        
+                         
+                        />
+                        <app-alert
+                          [hidden]="
+                          formUpdate.get('total')?.valid ||
+                          formUpdate.get('total')?.pristine
+                          "
+                          alert="El nombre no es valido"
+                        ></app-alert>
+                        <label class="mt-2 block mb-2 text-sm font-medium text-white"
+                          >Abono</label
+                        >
+                        <input
+                          type="number"
+                          formControlName="amount"
+                          class="border text-sm rounded-lg block w-full p-2.5 "
+                          placeholder="Escribir el monto"
+                          
+                        />
+                        <app-alert
+                          [hidden]="
+                          formUpdate.get('amount')?.valid ||
+                          formUpdate.get('amount')?.pristine
+                          "
+                          alert="El monto no es valido"
+                        ></app-alert>
+                      </div>
+                     
+                      
+                      
+                    </div>
+                    <button
+                      [disabled]="formUpdate.invalid"
+                      [ngClass]="{
+                        'bg-red-800 text-white': formUpdate.invalid,
+                        ' bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white ':
+                          !formUpdate.invalid
+                      }"
+                      type="submit"
+                      class="flex items-center justify-center rounded-lg text-sm px-4 py-2"
+                    >
+                      Actualizar Registro
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+    </section>
+</main>

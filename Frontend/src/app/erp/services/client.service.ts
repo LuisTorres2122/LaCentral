@@ -16,8 +16,8 @@ export class ClientService {
     return this.http.get<Client>(this.urlapi);
   }
 
-  public createClient(client: Client): Observable<any>{
-    return this.http.post<any>(this.urlapi, client);
+  public createClient(client: Client): Observable<Client>{
+    return this.http.post<Client>(this.urlapi, client);
   }
 
   public updateClient(id:number, client: Client): Observable<any>{

@@ -26,6 +26,10 @@ import { RegisterComponent } from './components/forms/register/register.componen
 import { AlertUserComponent } from './components/alert-user/alert-user.component';
 import { OrderSheetComponent } from './components/order-sheet/order-sheet.component';
 import { PrintComponent } from './components/print/print.component';
+import { BrowserOrderComponent } from './pages/browser-order/browser-order.component';
+import { PendingComponent } from './pages/pending/pending.component';
+import { ReportComponent } from './pages/report/report.component';
+import { NgxPrintModule } from 'ngx-print';
 
 
 
@@ -51,14 +55,18 @@ import { PrintComponent } from './components/print/print.component';
     RegisterComponent,
     AlertUserComponent,
     OrderSheetComponent,
-    PrintComponent
+    PrintComponent,
+    BrowserOrderComponent,
+    PendingComponent,
+    ReportComponent
   ],
   imports: [
     CommonModule,
     ERPRoutingModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPrintModule
   ],
   exports:[
     AlertComponent, 

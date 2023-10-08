@@ -1,19 +1,35 @@
-<main class="h-[calc(h-full-50px)] w-full flex flex-col md:flex-row px-10 bg-transparent">
+<main class="z-10 h-5/6 w-full flex flex-col md:flex-row px-10 bg-transparent">
   <section class="w-[calc(w-full-50px)] h-full">
     <img
-      (click)="showPicture()"
       class="cover mx-auto"
       src="{{ base64ToImage() }}"
       alt=""
     />
   </section>
-  <section class="w-full h-full p-10 bg-gray-100">
+  <section class="w-full h-full p-10 flex flex-col justify-center gap-10 ">
     <div *ngIf="piece.tituloObra" class="flex flex-row gap-3">
       <h3 class="text-3xl">Titulo</h3>
-      <p class="text-1xl w-full">{{ piece.tituloObra }}</p>
+      <p class="text-1xl w-full my-auto">{{ piece.tituloObra }}</p>
+    </div>
+    <div *ngIf="piece.autorObra" class="flex flex-row gap-3">
+      <h3 class="text-3xl">Autor</h3>
+      <p class="text-1xl w-full my-auto">{{ piece.autorObra }}</p>
+    </div>
+    <div *ngIf="piece.tecnicaObra" class="flex flex-row gap-3">
+      <h3 class="text-3xl">Tecnica</h3>
+      <p class="text-1xl w-full my-auto">{{ piece.tecnicaObra }}</p>
+    </div>
+    <div *ngIf="piece.precioObra" class="flex flex-row gap-3">
+      <h3 class="text-3xl">Medida</h3>
+      <p class="text-1xl w-full my-auto">{{ piece.precioObra }}</p>
+    </div>
+    <div *ngIf="piece.precioObra" class="flex flex-row gap-3">
+      <h3 class="text-3xl">Precio</h3>
+      <p class="text-1xl w-full my-auto">{{ piece.precioObra }}</p>
     </div>
   </section>
-  <button  class=" absolute right-0 ">
+  <button  class=" absolute md:right-0 right-0 top-24 "
+  (click)="hidePicture()">
     <svg
       class="w-8 md:w-20"
       viewBox="0 0 24 24"

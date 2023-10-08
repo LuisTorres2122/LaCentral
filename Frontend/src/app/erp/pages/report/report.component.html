@@ -1,0 +1,136 @@
+<main id="main" class="flex flex-row justify-between p-5 ">
+  <section class="my-5 w-full clas flex flex-col">
+    <section>
+      <h1 class="text-5xl flex justify-center font-playfair">Reporte Pedido</h1>
+    </section>
+    <form
+      class="flex justify-center items-center w-full mt-10 gap-2"
+      [formGroup]="reportForm"
+      (ngSubmit)="chargeData()"
+    >
+      <label for="firstDate">Fecha Inicio</label>
+      <input
+        type="date"
+        name="firstDate"
+        formControlName="firstDate"
+        class="border-2 border-enmarcadora-principal text-sm rounded-lg text-black block w-40 p-1"
+      />
+      <label for="lastDate" class="pl-5">Fecha Fin</label>
+      <input
+        type="date"
+        name="lastDate"
+        formControlName="lastDate"
+        class="border-2 border-enmarcadora-principal text-sm rounded-lg text-black block w-40 p-1"
+      />
+      <button
+        type="submit"
+        class="ml-5 border-2 border-enmarcadora-principal rounded-full w-16 bg-enmarcadora-principal text-white font-semibold hover:text-enmarcadora-principal hover:bg-white"
+        [disabled]="reportForm.invalid"
+        [ngClass]="{
+          'bg-red-800 ': reportForm.invalid,
+          '  bg-enmarcadora-principal   hover:bg-white hover:text-enmarcadora-principal':
+            !reportForm.invalid
+        }"
+      >
+        Buscar
+      </button>
+      <button
+      [ngClass]="{'hidden': !showPrint,
+    'block':showPrint}"  
+       class="flex justify-center gap-1 items-center text-sm font-semibold text-enmarcadora-principal hover:text-white  hover:bg-enmarcadora-principal rounded-lg p-1"
+       type = "button"
+       printSectionId="main" [useExistingCss]="true" about="Reporte"  ngxPrint>
+        <svg
+         class="w-6"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M6 10C5.44772 10 5 10.4477 5 11C5 11.5523 5.44772 12 6 12C6.55229 12 7 11.5523 7 11C7 10.4477 6.55229 10 6 10Z"
+            fill="currentColor"
+          />
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M7 1C5.89543 1 5 1.89543 5 3V7H4C2.34315 7 1 8.34315 1 10V17C1 18.6569 2.34315 20 4 20H5V21C5 22.1046 5.89543 23 7 23H17C18.1046 23 19 22.1046 19 21V20H20C21.6569 20 23 18.6569 23 17V10C23 8.34315 21.6569 7 20 7H19V3C19 1.89543 18.1046 1 17 1H7ZM17 7H7V4C7 3.44772 7.44771 3 8 3H16C16.5523 3 17 3.44772 17 4V7ZM7 14C5.89543 14 5 14.8954 5 16V18H4C3.44772 18 3 17.5523 3 17V10C3 9.44772 3.44772 9 4 9H20C20.5523 9 21 9.44772 21 10V17C21 17.5523 20.5523 18 20 18H19V16C19 14.8954 18.1046 14 17 14H7ZM16 16C16.5523 16 17 16.4477 17 17V20C17 20.5523 16.5523 21 16 21H8C7.44772 21 7 20.5523 7 20V17C7 16.4477 7.44771 16 8 16H16Z"
+            fill="currentColor"
+          />
+        </svg>
+        Imprimir
+      </button>
+    </form>
+    <section class="mt-2">
+      <table id="contentTable" class="w-5/6 text-sm text-left mx-auto">
+        <thead
+          class="text-sm bold text-white uppercase bg-enmarcadora-principal"
+        >
+          <tr>
+            <th scope="col" class="px-4 py-3" *ngFor="let header of headers">
+              {{ header }}
+            </th>
+            <th scope="col" class="px-4 py-3">
+              <span class="sr-only">Actions</span>
+            </th>
+          </tr>
+        </thead>
+
+        <tbody *ngFor="let element of elements">
+          <tr class="border-b">
+            <td class="px-4 py-3">
+              {{ element.idPedido }}
+            </td>
+            <td class="px-4 py-3">
+              {{ element.idCliente }}
+            </td>
+            <td class="px-4 py-3">
+              {{ element.nombre }}
+            </td>
+            <td class="px-4 py-3">
+              {{ element.fecha }}
+            </td>
+            <td class="px-4 py-3">
+              {{ element.descuento | currency:'Q' }}
+            </td>
+            <td class="px-4 py-3">
+              {{ element.total | currency:'Q'}}
+            </td>
+            <td class="px-4 py-3">
+              {{ element.abono | currency:'Q' }}
+            </td>
+            <td class="px-4 py-3">
+              {{ element.estatus }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </section>
+  <aside id="asideTable" class="w-72 flex flex-col items-center mt-36">
+    <h2
+      class="mt-2 p-0.5 w-full h-10 text-white text-center text-2xl font-semibold font-mono bg-enmarcadora-principal"
+    >
+      Resumen
+    </h2>
+    <div
+      class="flex flex-col gap-5 w-full border-2 border-enmarcadora-principal p-3"
+    >
+      <div  class="flex flex-row justify-between">
+        <span>Inicio:</span>
+        <span>{{resume[0]}}</span>
+      </div>
+      <div class="flex flex-row justify-between">
+        <span>Fin:</span>
+        <span>{{resume[1]}}</span>
+      </div>
+      <div class="flex flex-row justify-between">
+        <span>Registros:</span>
+        <span>{{resume[2]}}</span>
+      </div>
+      <div class="flex flex-row justify-between">
+        <span>Total:</span>
+        <span>{{resume[3] | currency:'Q'}}</span>
+      </div>
+    </div>
+  </aside>
+</main>

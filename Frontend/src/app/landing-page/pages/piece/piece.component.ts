@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Piece } from '../../models/piece.model';
 
 @Component({
@@ -7,8 +7,9 @@ import { Piece } from '../../models/piece.model';
 })
 export class PieceComponent {
   pieceId: string | null;
-  show: boolean = false;
+  @Output() close = new EventEmitter<boolean>();
   @Input() piece: Piece;
+  
 
  
 
@@ -29,13 +30,9 @@ export class PieceComponent {
     window.scrollTo(0, 0);
   }
 
-  showPicture(): void {
-  
-    this.show = true;
-  }
 
   hidePicture(): void {
-    this.show = false;
+    this.close.emit(false);
   }
 
 }

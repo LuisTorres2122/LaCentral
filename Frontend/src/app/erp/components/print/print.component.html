@@ -1,8 +1,12 @@
-<main class="h-screen">
+<main class="h-screen w-full">
   <section class="h-20 mt-5">
     <nav class="flex flex-row justify-evenly h-14 p-3">
-      <button class="flex justify-center gap-1 items-center text-lg font-semibold text-enmarcadora-principal hover:text-white  hover:bg-enmarcadora-principal rounded-lg p-5">Regresar</button>
-      <button class="flex justify-center gap-1 items-center text-lg font-semibold text-enmarcadora-principal hover:text-white  hover:bg-enmarcadora-principal rounded-lg p-5">
+      <button
+      (click)="closeShow()"
+       class="flex justify-center gap-1 items-center text-lg font-semibold text-enmarcadora-principal hover:text-white  hover:bg-enmarcadora-principal rounded-lg p-5">Regresar</button>
+      <button class="flex justify-center gap-1 items-center text-lg font-semibold text-enmarcadora-principal hover:text-white  hover:bg-enmarcadora-principal rounded-lg p-5"
+      printSectionId="orderSheet" [useExistingCss]="true" ngxPrint
+      >
         <svg
          class="w-6"
           viewBox="0 0 24 24"
@@ -25,6 +29,9 @@
     </nav>
   </section>
   <section class="flex justify-center">
-    <app-order-sheet></app-order-sheet>
+    <app-order-sheet
+     id="orderSheet"
+     [data]="data"
+     ></app-order-sheet>
   </section>
 </main>

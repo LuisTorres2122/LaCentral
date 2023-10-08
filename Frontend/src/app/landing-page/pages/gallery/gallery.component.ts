@@ -19,6 +19,10 @@ export class GalleryComponent {
    
   }
 
+  closeDetails(status: boolean):void{
+    this.showDetailsPiece= status;
+  }
+
   ngAfterViewInit(): void {
     this.scrollToTop();
   }

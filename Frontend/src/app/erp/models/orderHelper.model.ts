@@ -30,3 +30,8 @@ export class updateCards{
     cards: Card[];
     Details: serviceDetails[];
 }
+
+export class reportRequest{
+    firstDate: string;
+    lastDate: string;
+}

@@ -101,11 +101,13 @@ export class ClientComponent {
         this.clients.push(newClient);
         this.notify = 'creación de cliente';
         this.deleteNotify();
+        console.log(response.pkIdCliente);
       },
       error: (err) => {
         console.log(err);
         this.badNotify = 'creación de cliente';
         this.deleteNotify();
+        
       },
     });
     this.clearInputs();

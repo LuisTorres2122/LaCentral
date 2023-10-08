@@ -35,5 +35,6 @@
 <div *ngIf="showDetailsPiece">
 <app-piece
 [piece] = "selectedPiece"
+(close)="closeDetails($event)"
 ></app-piece>
 </div>

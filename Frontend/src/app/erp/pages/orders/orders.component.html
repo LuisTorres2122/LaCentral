@@ -12,13 +12,16 @@
       class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5"
       type="text"
       name="client"
+      
       [(ngModel)]="client"
       (ngModelChange)="findClient()"
     />
     <button
     (click)="prepareClient()"
       class="border-2 border-enmarcadora-principal rounded-full w-16 bg-enmarcadora-principal text-white font-semibold hover:text-enmarcadora-principal hover:bg-white"
-    >
+      [disabled]="clientDisabled"
+      [ngClass]="{'bg-red-800 hover:bg-red-800 hover:text-white':clientDisabled}"
+      >
       crear
     </button>
   </div>

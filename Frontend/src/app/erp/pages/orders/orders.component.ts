@@ -21,6 +21,7 @@ import { serviceDetails } from '../../models/order.model';
   templateUrl: './orders.component.html',
 })
 export class OrdersComponent {
+  @Input() allowClient:boolean;
   client: string;
   @Output() cardEvent = new EventEmitter<Card>();
   @Output() detailsServiceSent = new EventEmitter<serviceDetails[]>();
@@ -72,6 +73,8 @@ export class OrdersComponent {
   selectedClient: Client;
   detailsService: serviceDetails[] = [];
   @Input() cardId: number;
+  detailsId: number=0;
+  clientDisabled: boolean = false;
 
   framedCard: Card[] = [];
   @Input() utility: Utility[];
@@ -142,6 +145,10 @@ export class OrdersComponent {
     price: new FormControl('', Validators.required),
   });
 
+  clearClient():void {
+    this.client = "";
+  }
+
   findClient(): void {
     this.filterClients = this.clients.filter((client: Client) => {
       return client.nombreCliente
@@ -151,17 +158,26 @@ export class OrdersComponent {
     });
     if (this.client.length == 0) {
       this.filterClients = [];
+      this.clientDisabled=false;
     }
   }
 
   prepareClient(): void {
     let client = new Client();
-    if (this.client.length >= 0) {
-      this.filterClients = [];
-      client.nombreCliente = this.client;
-      this.selectedClient = client;
-      this.sendClient.emit(this.selectedClient);
+    if(!this.clientDisabled){
+      if (this.client) {
+        this.filterClients = [];
+        client.nombreCliente = this.client;
+        this.selectedClient = client;
+        
+        this.clientDisabled=true;
+        this.sendClient.emit(this.selectedClient);
+      }else{
+        this.badNotify='No se escribio el nombre';
+        this.deleteNotify();
+      }
     }
+  
   }
 
   selectClient(client: Client): void {
@@ -169,6 +185,7 @@ export class OrdersComponent {
     this.client = client.nombreCliente;
     this.filterClients = [];
     this.sendClient.emit(this.selectedClient);
+    this.clientDisabled=true;
   }
 
   addCardRestauration(): void {
@@ -188,7 +205,7 @@ export class OrdersComponent {
     this.toggleRestauration = false;
   }
   addCardinstalation(): void {
-    let formInstalation = this.ventaneriaForm.value;
+    let formInstalation = this.instalationForm.value;
     let cardSend = new Card();
     if (formInstalation && formInstalation.description) {
       cardSend.description = formInstalation.description;
@@ -200,7 +217,7 @@ export class OrdersComponent {
     this.cardId += 1;
     cardSend.title = 'Instalación';
     this.cardEvent.emit(cardSend);
-    this.clearForm(this.ventaneriaForm);
+    this.clearForm(this.instalationForm);
     this.toggleInstalation = false;
   }
 
@@ -224,12 +241,14 @@ export class OrdersComponent {
   addCardFramed(): void {
     let stringFramed: string[] = [];
     let details: serviceDetails[] = [];
+    let currentDetailsId = this.cardId + 1;
     let stringCode = '';
     let line = 0;
     let cardSend = new Card();
     let total = this.FramedForm.get('total')?.value;
     let form = this.FramedForm.value;
-
+    
+  
     if(form){
       if(form.border){
         stringFramed[0] = `Enmarcado: ${form.name} ${form.measure} borde ${form.border}" \n`;
@@ -252,6 +271,7 @@ export class OrdersComponent {
         let detail = new serviceDetails();
         line += 1;
 
+        detail.idDetallePedido = currentDetailsId;
         detail.linea = line;
         detail.idMaterial = 1;
         detail.nombre =
@@ -272,6 +292,7 @@ export class OrdersComponent {
         let detail = new serviceDetails();
         line += 1;
 
+        detail.idDetallePedido = currentDetailsId;
         detail.linea = line;
         detail.idMaterial = 2;
         detail.nombre = 'Vidrio Tipo: ' + this.glassAdded[glass].type;
@@ -290,6 +311,7 @@ export class OrdersComponent {
         let detail = new serviceDetails();
         line += 1;
 
+        detail.idDetallePedido = currentDetailsId;
         detail.linea = line;
         detail.idMaterial = 3;
         detail.nombre = 'Filete Tipo: ' + this.filletAdded[fillet].type;
@@ -308,6 +330,7 @@ export class OrdersComponent {
         let detail = new serviceDetails();
         line += 1;
 
+        detail.idDetallePedido = currentDetailsId;
         detail.linea = line;
         detail.idMaterial = 4;
         detail.nombre = 'Marco Codigo: ' + this.frameAdded[frame].code;
@@ -342,11 +365,14 @@ export class OrdersComponent {
         (stringFramed[5] == undefined ? '' : '\n ' + stringFramed[5]);
       cardSend.total = parseFloat(total);
     }
-    cardSend.id = this.cardId + 1;
+    
+    cardSend.id = currentDetailsId;
     console.log(cardSend);
     this.cardId += 1;
     this.cardEvent.emit(cardSend);
     this.detailsServiceSent.emit(details);
+    console.log(cardSend);
+    console.log(details);
     this.clearFramed();
   }
 

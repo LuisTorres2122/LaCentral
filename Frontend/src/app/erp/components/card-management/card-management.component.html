@@ -1,6 +1,10 @@
-<main *ngIf="!togglePrint" class="flex flex-row my-5">
+<div *ngIf="badNotify.length > 0">
+  <app-alert-user [type]="badNotify"></app-alert-user>
+</div>
+<main *ngIf="!showOrderSheet" class="flex flex-row my-5">
   <section class="w-5/6">
     <app-orders
+    #OrdersC
       [passepatouts]="passepatouts"
       [glasses]="glasses"
       [fillets]="fillets"
@@ -21,9 +25,11 @@
       </h2>
       <section>
         <app-order-card
+       
           [Cards]="cards"
           [Details]="detailsServiceReceive"
           (updatedData)="UpdateCars($event)"
+          (sendPastCard)="recievePastCards($event)"
         ></app-order-card>
       </section>
       <section
@@ -57,6 +63,14 @@
       <section
         class="flex flex-col py-4 px-2 border-b-2 border-enmarcadora-principal"
       >
+      <label class="font-bold self-stretch" for="">Mano de Obra</label>
+        <input
+          class="w-5/6 border-2 border-enmarcadora-principal rounded px-2"
+          type="number"
+          name  = "labour"
+          [(ngModel)] = "labour"
+          (ngModelChange)="onLabourChange($event)"
+        />
         <label class="font-bold self-stretch" for="">Anticipo</label>
         <input
           class="w-5/6 border-2 border-enmarcadora-principal rounded px-2"
@@ -124,7 +138,10 @@
     </div>
   </aside>
 </main>
-<div *ngIf="togglePrint">
-  <app-print></app-print>
+<div *ngIf="showOrderSheet">
+  <app-print
+  [data]="currentOrderSheet"
+  [show]="showOrderSheet"
+  ></app-print>
 </div>
 
