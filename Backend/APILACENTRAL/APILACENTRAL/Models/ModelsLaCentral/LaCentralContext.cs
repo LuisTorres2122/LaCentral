@@ -39,7 +39,9 @@ public partial class LaCentralContext : DbContext
 
     public virtual DbSet<Tblvidrio> Tblvidrios { get; set; }
 
-    
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseMySql("server=localhost;port=3306;database=LaCentral;user=root;password=12345", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.26-mysql"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -67,7 +69,9 @@ public partial class LaCentralContext : DbContext
 
         modelBuilder.Entity<Tbldetallepedido>(entity =>
         {
-            entity.HasKey(e => e.PkIdDetallePedido).HasName("PRIMARY");
+            entity.HasKey(e => new { e.PkIdDetallePedido, e.FkIdPedido })
+                .HasName("PRIMARY")
+                .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
             entity
                 .ToTable("tbldetallepedido")
@@ -77,10 +81,10 @@ public partial class LaCentralContext : DbContext
             entity.HasIndex(e => e.FkIdPedido, "fk_idPedido");
 
             entity.Property(e => e.PkIdDetallePedido).HasColumnName("pk_idDetallePedido");
+            entity.Property(e => e.FkIdPedido).HasColumnName("fk_idPedido");
             entity.Property(e => e.DescripcionServicio)
                 .HasMaxLength(300)
                 .HasColumnName("descripcionServicio");
-            entity.Property(e => e.FkIdPedido).HasColumnName("fk_idPedido");
             entity.Property(e => e.PrecioPedido)
                 .HasPrecision(10, 2)
                 .HasColumnName("precioPedido");
@@ -107,18 +111,13 @@ public partial class LaCentralContext : DbContext
             entity.Property(e => e.FkIdDetallePedido).HasColumnName("fk_idDetallePedido");
             entity.Property(e => e.Linea).HasColumnName("linea");
             entity.Property(e => e.ColorMaterial)
-                .HasMaxLength(25)
+                .HasMaxLength(50)
                 .HasColumnName("colorMaterial");
             entity.Property(e => e.FkIdMaterial).HasColumnName("fk_idMaterial");
-            entity.Property(e => e.NombreMaterial).HasMaxLength(25);
+            entity.Property(e => e.NombreMaterial).HasMaxLength(100);
             entity.Property(e => e.PrecioMaterial)
                 .HasPrecision(10, 2)
                 .HasColumnName("precioMaterial");
-
-            entity.HasOne(d => d.FkIdDetallePedidoNavigation).WithMany(p => p.Tbldetalleservicios)
-                .HasForeignKey(d => d.FkIdDetallePedido)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("tbldetalleservicio_ibfk_1");
 
             entity.HasOne(d => d.FkIdMaterialNavigation).WithMany(p => p.Tbldetalleservicios)
                 .HasForeignKey(d => d.FkIdMaterial)
@@ -137,7 +136,9 @@ public partial class LaCentralContext : DbContext
 
             entity.HasIndex(e => e.FkIdCliente, "fk_idCliente");
 
-            entity.Property(e => e.PkIdPedido).HasColumnName("pk_idPedido");
+            entity.Property(e => e.PkIdPedido)
+                .ValueGeneratedNever()
+                .HasColumnName("pk_idPedido");
             entity.Property(e => e.AbonoPedido)
                 .HasPrecision(10, 2)
                 .HasColumnName("abonoPedido");
@@ -198,7 +199,9 @@ public partial class LaCentralContext : DbContext
             entity.HasIndex(e => e.FKIdMaterial, "fK_idMaterial");
 
             entity.Property(e => e.PkIdMarco).HasColumnName("pk_idMarco");
-            entity.Property(e => e.CodigoMarco).HasColumnName("codigoMarco");
+            entity.Property(e => e.CodigoMarco)
+                .HasMaxLength(50)
+                .HasColumnName("codigoMarco");
             entity.Property(e => e.FKIdMaterial).HasColumnName("fK_idMaterial");
             entity.Property(e => e.PrecioMarco)
                 .HasPrecision(10, 2)
@@ -251,8 +254,7 @@ public partial class LaCentralContext : DbContext
             entity.Property(e => e.TituloObra)
                 .HasMaxLength(50)
                 .HasColumnName("tituloObra");
-            entity.Property(e => e.UrlObra)
-                .HasColumnName("urlObra");
+            entity.Property(e => e.UrlObra).HasColumnName("urlObra");
         });
 
         modelBuilder.Entity<Tblpassepartout>(entity =>
@@ -267,12 +269,11 @@ public partial class LaCentralContext : DbContext
             entity.HasIndex(e => e.FKIdMaterial, "fK_idMaterial");
 
             entity.Property(e => e.PkIdPassepartout).HasColumnName("pk_idPassepartout");
-            entity.Property(e => e.CasaPassepartout)
-                .HasMaxLength(25)
-                .HasColumnName("casaPassepartout");
-            entity.Property(e => e.CodigoPassepartout).HasColumnName("codigoPassepartout");
+            entity.Property(e => e.CodigoPassepartout)
+                .HasMaxLength(50)
+                .HasColumnName("codigoPassepartout");
             entity.Property(e => e.ColorPassepartout)
-                .HasMaxLength(15)
+                .HasMaxLength(30)
                 .HasColumnName("colorPassepartout");
             entity.Property(e => e.FKIdMaterial).HasColumnName("fK_idMaterial");
 
@@ -296,7 +297,7 @@ public partial class LaCentralContext : DbContext
                 .HasMaxLength(25)
                 .HasColumnName("emailUsuario");
             entity.Property(e => e.PasswordUsuario)
-                .HasMaxLength(25)
+                .HasMaxLength(255)
                 .HasColumnName("passwordUsuario");
         });
 

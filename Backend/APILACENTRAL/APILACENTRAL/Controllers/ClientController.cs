@@ -44,9 +44,9 @@ namespace APILACENTRAL.Controllers
 
         }
 
-       [Authorize]
+      
         [HttpPost]
-        public async Task<ActionResult> postClient(Tblcliente client)
+        public async Task<ActionResult<Tblcliente>> postClient(Tblcliente client)
         {
             var cretedClient = await _clientService.addClient(client);
             return Ok(cretedClient);

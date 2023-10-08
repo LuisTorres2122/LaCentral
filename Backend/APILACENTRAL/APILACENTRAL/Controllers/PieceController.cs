@@ -1,5 +1,6 @@
 ﻿using APILACENTRAL.Models.ModelsLaCentral;
 using APILACENTRAL.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APILACENTRAL.Controllers
@@ -28,7 +29,7 @@ namespace APILACENTRAL.Controllers
             return BadRequest(new { message = "table is empty" });
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Tblobra>> getPiece(int id)
         {
@@ -42,7 +43,7 @@ namespace APILACENTRAL.Controllers
 
         }
 
-        // [Authorize]
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> postClient(Tblobra piece)
         {
@@ -50,7 +51,7 @@ namespace APILACENTRAL.Controllers
             return Ok(cretedPiece);
         }
 
-        // [Authorize]
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> putClient(int id, Tblobra piece)
         {
@@ -67,7 +68,7 @@ namespace APILACENTRAL.Controllers
             return pieceNotFound(id);
         }
 
-        // [Authorize]
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> deleteClient(int id)
         {

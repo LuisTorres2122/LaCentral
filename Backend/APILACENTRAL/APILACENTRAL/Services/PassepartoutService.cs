@@ -26,7 +26,7 @@ namespace APILACENTRAL.Services
           PkIdPassepartout = passe.PkIdPassepartout,
           NombreMaterial = material.NombreMaterial,
           CodigoPassepartout = passe.CodigoPassepartout,
-          CasaPassepartout = passe.CasaPassepartout,
+
           ColorPassepartout = passe.ColorPassepartout
 
       })
@@ -46,7 +46,7 @@ namespace APILACENTRAL.Services
             var newPassepartout = new Tblpassepartout();
             newPassepartout.FKIdMaterial = passepartout.FKIdMaterial;
             newPassepartout.CodigoPassepartout = passepartout.CodigoPassepartout;
-            newPassepartout.CasaPassepartout = passepartout.CasaPassepartout;
+        
             newPassepartout.ColorPassepartout = passepartout.ColorPassepartout;
             _laCentralContext.Tblpassepartouts.Add(newPassepartout);
             await _laCentralContext.SaveChangesAsync();
@@ -61,7 +61,7 @@ namespace APILACENTRAL.Services
             {
                 PassepartoutFound.FKIdMaterial = passepartout.FKIdMaterial;
                 PassepartoutFound.CodigoPassepartout = passepartout.CodigoPassepartout;
-                PassepartoutFound.CasaPassepartout = passepartout.CasaPassepartout;
+               
                 PassepartoutFound.ColorPassepartout = passepartout.ColorPassepartout;
                 await _laCentralContext.SaveChangesAsync();
             }

@@ -13,6 +13,7 @@ public partial class Tblfilete
     public string TipoFilete { get; set; } = null!;
 
     public decimal PrecioFilete { get; set; }
+
     [JsonIgnore]
     public virtual Tblmaterial FKIdMaterialNavigation { get; set; } = null!;
 }

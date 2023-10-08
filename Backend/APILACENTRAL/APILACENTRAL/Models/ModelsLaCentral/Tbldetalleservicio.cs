@@ -17,8 +17,7 @@ public partial class Tbldetalleservicio
     public decimal? PrecioMaterial { get; set; }
 
     public string? ColorMaterial { get; set; }
-    [JsonIgnore]
-    public virtual Tbldetallepedido FkIdDetallePedidoNavigation { get; set; } = null!;
+
     [JsonIgnore]
     public virtual Tblmaterial FkIdMaterialNavigation { get; set; } = null!;
 }

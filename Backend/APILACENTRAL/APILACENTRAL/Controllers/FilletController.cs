@@ -19,7 +19,7 @@ namespace APILACENTRAL.Controllers
             _materialService = materialService;
         }
 
-        // [Authorize]
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SFilletDTO>>> getFillets()
         {
@@ -33,7 +33,7 @@ namespace APILACENTRAL.Controllers
         }
 
 
-    //    [Authorize]
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Tblvidrio>> getFillet(int id)
         {
@@ -47,7 +47,7 @@ namespace APILACENTRAL.Controllers
 
         }
 
-      //  [Authorize]
+      [Authorize]
         [HttpPost]
         public async Task<IActionResult> postGlass(FilletDTO fillet)
         {
@@ -62,7 +62,7 @@ namespace APILACENTRAL.Controllers
 
         }
 
-      //  [Authorize]
+      [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> putGlass(int id, FilletDTO fillet)
         {
@@ -85,7 +85,7 @@ namespace APILACENTRAL.Controllers
 
         }
 
-       // [Authorize]
+       [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> deleteGlass(int id)
         {

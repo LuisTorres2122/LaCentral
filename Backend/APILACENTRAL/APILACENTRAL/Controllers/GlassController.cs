@@ -19,7 +19,7 @@ namespace APILACENTRAL.Controllers
             _materialService = materialService;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SGlassDTO>>> getGlasses()
         {
@@ -32,7 +32,7 @@ namespace APILACENTRAL.Controllers
             return BadRequest(new { message = "table is empty" });
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Tblvidrio>> getGlass(int id)
         {
@@ -46,7 +46,7 @@ namespace APILACENTRAL.Controllers
 
         }
 
-       // [Authorize]
+       [Authorize]
         [HttpPost]
         public async Task<IActionResult> postGlass(GlassDTO glass)
         {
@@ -61,7 +61,7 @@ namespace APILACENTRAL.Controllers
             
         }
 
-       // [Authorize]
+       [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> putGlass(int id, GlassDTO glass)
         {
@@ -84,7 +84,7 @@ namespace APILACENTRAL.Controllers
 
         }
 
-       // [Authorize]
+       [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> deleteGlass(int id)
         {
@@ -97,7 +97,7 @@ namespace APILACENTRAL.Controllers
             return materialNotFound(id);
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         [Route("material")]
         public async Task<ActionResult<IEnumerable<Tblmaterial>>> getMaterials()

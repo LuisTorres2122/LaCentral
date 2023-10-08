@@ -24,23 +24,55 @@ namespace APILACENTRAL.Services
         {
             return await _laCentralContext.Tblencabezadopedidos.ToListAsync();
         }
+
+        public async Task<IEnumerable<OrderDTO>> getHeaderOrdersByName(string clientName)
+        {
+            var listOrders = await _laCentralContext.Tblencabezadopedidos.Where(x => x.NombreCliente.ToLower().Trim() == clientName.ToLower().Trim()).ToListAsync();
+            var foundedOrder = new List<OrderDTO>();
+            foreach (var order in listOrders)
+            {
+                var orderI = new OrderDTO();
+                orderI.idPedido = order.PkIdPedido;
+                orderI.idCliente = order.FkIdCliente;
+                orderI.Nombre = order.NombreCliente;
+                orderI.Fecha = order.FechaPedido;
+                orderI.Descuento = order.DescuentoPedido;
+                orderI.Total = order.TotalPedido;
+                orderI.Abono = order.AbonoPedido;
+                orderI.Estatus = order.EstatusPedido;
+                foundedOrder.Add(orderI);
+            }
+            return foundedOrder;
+        }
+
         public async Task<Tblencabezadopedido?> getHeaderOrder(int id)
         {
             return await _laCentralContext.Tblencabezadopedidos.FindAsync(id);
         }
 
-        public async Task<OrderDetailsDTO?> getDetailsOrder(int id)
+        public async Task<IEnumerable<OrderDetailsDTO>> getDetailsOrder(int id)
         {
-            var detail = await _laCentralContext.Tbldetallepedidos.FindAsync(id);
+            var detail = await _laCentralContext.Tbldetallepedidos.Where(x => x.FkIdPedido == id).ToListAsync();
+            var foundedDetail = new List<OrderDetailsDTO>();
+            if (detail is not null)
+            {
+                
+                foreach (var order in detail)
+                {
+                    var det = new OrderDetailsDTO();
+                    det.idDetallePedido = order.PkIdDetallePedido;
+                    det.idPedido = order.FkIdPedido;
+                    det.Descripcion = order.DescripcionServicio;
+                    det.Precio = order.PrecioPedido;
+                    foundedDetail.Add(det);
+                }
 
-            var foundedDetail = new OrderDetailsDTO();
+               
+            }
 
-            foundedDetail.idDetallePedido = detail.PkIdDetallePedido;
-            foundedDetail.idPedido = detail.FkIdPedido;
-            foundedDetail.Descripcion = detail.DescripcionServicio;
-            foundedDetail.Precio = detail.PrecioPedido;
 
             return foundedDetail;
+
 
         }
 
@@ -57,6 +89,30 @@ namespace APILACENTRAL.Services
             foundedDetail.Color = services.ColorMaterial;
 
             return foundedDetail;
+
+        }
+
+        public async Task<IEnumerable<OrderDTO>> getReportByDates(ReportRequest request)
+        {
+            var list = new List<Tblencabezadopedido>();
+
+            list = await _laCentralContext.Tblencabezadopedidos.Where(p => p.FechaPedido >= request.firstDate && p.FechaPedido <= request.lastDate).ToListAsync();
+
+            var newList = new List<OrderDTO>();
+            foreach (var item in list)
+            {
+                var order = new OrderDTO();
+                order.idPedido = item.PkIdPedido;
+                order.idCliente = item.FkIdCliente;
+                order.Nombre = item.NombreCliente;
+                order.Fecha = item.FechaPedido;
+                order.Descuento = item.DescuentoPedido;
+                order.Abono = item.AbonoPedido;
+                order.Total = item.TotalPedido;
+                order.Estatus = item.EstatusPedido;
+                newList.Add(order);
+            }
+            return newList;
 
         }
 

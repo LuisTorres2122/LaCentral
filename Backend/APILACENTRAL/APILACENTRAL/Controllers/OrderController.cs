@@ -18,11 +18,11 @@ namespace APILACENTRAL.Controllers
             _orderService = orderService;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("report")]
-        public async Task<ActionResult<IEnumerable<OrderDTO>>> getReport(string date)
+        public async Task<ActionResult<IEnumerable<OrderDTO>>> getReport(ReportRequest date)
         {
-            var report = await _orderService.getReport(date);
+            var report = await _orderService.getReportByDates(date);
             if (report is not null)
             {
                 return Ok(report);
@@ -44,6 +44,32 @@ namespace APILACENTRAL.Controllers
         }
 
         [HttpGet]
+        [Route("Order")]
+        public async Task<ActionResult<IEnumerable<OrderDTO>>> getOrderByname(string name)
+        {
+            var order = await _orderService.getHeaderOrdersByName(name);
+            if (order is not null)
+            {
+                return Ok(order);
+            }
+
+            return BadRequest(new { message = "table is empty" });
+        }
+
+        [HttpGet]
+        [Route("DetailOrder")]
+        public async Task<ActionResult<IEnumerable<OrderDetailsDTO>>> getdetails(int id)
+        {
+            var order = await _orderService.getDetailsOrder(id);
+            if (order is not null)
+            {
+                return Ok(order);
+            }
+
+            return BadRequest(new { message = "table is empty" });
+        }
+
+        [HttpGet]
         [Route("pending")]
         public async Task<ActionResult<IEnumerable<OrderDTO>>> getPendingOrders()
         {
@@ -62,8 +88,8 @@ namespace APILACENTRAL.Controllers
         {
             var lastid = await _orderService.foundCurrentIdOrder();
 
-            return Ok(new {lastid = lastid});
- 
+            return Ok(new { lastid = lastid });
+
         }
 
 
@@ -77,6 +103,24 @@ namespace APILACENTRAL.Controllers
 
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> putOrder(int id, OrderDTO order)
+        {
+            var existingOrder = await _orderService.getHeaderOrder(id);
+
+
+            if (id != order.idPedido)
+            {
+                return BadRequest(new { message = $"Id = {id} doesn't match with body id = {order.idPedido} " });
+            }
+            if (existingOrder is not null)
+            {
+                await _orderService.updateOrder(order, id);
+                return Ok(order);
+            }
+            return NotFound();
+
+        }
 
 
 

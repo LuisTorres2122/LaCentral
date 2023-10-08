@@ -21,8 +21,9 @@ public partial class Tblencabezadopedido
     public decimal AbonoPedido { get; set; }
 
     public bool EstatusPedido { get; set; }
+
     [JsonIgnore]
     public virtual Tblcliente FkIdClienteNavigation { get; set; } = null!;
-    [JsonIgnore]
+
     public virtual ICollection<Tbldetallepedido> Tbldetallepedidos { get; set; } = new List<Tbldetallepedido>();
 }

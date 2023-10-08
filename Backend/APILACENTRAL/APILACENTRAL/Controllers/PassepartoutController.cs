@@ -19,7 +19,7 @@ namespace APILACENTRAL.Controllers
             _materialService = materialService;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SPassepartoutDTO>>> getPassepartouts()
         {
@@ -32,7 +32,7 @@ namespace APILACENTRAL.Controllers
             return BadRequest(new { message = "table is empty" });
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Tblpassepartout>> getPassepartout(int id)
         {
@@ -46,7 +46,7 @@ namespace APILACENTRAL.Controllers
 
         }
 
-       // [Authorize]
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> postPassepartout(PassepartoutDTO passepartout)
         {
@@ -61,7 +61,7 @@ namespace APILACENTRAL.Controllers
 
         }
 
-      //  [Authorize]
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> putPassepartout(int id, PassepartoutDTO passepartout)
         {
@@ -83,7 +83,7 @@ namespace APILACENTRAL.Controllers
             return materialNotFound(id);
         }
 
-       // [Authorize]
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> deletePassepartout(int id)
         {
@@ -96,7 +96,7 @@ namespace APILACENTRAL.Controllers
             return materialNotFound(id);
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         [Route("material")]
         public async Task<ActionResult<IEnumerable<Tblmaterial>>> getMaterials()

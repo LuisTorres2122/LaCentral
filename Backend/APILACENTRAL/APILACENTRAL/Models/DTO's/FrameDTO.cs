@@ -6,7 +6,7 @@
 
         public int FKIdMaterial { get; set; }
 
-        public int CodigoMarco { get; set; }
+        public string CodigoMarco { get; set; }
 
         public decimal PrecioMarco { get; set; }
     }
@@ -16,7 +16,7 @@
 
         public string NombreMaterial { get; set; }
 
-        public int CodigoMarco { get; set; }
+        public string CodigoMarco { get; set; }
 
         public decimal PrecioMarco { get; set; }
     }

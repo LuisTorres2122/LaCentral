@@ -24,9 +24,10 @@ namespace APILACENTRAL.Services
 
         public async Task<Tblcliente> addClient(Tblcliente client)
         {
-            _laCentralContext.Tblclientes.Add(client);
+           var newClient = _laCentralContext.Tblclientes.Add(client);
             await _laCentralContext.SaveChangesAsync();
-            return client;
+
+            return newClient.Entity;
         }
 
         public async Task updateClient(int id, Tblcliente client)

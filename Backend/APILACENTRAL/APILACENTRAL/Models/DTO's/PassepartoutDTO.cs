@@ -9,10 +9,8 @@ namespace APILACENTRAL.Models.DTO_s
 
         public int FKIdMaterial { get; set; }
 
-        public int CodigoPassepartout { get; set; }
-        [MaxLength(25, ErrorMessage = "the home is longer than 25c")]
-        public string? CasaPassepartout { get; set; }
-        [MaxLength(15, ErrorMessage = "the color is longer than 15c")]
+        public string CodigoPassepartout { get; set; }
+        
         public string ColorPassepartout { get; set; } = null!;
     }
 
@@ -23,10 +21,8 @@ namespace APILACENTRAL.Models.DTO_s
 
         public string NombreMaterial { get; set; }
 
-        public int CodigoPassepartout { get; set; }
-        [MaxLength(25, ErrorMessage = "the home is longer than 25c")]
-        public string? CasaPassepartout { get; set; }
-        [MaxLength(15, ErrorMessage = "the color is longer than 15c")]
+        public string CodigoPassepartout { get; set; }
+       
         public string ColorPassepartout { get; set; } = null!;
     }
 }

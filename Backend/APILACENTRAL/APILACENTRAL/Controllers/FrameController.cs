@@ -19,7 +19,7 @@ namespace APILACENTRAL.Controllers
             _materialService = materialService;
         }
 
-        // [Authorize]
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SFrameDTO>>> getFrames()
         {
@@ -32,7 +32,7 @@ namespace APILACENTRAL.Controllers
             return BadRequest(new { message = "table is empty" });
         }
 
-       // [Authorize]
+       [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Tblmarco>> getFrame(int id)
         {
@@ -46,7 +46,7 @@ namespace APILACENTRAL.Controllers
 
         }
 
-       // [Authorize]
+       [Authorize]
         [HttpPost]
         public async Task<IActionResult> postFrame(FrameDTO frame)
         {
@@ -61,7 +61,7 @@ namespace APILACENTRAL.Controllers
 
         }
 
-      //  [Authorize]
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> putFrame(int id, FrameDTO frame)
         {
@@ -83,7 +83,7 @@ namespace APILACENTRAL.Controllers
             return materialNotFound(id);
         }
 
-       // [Authorize]
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> deleteFrame(int id)
         {
@@ -96,7 +96,7 @@ namespace APILACENTRAL.Controllers
             return materialNotFound(id);
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         [Route("material")]
         public async Task<ActionResult<IEnumerable<Tblmaterial>>> getMaterials()

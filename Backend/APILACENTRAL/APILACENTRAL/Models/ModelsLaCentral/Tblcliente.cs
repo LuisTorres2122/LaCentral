@@ -15,6 +15,7 @@ public partial class Tblcliente
     public int? TelefonoCliente { get; set; }
 
     public string? DireccionCliente { get; set; }
+
     [JsonIgnore]
     public virtual ICollection<Tblencabezadopedido> Tblencabezadopedidos { get; set; } = new List<Tblencabezadopedido>();
 }

@@ -13,8 +13,7 @@ public partial class Tbldetallepedido
     public string DescripcionServicio { get; set; } = null!;
 
     public decimal PrecioPedido { get; set; }
+
     [JsonIgnore]
     public virtual Tblencabezadopedido FkIdPedidoNavigation { get; set; } = null!;
-    [JsonIgnore]
-    public virtual ICollection<Tbldetalleservicio> Tbldetalleservicios { get; set; } = new List<Tbldetalleservicio>();
 }

@@ -7,7 +7,7 @@ using APILACENTRAL.Models.Tokens;
 
 
 using APILACENTRAL.Services;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace APILACENTRAL.Controllers
 {
@@ -24,7 +24,7 @@ namespace APILACENTRAL.Controllers
             _userService = userService;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Tblusuario>>> getUsers()
         {
@@ -59,7 +59,7 @@ namespace APILACENTRAL.Controllers
 
         
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Tblusuario>> getUser(int id)
         {
@@ -91,7 +91,7 @@ namespace APILACENTRAL.Controllers
            
         }
 
-        //[Authorize]
+       [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> putUser(int id, Tblusuario user)
         {
@@ -112,7 +112,7 @@ namespace APILACENTRAL.Controllers
             
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> deleteUser(int id)
         {
