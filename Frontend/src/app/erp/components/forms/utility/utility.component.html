@@ -1,0 +1,166 @@
+<main>
+    <div *ngIf="badNotify.length > 0">
+      <app-badalert [type]="badNotify"></app-badalert>
+    </div>
+    <div *ngIf="notify.length > 0">
+      <app-notify [type]="notify"> </app-notify>
+    </div>
+    <section class="my-5">
+      <h1 class="text-5xl flex justify-center font-playfair">{{ title }}</h1>
+    </section>
+    <section>
+      <app-layout-mantenance
+        [elements]="utilities"
+        [elementsTypes]="elementsUtility"
+        [headers]="header"
+        (toggle)="recieveToggle($event)"
+        (updatedForm)="transferData($event)"
+        (toggledelete)="showDeleteForm($event)"
+        [ngClass]="{
+          'opacity-30': toggleForm || toggleUpd || toggleDel
+        }"
+      ></app-layout-mantenance>
+      <div *ngIf="toggleForm">
+        <div
+        class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+        role="alert"
+      >
+        <strong class="font-bold">Acción Denegada!</strong>
+        <span class="block sm:inline">
+           En este formulario solo se puede actualizar.
+        </span>
+        <button class="absolute top-0 bottom-0 right-0 px-4 py-3" (click)="closeToggleCreate()">
+            <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+          
+        </button>
+      </div>
+      </div>
+      <!-- Form Update -->
+      <div *ngIf="toggleUpd">
+        <div
+          class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+          [ngClass]="{
+            'absolute flex justify-center items-center': toggleUpd,
+            hidden: !toggleUpd
+          }"
+        >
+          <div class="relative p-4 w-full max-w-2xl max-h-full">
+            <div
+              class="relative p-4 bg-enmarcadora-principal rounded-lg shadow sm:p-5"
+            >
+              <div
+                class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5"
+              >
+                <h3 class="text-lg font-semibold text-white">Actualizar</h3>
+                <button
+                  type="button"
+                  (click)="closeUpdateToggle()"
+                  class="bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center hover:text-gray-400 text-white"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="w-5 h-5"
+                    fill="currentColor"
+                    viewbox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  <span class="sr-only">Close modal</span>
+                </button>
+              </div>
+              <form [formGroup]="formPassUpdate" (ngSubmit)="updateUtility()">
+                <div class="grid gap-4 mb-4 sm:grid-cols-2">
+                    <div>
+                    <label class="block mb-2 text-sm font-medium text-white"
+                      >Nombre</label
+                    >
+                    <input
+                      class="border text-sm rounded-lg block w-full p-2.5"
+                      placeholder="nombre"
+                      type="text"
+                      formControlName="name"
+                     
+                    />
+                    <app-alert
+                      [hidden]="
+                      formPassUpdate.get('name')?.valid ||
+                      formPassUpdate.get('name')?.pristine
+                      "
+                      alert="El nombre no es valido"
+                    ></app-alert>
+                  </div>
+                  <div>
+                    <label class="block mb-2 text-sm font-medium text-white"
+                      >Valor</label
+                    >
+                    <input
+                      type="number"
+                      formControlName="value"
+                      class="border text-sm rounded-lg block w-full p-2.5"
+                      placeholder="casa"
+                    />
+                    <app-alert
+                      [hidden]="
+                      formPassUpdate.get('value')?.valid ||
+                      formPassUpdate.get('value')?.pristine
+                      "
+                      alert="La casa no es valida"
+                    ></app-alert>
+                  </div>
+                 
+                </div>
+                <button
+                  [disabled]="formPassUpdate.invalid"
+                  [ngClass]="{
+                    'bg-red-800 text-white': formPassUpdate.invalid,
+                    ' bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white ':
+                      !formPassUpdate.invalid
+                  }"
+                  type="submit"
+                  class="flex items-center justify-center rounded-lg text-sm px-4 py-2"
+                >
+                  <svg
+                    class="mr-1 -ml-1 w-6 h-6 my-auto"
+                    fill="currentColor"
+                    viewbox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  Actualizar Registro
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Form Delete -->
+        <div *ngIf="toggleDel">
+            <div
+            class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative "
+            role="alert"
+          >
+            <strong class="font-bold">Acción Denegada!</strong>
+            <span class="block sm:inline">
+               En este formulario solo se puede actualizar.
+            </span>
+            <button (click)="closeDeleteToggle()" class="absolute top-0 bottom-0 right-0 px-4 py-3" >
+                <svg   class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+              
+            </button>
+          </div>
+        </div>
+       
+    </section>
+  </main>
+  
+

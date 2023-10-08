@@ -1,0 +1,84 @@
+<section class="my-2 w-60">
+  <div
+    class="flex flex-col items-center justify-center"
+    *ngFor="let card of Cards"
+  >
+  <div class="mt-2 bg-enmarcadora-principal text-white w-full flex flex-col justify-center items-center border rounded-t-lg border-enmarcadora-principal">
+    <label class="text-lg font-semibold select-none">{{ card.title }}</label>
+    <section
+      class="flex flex-row gap-5 border-t-2 w-full border-enmarcadora-fourth  justify-center my-2"
+    >
+      <svg
+      class = "text-white"
+        (click)="deleted(Cards.indexOf(card))"
+        class="w-4 "
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M2 12C2 11.4477 2.44772 11 3 11H21C21.5523 11 22 11.4477 22 12C22 12.5523 21.5523 13 21 13H3C2.44772 13 2 12.5523 2 12Z"
+          fill="currentColor"
+        />
+      </svg>
+      <svg
+        (click)="changeToggle(Cards.indexOf(card))"
+        [ngClass]="{
+          'transition-all duration-1000 hidden':
+            cardActivate[Cards.indexOf(card)],
+          'transition-all duration-1000  block':
+            !cardActivate[Cards.indexOf(card)]
+        }"
+        class="w-6 rotate-90 text-white"
+        viewBox="0 0 25 25"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M18.3432 16.2428C18.7337 16.6333 19.3669 16.6333 19.7574 16.2428L22.5858 13.4144C23.3669 12.6333 23.3669 11.367 22.5858 10.5859L19.7573 7.75749C19.3668 7.36697 18.7336 7.36697 18.3431 7.75749C17.9526 8.14802 17.9526 8.78118 18.3431 9.17171L20.1715 11.0001L15 11.0001C14.4477 11.0001 14 11.4478 14 12.0001C14 12.5524 14.4477 13.0001 15 13.0001H20.1716L18.3432 14.8286C17.9527 15.2191 17.9527 15.8523 18.3432 16.2428Z"
+          fill="currentColor"
+        />
+        <path
+          d="M5.65706 7.75752C5.26653 7.367 4.63337 7.367 4.24284 7.75752L1.41442 10.5859C0.633365 11.367 0.633215 12.6333 1.41426 13.4144L4.24269 16.2428C4.63321 16.6333 5.26638 16.6333 5.6569 16.2428C6.04743 15.8523 6.04743 15.2191 5.6569 14.8286L3.82843 13.0001L9 13.0001C9.55228 13.0001 10 12.5524 10 12.0001C10 11.4478 9.55228 11.0001 9 11.0001L3.82867 11.0001L5.65706 9.17173C6.04758 8.78121 6.04758 8.14805 5.65706 7.75752Z"
+          fill="currentColor"
+        />
+      </svg>
+
+      <svg
+        (click)="changeToggle(Cards.indexOf(card))"
+        [ngClass]="{
+          'transition-all duration-1000 block':
+            cardActivate[Cards.indexOf(card)],
+          'transition-all duration-1000  hidden':
+            !cardActivate[Cards.indexOf(card)]
+        }"
+        class="w-6 my-0 rotate-90 text-white"
+        viewBox="0 0 25 25"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M6.58571 7.75725C6.19518 7.36672 5.56202 7.36672 5.17149 7.75725C4.78097 8.14777 4.78097 8.78094 5.17149 9.17146L6.99988 10.9998H1.82855C1.27627 10.9998 0.828552 11.4476 0.828552 11.9998C0.828552 12.5521 1.27627 12.9998 1.82855 12.9998L7.00012 12.9998L5.17165 14.8283C4.78112 15.2189 4.78112 15.852 5.17165 16.2425C5.56217 16.6331 6.19533 16.6331 6.58586 16.2425L9.41429 13.4141C10.1953 12.6331 10.1952 11.3667 9.41413 10.5857L6.58571 7.75725Z"
+          fill="currentColor"
+        />
+        <path
+          d="M17.4142 16.2428C17.8048 16.6333 18.4379 16.6333 18.8284 16.2428C19.219 15.8523 19.219 15.2191 18.8284 14.8286L17 13.0001H22.1716C22.7239 13.0001 23.1716 12.5524 23.1716 12.0001C23.1716 11.4478 22.7239 11.0001 22.1716 11.0001H17.0001L18.8285 9.17171C19.2191 8.78118 19.2191 8.14802 18.8285 7.75749C18.438 7.36697 17.8048 7.36697 17.4143 7.75749L14.5858 10.5859C13.8048 11.367 13.8048 12.6333 14.5858 13.4144L17.4142 16.2428Z"
+          fill="currentColor"
+        />
+      </svg>
+    </section>
+  </div>
+    <!--Content-->
+    <section
+      class="flex flex-col justify-center items-center text-base border-2 border-enmarcadora-principal w-full rounded-b-lg mt-0 mb-2"
+      [ngClass]="{
+        'transition-all duration-1000 block': cardActivate[Cards.indexOf(card)],
+        'transition-all duration-1000  hidden':
+          !cardActivate[Cards.indexOf(card)]
+      }"
+    >
+      <label class="select-none text-base" *ngIf="card.description">{{ card.description }}</label>
+      <label class="select-none text-base" *ngIf="card.total">Total: {{ card.total }}</label>
+    </section>
+  </div>
+</section>

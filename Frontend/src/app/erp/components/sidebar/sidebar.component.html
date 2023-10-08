@@ -1,0 +1,172 @@
+<div
+  class="bg-enmarcadora-principal text-white w-44  border-enmarcadora-principal border-2"
+>
+  <section class="flex flex-col gap-1 mx-auto items-center">
+    <div class="flex flex-row my-5">
+      <img
+        src="../../../../assets/images/LogoLaCentral.png"
+        alt=""
+        class="bg-white border-collapse rounded-full border-1p border-white w-16"
+      />
+      <button class="text-lg font-bold p-2 w-full">La Central</button>
+    </div>
+
+    <button
+      class="text-lg font-bold p-2 w-full border-white  border-b-2"
+      (click)="changeToggle('maintenance')"
+    >
+      Manteniminetos
+    </button>
+    <ul
+      class="w-full border-2 border-white"
+      [ngClass]="{
+        'transition duration-700 block': toggleMant,
+        'transition duration-700  hidden': !toggleMant
+      }"
+    >
+    <a routerLink="/erp/cliente">
+      <li
+        class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
+      >
+        Cliente
+      </li>
+    </a>
+      <a routerLink="/erp/passepartout">
+        <li
+          class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
+        >
+          Passepartout
+        </li>
+      </a>
+      <a routerLink="/erp/vidrio">
+        <li
+          class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
+        >
+          Vidrio
+        </li>
+      </a>
+      <a routerLink="/erp/filete">
+        <li
+          class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
+        >
+          Filete
+        </li>
+      </a>
+      <a routerLink="/erp/marco">
+        <li
+          class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
+        >
+          Marco
+        </li>
+      </a>
+      
+      <a routerLink="/erp/utilidad">
+        <li
+          class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
+        >
+          Utilidad
+        </li>
+      </a>
+      
+      <a routerLink="/erp/galeria">
+        <li
+          class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
+        >
+          Galeria
+        </li>
+      </a>
+    </ul>
+    <button
+      class="text-lg font-bold p-2 w-full border-white  border-b-2"
+      (click)="changeToggle('order')"
+    >
+      Pedidos
+    </button>
+    <ul
+      class="w-full border-2 border-white"
+      [ngClass]="{
+        'transition duration-700 block': toggleOrder,
+        'transition duration-700  hidden': !toggleOrder
+      }"
+    >
+    <a routerLink="/erp/pedido">
+      <li
+        class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
+      >
+        Creación Pedido
+      </li>
+    </a>
+    <a routerLink="/erp/busqueda">
+      <li
+        class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
+      >
+        Busqueda Pedidos
+      </li>
+    </a>
+      <a routerLink="/erp/pendiente">
+        <li
+          class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
+        >
+          Pedidos Pendientes
+        </li>
+      </a>
+    
+    </ul>
+    <button
+      class="text-lg font-bold p-2 w-full border-white  border-b-2"
+      (click)="changeToggle('user')"
+    >
+      Usuarios
+    </button>
+    <ul
+      class="w-full border-2 border-white"
+      [ngClass]="{
+        'transition duration-700 block': toggleUsers,
+        'transition duration-700  hidden': !toggleUsers
+      }"
+    >
+    <a routerLink="/erp/registrar">
+      <li
+        class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
+      >
+        Crear Usuario
+      </li>
+    </a>
+    <a routerLink="/erp/cambiarContraseña">
+      <li
+        class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
+      >
+        Cambiar Contraseña
+      </li>
+    </a>
+    </ul>
+    <button
+      class="text-lg font-bold p-2 w-full border-white  border-b-2"
+      (click)="changeToggle('report')"
+    >
+      Reportes
+    </button>
+    <ul
+      class="w-full border-2 border-white"
+      [ngClass]="{
+        'transition duration-700 block': toggleReporters,
+        'transition duration-700  hidden': !toggleReporters
+      }"
+    >
+    <a routerLink="/erp/reporte">
+      <li
+        class="border-2 border-white p-2 bg-white text-enmarcadora-principal hover:bg-enmarcadora-principal hover:text-white font-semibold"
+      >
+        Pedidos
+      </li>
+    </a>
+    </ul>
+    <button class="text-lg font-bold p-2 w-full border-white  border-b-2"
+    (click)="logOut()">
+      Cerrar Sesión
+    </button>
+  </section>
+  <section class="h-screen">
+
+  </section>
+</div>

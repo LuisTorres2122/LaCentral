@@ -1,0 +1,959 @@
+<div *ngIf="badNotify.length > 0">
+  <app-alert-user [type]="badNotify"></app-alert-user>
+</div>
+<section class="flex items-center justify-evenly">
+  <h2 class="text-6xl font-playfair">Pedidos</h2>
+  <label class="text-lg">{{ date }}</label>
+</section>
+<section class="ml-14 my-20 flex flex-col w-orderCard">
+  <div class="flex flex-row items-center gap-2">
+    <label class="font-semibold text-lg">Cliente</label>
+    <input
+      class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5"
+      type="text"
+      name="client"
+      
+      [(ngModel)]="client"
+      (ngModelChange)="findClient()"
+    />
+    <button
+    (click)="prepareClient()"
+      class="border-2 border-enmarcadora-principal rounded-full w-16 bg-enmarcadora-principal text-white font-semibold hover:text-enmarcadora-principal hover:bg-white"
+      [disabled]="clientDisabled"
+      [ngClass]="{'bg-red-800 hover:bg-red-800 hover:text-white':clientDisabled}"
+      >
+      crear
+    </button>
+  </div>
+  <div  *ngIf="filterClients.length > 0">
+  <table class="w-full text-sm text-left" >
+    <thead class="text-sm bold text-black uppercase bg-gray-100">
+      <tr>
+        <th scope="col" class="px-4 py-3">codigo</th>
+        <th scope="col" class="px-4 py-3">Nombre</th>
+        <th scope="col" class="px-4 py-3">Seleccionar</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let client of filterClients">
+      <tr class="border-b">
+        <td class="px-4 py-3">
+          {{ client.pkIdCliente }}
+        </td>
+        <td class="px-4 py-3">
+          {{ client.nombreCliente }}
+        </td>
+        <td class="px-4 py-3">
+          <button
+            class="border-2 p-1 border-enmarcadora-principal rounded-full  bg-enmarcadora-principal text-white font-semibold hover:text-enmarcadora-principal hover:bg-white"
+            (click)="selectClient(client)"
+            >
+            Seleccionar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</section>
+<section class="flex flex-col gap-2">
+  <div class="ml-14 border-2 border-gray-300 px-5 py-2 w-orderCard">
+    <div
+      class="flex flex-row gap-2"
+      (click)="changeToggleServices('enmarcado')"
+    >
+      <svg
+        class="w-6"
+        version="1.1"
+        id="Capa_1"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        x="0px"
+        y="0px"
+        viewBox="0 0 512 512"
+        style="enable-background: new 0 0 512 512"
+        xml:space="preserve"
+        [ngClass]="{
+          'rotate-180 transition-transform duration-700 ': toggleEnmarcado
+        }"
+      >
+        <g>
+          <g>
+            <path
+              d="M506.157,132.386c-7.803-7.819-20.465-7.831-28.285-0.029l-207.73,207.299c-7.799,7.798-20.486,7.797-28.299-0.015 L34.128,132.357c-7.819-7.803-20.481-7.79-28.285,0.029c-7.802,7.819-7.789,20.482,0.029,28.284l207.701,207.27 c11.701,11.699,27.066,17.547,42.433,17.547c15.358,0,30.719-5.846,42.405-17.533L506.128,160.67 C513.946,152.868,513.959,140.205,506.157,132.386z"
+            ></path>
+          </g>
+        </g>
+      </svg>
+      <h2 class="text-3xl select-none">Enmarcado</h2>
+    </div>
+    <!--framed section-->
+    <form
+      [formGroup]="FramedForm"
+      (ngSubmit)="addCardFramed()"
+      class="py-3 border-t"
+      [ngClass]="{
+        'transition-all duration-1000 block': toggleEnmarcado,
+        'transition-all duration-1000  hidden': !toggleEnmarcado
+      }"
+    >
+    <div class="flex mb-4">
+      <label class="text-lg font-semibold w-20">Nombre</label>
+      <input
+        class="ml-5 border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-72"
+        type="text"
+        formControlName="name"
+        placeholder="nombre"
+      />
+    </div>
+    <app-alert
+      [hidden]="FramedForm.get('name')?.valid || FramedForm.get('name')?.pristine"
+      *ngIf="FramedForm.get('name')?.hasError('required')"
+      alert="El nombre es requerido"
+    ></app-alert>
+    
+    <div class="flex  ">
+      <label class="text-lg font-semibold w-20  ">Medida Pieza</label>
+      <input
+        class="ml-5 border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-72 h-8 self-center"
+        type="text"
+        formControlName="measure"
+        placeholder="5x5"
+      />
+    </div>
+    <app-alert
+    class="mb-1"
+      [hidden]="FramedForm.get('measure')?.valid "
+      *ngIf="FramedForm.get('measure')?.hasError('pattern')"
+      alert="El patron es incorrecto, debe de ser formato = numeroxnumero"
+    ></app-alert>
+    <app-alert
+    class="mb-1"
+      [hidden]="FramedForm.get('measure')?.valid"
+      *ngIf="FramedForm.get('measure')?.hasError('required')"
+      alert="La medida es requerida"
+    ></app-alert>
+    
+    <div class="flex mb-4 mt-4">
+      <label class="text-lg font-semibold w-20">Borde</label>
+      <input
+        class="ml-5 border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-72"
+        type="number"
+        formControlName="border"
+        placeholder="1"
+      />
+    </div>
+
+      <div class="my-2 px-2 border-2 border-gray-300">
+        <input
+          (click)="changeToggle('passepartout')"
+          class="checked:bg-enmarcadora-principal"
+          type="checkbox"
+        />
+        <label class="ml-2 font-bold">Passepartout</label>
+        <section
+          class="flex flex-row gap-2"
+          [ngClass]="{
+            'transition duration-700 block': togglePasseparout,
+            'transition duration-700  hidden': !togglePasseparout
+          }"
+        >
+          <div>
+            <form
+              [formGroup]="passPartoutForm"
+              (ngSubmit)="addPasspartout()"
+              class="flex flex-col gap-1 my-2 w-full"
+            >
+              <label class="text-lg font-semibold">Codigo</label>
+              <input
+                class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
+                type="text"
+                formControlName="code"
+                (ngModelChange)="buscarPass()"
+                [ngClass]="{'bg-enmarcadora-second': filterPass.length > 0}"
+              />
+              <app-alert
+                [hidden]="
+                  passPartoutForm.get('code')?.valid ||
+                  passPartoutForm.get('code')?.pristine
+                "
+                *ngIf="passPartoutForm.get('code')?.hasError('required')"
+                alert="El codigo es requerido"
+              ></app-alert>
+              <app-alert
+                [hidden]="
+                  passPartoutForm.get('code')?.valid ||
+                  passPartoutForm.get('code')?.pristine
+                "
+                *ngIf="
+                  passPartoutForm.get('code')?.hasError('PassCodeValidator')
+                "
+                alert="El codigo no existe"
+              ></app-alert>
+              <label class="text-lg font-semibold">Color</label>
+              <input
+                class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
+                type="text"
+                formControlName="color"
+              />
+              <app-alert
+                [hidden]="
+                  passPartoutForm.get('color')?.valid ||
+                  passPartoutForm.get('color')?.pristine
+                "
+                *ngIf="passPartoutForm.get('color')?.hasError('required')"
+                alert="El color es requerido"
+              ></app-alert>
+              <label class="text-lg font-semibold">Precio</label>
+              <input
+                class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
+                type="number"
+                formControlName="price"
+              />
+              <app-alert
+                [hidden]="
+                  passPartoutForm.get('price')?.valid ||
+                  passPartoutForm.get('price')?.pristine
+                "
+                *ngIf="passPartoutForm.get('price')?.hasError('required')"
+                alert="El precio es requerido"
+              ></app-alert>
+             
+              <button
+                [disabled]="passPartoutForm.invalid"
+                [ngClass]="{
+                  'bg-red-800 ': passPartoutForm.invalid,
+                  '  bg-enmarcadora-principal   hover:bg-white hover:text-enmarcadora-principal':
+                    !passPartoutForm.invalid
+                }"
+                type="submit"
+                class="self-end mt-2 border-2 border-enmarcadora-principal rounded-full w-20 bg-enmarcadora-principal text-white font-semibold hover:text-enmarcadora-principal hover:bg-white"
+              >
+                Agregar
+              </button>
+            </form>
+          </div>
+          <div *ngIf="passpartoutAdded.length > 0" class="w-full">
+            <table class="w-full text-sm text-left">
+              <thead class="text-sm bold text-black uppercase bg-gray-100">
+                <tr>
+                  <th scope="col" class="px-4 py-3">codigo</th>
+                  <th scope="col" class="px-4 py-3">Color</th>
+                  <th scope="col" class="px-4 py-3">precio</th>
+                  <th scope="col" class="px-4 py-3">-</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let pass of passpartoutAdded">
+                <tr class="border-b">
+                  <td class="px-4 py-3">
+                    {{ pass.code }}
+                  </td>
+                  <td class="px-4 py-3">
+                    {{ pass.color }}
+                  </td>
+                  <td class="px-4 py-3">
+                    {{ pass.price }}
+                  </td>
+                  
+                  <td class="px-4 py-3">
+                    <svg
+                      (click)="
+                        deletePasspartout(passpartoutAdded.indexOf(pass))
+                      "
+                      class="w-2 text-black"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M2 12C2 11.4477 2.44772 11 3 11H21C21.5523 11 22 11.4477 22 12C22 12.5523 21.5523 13 21 13H3C2.44772 13 2 12.5523 2 12Z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+      <!----Vidrio------>
+      <div class="my-2 px-2 border-2 border-gray-300">
+        <input
+          (click)="changeToggle('vidrio')"
+          class="checked:bg-enmarcadora-principal"
+          type="checkbox"
+          name=""
+          id=""
+        />
+        <label class="ml-2 font-bold" for="">Vidrio</label>
+        <section
+          class="flex flex-row gap-2"
+          [ngClass]="{
+            'transition duration-700 block': toggleVidrio,
+            'transition duration-700  hidden': !toggleVidrio
+          }"
+        >
+          <div>
+            <form
+              class="flex flex-col gap-1 my-2"
+              [formGroup]="glassForm"
+              (ngSubmit)="addGlass()"
+            >
+              <label>Tipo</label>
+              <select
+                class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
+                formControlName="type"
+                (change)="setPriceGlass($event)"
+              >
+                <option
+                  *ngFor="let glass of glasses"
+                  [value]="glass.tipoVidrio"
+                >
+                  {{ glass.tipoVidrio }}
+                </option>
+              </select>
+              <label>Precio</label>
+              <input
+                class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
+                type="text"
+                formControlName="price"
+              />
+              <button
+                [disabled]="glassForm.invalid"
+                [ngClass]="{
+                  'bg-red-800 ': glassForm.invalid,
+                  '  bg-enmarcadora-principal   hover:bg-white hover:text-enmarcadora-principal':
+                    !glassForm.invalid
+                }"
+                type="submit"
+                class="self-end mt-2 border-2 border-enmarcadora-principal rounded-full w-20 bg-enmarcadora-principal text-white font-semibold hover:text-enmarcadora-principal hover:bg-white"
+              >
+                Agregar
+              </button>
+            </form>
+          </div>
+          <div *ngIf="glassAdded.length > 0" class="w-full">
+            <table class="w-full text-sm text-left">
+              <thead class="text-sm bold text-black uppercase bg-gray-100">
+                <tr>
+                  <th scope="col" class="px-4 py-3">Tipo</th>
+                  <th scope="col" class="px-4 py-3">precio</th>
+                  <th scope="col" class="px-4 py-3">-</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let glass of glassAdded">
+                <tr class="border-b">
+                  <td class="px-4 py-3">
+                    {{ glass.type }}
+                  </td>
+                  <td class="px-4 py-3">
+                    {{ glass.price }}
+                  </td>
+
+                  <td class="px-4 py-3">
+                    <svg
+                      (click)="deleteGlass(glassAdded.indexOf(glass))"
+                      class="w-2 text-black"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M2 12C2 11.4477 2.44772 11 3 11H21C21.5523 11 22 11.4477 22 12C22 12.5523 21.5523 13 21 13H3C2.44772 13 2 12.5523 2 12Z"
+                        fill="#0F0F0F"
+                      />
+                    </svg>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+      <!----Filete------>
+      <div class="my-2 px-2 border-2 border-gray-300">
+        <input
+          (click)="changeToggle('filete')"
+          class="checked:bg-enmarcadora-principal"
+          type="checkbox"
+          name=""
+          id=""
+        />
+        <label class="ml-2 font-bold" for="">Filete</label>
+        <section
+          class="flex flex-row gap-2"
+          [ngClass]="{
+            'transition duration-700 block': toggleFilete,
+            'transition duration-700  hidden': !toggleFilete
+          }"
+        >
+          <div>
+            <form
+              class="flex flex-col gap-1 my-2"
+              [formGroup]="filletForm"
+              (ngSubmit)="addFillet()"
+            >
+              <label>Tipo</label>
+              <select
+                class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
+                formControlName="type"
+                (change)="setPriceFillet($event)"
+              >
+                <option
+                  *ngFor="let fillet of fillets"
+                  [value]="fillet.tipoFilete"
+                >
+                  {{ fillet.tipoFilete }}
+                </option>
+              </select>
+              <label>Precio</label>
+              <input
+                class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
+                type="text"
+                formControlName="price"
+              />
+              <label>Color</label>
+              <input
+                class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
+                type="text"
+                formControlName="color"
+              />
+              <button
+                [disabled]="filletForm.invalid"
+                [ngClass]="{
+                  'bg-red-800 ': filletForm.invalid,
+                  '  bg-enmarcadora-principal   hover:bg-white hover:text-enmarcadora-principal':
+                    !filletForm.invalid
+                }"
+                type="submit"
+                class="self-end mt-2 border-2 border-enmarcadora-principal rounded-full w-20 bg-enmarcadora-principal text-white font-semibold hover:text-enmarcadora-principal hover:bg-white"
+              >
+                Agregar
+              </button>
+            </form>
+          </div>
+          <div *ngIf="filletAdded.length > 0" class="w-full">
+            <table class="w-full text-sm text-left">
+              <thead class="text-sm bold text-black uppercase bg-gray-100">
+                <tr>
+                  <th scope="col" class="px-4 py-3">Tipo</th>
+                  <th scope="col" class="px-4 py-3">precio</th>
+                  <th scope="col" class="px-4 py-3">color</th>
+                  <th scope="col" class="px-4 py-3">-</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let fillet of filletAdded">
+                <tr class="border-b">
+                  <td class="px-4 py-3">
+                    {{ fillet.type }}
+                  </td>
+                  <td class="px-4 py-3">
+                    {{ fillet.price }}
+                  </td>
+                  <td class="px-4 py-3">
+                    {{ fillet.color }}
+                  </td>
+
+                  <td class="px-4 py-3">
+                    <svg
+                      (click)="deleteFillet(glassAdded.indexOf(fillet))"
+                      class="w-2 text-black"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M2 12C2 11.4477 2.44772 11 3 11H21C21.5523 11 22 11.4477 22 12C22 12.5523 21.5523 13 21 13H3C2.44772 13 2 12.5523 2 12Z"
+                        fill="#0F0F0F"
+                      />
+                    </svg>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+      <!----Marco------>
+      <div class="my-2 px-2 border-2 border-gray-300">
+        <input
+          (click)="changeToggle('marco')"
+          class="checked:bg-enmarcadora-principal"
+          type="checkbox"
+        />
+        <label class="ml-2 font-bold">Marco</label>
+        <section
+          class="flex flex-row gap-2"
+          [ngClass]="{
+            'transition duration-700 block': toggleMarco,
+            'transition duration-700  hidden': !toggleMarco
+          }"
+        >
+          <div>
+            <form
+              [formGroup]="frameForm"
+              (ngSubmit)="addFrame()"
+              class="flex flex-col gap-1 my-2 w-full"
+            >
+              <label class="text-lg font-semibold">Codigo</label>
+              <input
+                class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
+                type="text"
+                formControlName="code"
+                (ngModelChange)="findFrame()"
+              />
+              <app-alert
+                [hidden]="
+                  frameForm.get('code')?.valid ||
+                  frameForm.get('code')?.pristine
+                "
+                *ngIf="frameForm.get('code')?.hasError('required')"
+                alert="El codigo es requerido"
+              ></app-alert>
+              <app-alert
+                [hidden]="
+                  frameForm.get('code')?.valid ||
+                  frameForm.get('code')?.pristine
+                "
+                *ngIf="frameForm.get('code')?.hasError('PassCodeValidator')"
+                alert="El codigo no existe"
+              ></app-alert>
+              <label class="text-lg font-semibold">Precio</label>
+              <input
+                class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
+                type="number"
+                formControlName="price"
+              />
+              <app-alert
+                [hidden]="
+                  frameForm.get('price')?.valid ||
+                  frameForm.get('price')?.pristine
+                "
+                *ngIf="frameForm.get('price')?.hasError('required')"
+                alert="El precio es requerido"
+              ></app-alert>
+              <label class="text-lg font-semibold">Color</label>
+              <input
+                class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
+                type="text"
+                formControlName="color"
+              />
+
+              <button
+                [disabled]="frameForm.invalid"
+                [ngClass]="{
+                  'bg-red-800 ': frameForm.invalid,
+                  '  bg-enmarcadora-principal   hover:bg-white hover:text-enmarcadora-principal':
+                    !frameForm.invalid
+                }"
+                type="submit"
+                class="self-end mt-2 border-2 border-enmarcadora-principal rounded-full w-20 bg-enmarcadora-principal text-white font-semibold hover:text-enmarcadora-principal hover:bg-white"
+              >
+                Agregar
+              </button>
+            </form>
+          </div>
+          <div *ngIf="frameAdded.length > 0" class="w-full">
+            <table class="w-full text-sm text-left">
+              <thead class="text-sm bold text-black uppercase bg-gray-100">
+                <tr>
+                  <th scope="col" class="px-4 py-3">codigo</th>
+                  <th scope="col" class="px-4 py-3">precio</th>
+                  <th scope="col" class="px-4 py-3">color</th>
+                  <th scope="col" class="px-4 py-3">-</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let frame of frameAdded">
+                <tr class="border-b">
+                  <td class="px-4 py-3">
+                    {{ frame.code }}
+                  </td>
+                  <td class="px-4 py-3">
+                    {{ frame.price }}
+                  </td>
+                  <td class="px-4 py-3">
+                    {{ frame.color }}
+                  </td>
+
+                  <td class="px-4 py-3">
+                    <svg
+                      (click)="deleteFrame(frameAdded.indexOf(frame))"
+                      class="w-2 text-black"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M2 12C2 11.4477 2.44772 11 3 11H21C21.5523 11 22 11.4477 22 12C22 12.5523 21.5523 13 21 13H3C2.44772 13 2 12.5523 2 12Z"
+                        fill="#0F0F0F"
+                      />
+                    </svg>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+      <!--extras-->
+      <div class="grid grid-cols-2 gap-1">
+        <section class="flex flex-col w-full">
+          <label class="">Vitrina</label>
+          <select name="vitrina" id="vitrina"
+          formControlName ="vitrina"
+          class="border-2  border-enmarcadora-principal rounded pl-2 py-0.5 w-96">
+            <option value="vitrina">Vitrina</option>
+            <option value="novitrina">No Vitrina</option>
+          </select>
+          <label class="">Flotante</label>
+          <select name="float" id="float"
+          formControlName="float"
+          class="border-2  border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
+          (change)="addFramed()">
+            <option value="flotante">Flotante</option>
+            <option value="noflotante">No flotante</option>
+          </select>
+          <label class="">Utilidad</label>
+          <input
+            class="border-2 bg-enmarcadora-second border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
+            type="text"
+            formControlName="utility"
+          />
+          <label class="">Total</label>
+          <input
+            class="border-2 bg-enmarcadora-second border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
+            type="text"
+            formControlName="total"
+          />
+        </section>
+
+        <button
+          class="flex flex-row justify-center items-center gap-2 font-semibold text-2xl"
+          [disabled]="!FramedForm.valid"
+          [ngClass]="{ 'text-red-500': !FramedForm.valid }"
+          type="submit"
+        >
+          <svg
+            class="w-14"
+            viewBox="0 0 32 32"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"
+          >
+            <g
+              id="Page-1"
+              stroke="none"
+              stroke-width="1"
+              fill="currentColor"
+              fill-rule="evenodd"
+              sketch:type="MSPage"
+            >
+              <g
+                id="Icon-Set"
+                sketch:type="MSLayerGroup"
+                transform="translate(-464.000000, -1087.000000)"
+                fill="currentColor"
+              >
+                <path
+                  d="M480,1117 C472.268,1117 466,1110.73 466,1103 C466,1095.27 472.268,1089 480,1089 C487.732,1089 494,1095.27 494,1103 C494,1110.73 487.732,1117 480,1117 L480,1117 Z M480,1087 C471.163,1087 464,1094.16 464,1103 C464,1111.84 471.163,1119 480,1119 C488.837,1119 496,1111.84 496,1103 C496,1094.16 488.837,1087 480,1087 L480,1087 Z M486,1102 L481,1102 L481,1097 C481,1096.45 480.553,1096 480,1096 C479.447,1096 479,1096.45 479,1097 L479,1102 L474,1102 C473.447,1102 473,1102.45 473,1103 C473,1103.55 473.447,1104 474,1104 L479,1104 L479,1109 C479,1109.55 479.447,1110 480,1110 C480.553,1110 481,1109.55 481,1109 L481,1104 L486,1104 C486.553,1104 487,1103.55 487,1103 C487,1102.45 486.553,1102 486,1102 L486,1102 Z"
+                  id="plus-circle"
+                  sketch:type="MSShapeGroup"
+                ></path>
+              </g>
+            </g>
+          </svg>
+          Añadir Tarjeta
+        </button>
+      </div>
+    </form>
+  </div>
+  <!--Here starts other service -->
+  <div class="ml-14 border-2 border-gray-300 px-5 py-2 w-orderCard">
+    <div
+      class="flex flex-row gap-2"
+      (click)="changeToggleServices('restauration')"
+    >
+      <svg
+        class="w-6"
+        version="1.1"
+        id="Capa_1"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        x="0px"
+        y="0px"
+        viewBox="0 0 512 512"
+        style="enable-background: new 0 0 512 512"
+        xml:space="preserve"
+        [ngClass]="{
+          'rotate-180 transition-transform duration-700 ': toggleRestauration
+        }"
+      >
+        <g>
+          <g>
+            <path
+              d="M506.157,132.386c-7.803-7.819-20.465-7.831-28.285-0.029l-207.73,207.299c-7.799,7.798-20.486,7.797-28.299-0.015 L34.128,132.357c-7.819-7.803-20.481-7.79-28.285,0.029c-7.802,7.819-7.789,20.482,0.029,28.284l207.701,207.27 c11.701,11.699,27.066,17.547,42.433,17.547c15.358,0,30.719-5.846,42.405-17.533L506.128,160.67 C513.946,152.868,513.959,140.205,506.157,132.386z"
+            ></path>
+          </g>
+        </g>
+      </svg>
+      <h2 class="text-3xl select-none">Restauración</h2>
+    </div>
+    <form
+      [formGroup]="restaurationForm"
+      (ngSubmit)="addCardRestauration()"
+      class="py-2"
+      [ngClass]="{
+        'transition-all duration-1000 block': toggleRestauration,
+        'transition-all duration-1000  hidden': !toggleRestauration
+      }"
+    >
+      <div class="grid grid-cols-2 gap-1">
+        <section class="flex flex-col">
+          <label class="text-lg font-semibold">Descripción</label>
+          <textarea
+            class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
+            type="text"
+            formControlName="description"
+          ></textarea>
+          <label class="text-lg font-semibold">Precio</label>
+          <input
+            class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
+            type="number"
+            formControlName="price"
+          />
+        </section>
+        <button
+          class="flex flex-row justify-center items-center gap-2 font-semibold text-2xl"
+          [disabled]="!restaurationForm.valid"
+          [ngClass]="{ 'text-red-500': !restaurationForm.valid }"
+          type="submit"
+        >
+          <svg
+            class="w-14"
+            viewBox="0 0 32 32"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"
+          >
+            <g
+              id="Page-1"
+              stroke="none"
+              stroke-width="1"
+              fill="currentColor"
+              fill-rule="evenodd"
+              sketch:type="MSPage"
+            >
+              <g
+                id="Icon-Set"
+                sketch:type="MSLayerGroup"
+                transform="translate(-464.000000, -1087.000000)"
+                fill="currentColor"
+              >
+                <path
+                  d="M480,1117 C472.268,1117 466,1110.73 466,1103 C466,1095.27 472.268,1089 480,1089 C487.732,1089 494,1095.27 494,1103 C494,1110.73 487.732,1117 480,1117 L480,1117 Z M480,1087 C471.163,1087 464,1094.16 464,1103 C464,1111.84 471.163,1119 480,1119 C488.837,1119 496,1111.84 496,1103 C496,1094.16 488.837,1087 480,1087 L480,1087 Z M486,1102 L481,1102 L481,1097 C481,1096.45 480.553,1096 480,1096 C479.447,1096 479,1096.45 479,1097 L479,1102 L474,1102 C473.447,1102 473,1102.45 473,1103 C473,1103.55 473.447,1104 474,1104 L479,1104 L479,1109 C479,1109.55 479.447,1110 480,1110 C480.553,1110 481,1109.55 481,1109 L481,1104 L486,1104 C486.553,1104 487,1103.55 487,1103 C487,1102.45 486.553,1102 486,1102 L486,1102 Z"
+                  id="plus-circle"
+                  sketch:type="MSShapeGroup"
+                ></path>
+              </g>
+            </g>
+          </svg>
+          Añadir Tarjeta
+        </button>
+      </div>
+    </form>
+  </div>
+  <!--Here starts Ventaneria-->
+  <div class="ml-14 border-2 border-gray-300 px-5 py-2 w-orderCard">
+    <div
+      class="flex flex-row gap-2"
+      (click)="changeToggleServices('ventaneria')"
+    >
+      <svg
+        class="w-6"
+        version="1.1"
+        id="Capa_1"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        x="0px"
+        y="0px"
+        viewBox="0 0 512 512"
+        style="enable-background: new 0 0 512 512"
+        xml:space="preserve"
+        [ngClass]="{
+          'rotate-180 transition-transform duration-700 ': toggleVentaneria
+        }"
+      >
+        <g>
+          <g>
+            <path
+              d="M506.157,132.386c-7.803-7.819-20.465-7.831-28.285-0.029l-207.73,207.299c-7.799,7.798-20.486,7.797-28.299-0.015 L34.128,132.357c-7.819-7.803-20.481-7.79-28.285,0.029c-7.802,7.819-7.789,20.482,0.029,28.284l207.701,207.27 c11.701,11.699,27.066,17.547,42.433,17.547c15.358,0,30.719-5.846,42.405-17.533L506.128,160.67 C513.946,152.868,513.959,140.205,506.157,132.386z"
+            ></path>
+          </g>
+        </g>
+      </svg>
+      <h2 class="text-3xl select-none">Ventanería</h2>
+    </div>
+    <form
+      [formGroup]="ventaneriaForm"
+      (ngSubmit)="addCardVentaneria()"
+      class="py-2"
+      [ngClass]="{
+        'transition-all duration-1000 block': toggleVentaneria,
+        'transition-all duration-1000  hidden': !toggleVentaneria
+      }"
+    >
+    <div class="grid grid-cols-2 gap-1">
+      <section class="flex flex-col">
+        <label class="text-lg font-semibold">Descripción</label>
+        <textarea
+          class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
+          type="text"
+          formControlName="description"
+        ></textarea>
+        <label class="text-lg font-semibold">Precio</label>
+        <input
+          class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
+          type="number"
+          formControlName="price"
+        />
+      </section>
+      <button
+        class="flex flex-row justify-center items-center gap-2 font-semibold text-2xl"
+        [disabled]="!ventaneriaForm.valid"
+        [ngClass]="{ 'text-red-500': !ventaneriaForm.valid }"
+        type="submit"
+      >
+        <svg
+          class="w-14"
+          viewBox="0 0 32 32"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"
+        >
+          <g
+            id="Page-1"
+            stroke="none"
+            stroke-width="1"
+            fill="currentColor"
+            fill-rule="evenodd"
+            sketch:type="MSPage"
+          >
+            <g
+              id="Icon-Set"
+              sketch:type="MSLayerGroup"
+              transform="translate(-464.000000, -1087.000000)"
+              fill="currentColor"
+            >
+              <path
+                d="M480,1117 C472.268,1117 466,1110.73 466,1103 C466,1095.27 472.268,1089 480,1089 C487.732,1089 494,1095.27 494,1103 C494,1110.73 487.732,1117 480,1117 L480,1117 Z M480,1087 C471.163,1087 464,1094.16 464,1103 C464,1111.84 471.163,1119 480,1119 C488.837,1119 496,1111.84 496,1103 C496,1094.16 488.837,1087 480,1087 L480,1087 Z M486,1102 L481,1102 L481,1097 C481,1096.45 480.553,1096 480,1096 C479.447,1096 479,1096.45 479,1097 L479,1102 L474,1102 C473.447,1102 473,1102.45 473,1103 C473,1103.55 473.447,1104 474,1104 L479,1104 L479,1109 C479,1109.55 479.447,1110 480,1110 C480.553,1110 481,1109.55 481,1109 L481,1104 L486,1104 C486.553,1104 487,1103.55 487,1103 C487,1102.45 486.553,1102 486,1102 L486,1102 Z"
+                id="plus-circle"
+                sketch:type="MSShapeGroup"
+              ></path>
+            </g>
+          </g>
+        </svg>
+        Añadir Tarjeta
+      </button>
+    </div>
+    </form>
+  </div>
+  <!--Here starts Instalation -->
+  <div class="ml-14 border-2 border-gray-300 px-5 py-2 w-orderCard">
+    <div
+      class="flex flex-row gap-2"
+      (click)="changeToggleServices('instalation')"
+    >
+      <svg
+        class="w-6"
+        version="1.1"
+        id="Capa_1"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        x="0px"
+        y="0px"
+        viewBox="0 0 512 512"
+        style="enable-background: new 0 0 512 512"
+        xml:space="preserve"
+        [ngClass]="{
+          'rotate-180 transition-transform duration-700 ': toggleInstalation
+        }"
+      >
+        <g>
+          <g>
+            <path
+              d="M506.157,132.386c-7.803-7.819-20.465-7.831-28.285-0.029l-207.73,207.299c-7.799,7.798-20.486,7.797-28.299-0.015 L34.128,132.357c-7.819-7.803-20.481-7.79-28.285,0.029c-7.802,7.819-7.789,20.482,0.029,28.284l207.701,207.27 c11.701,11.699,27.066,17.547,42.433,17.547c15.358,0,30.719-5.846,42.405-17.533L506.128,160.67 C513.946,152.868,513.959,140.205,506.157,132.386z"
+            ></path>
+          </g>
+        </g>
+      </svg>
+      <h2 class="text-3xl select-none">Instalación</h2>
+    </div>
+    <form
+      [formGroup]="instalationForm"
+      (ngSubmit)="addCardinstalation()"
+      class="py-2"
+      [ngClass]="{
+        'transition-all duration-1000 block': toggleInstalation,
+        'transition-all duration-1000  hidden': !toggleInstalation
+      }"
+    >
+      <div class="grid grid-cols-2 gap-1">
+        <section class="flex flex-col">
+          <label class="text-lg font-semibold">Descripción</label>
+          <textarea
+            class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
+            type="text"
+            formControlName="description"
+          ></textarea>
+          <label class="text-lg font-semibold">Precio</label>
+          <input
+            class="border-2 border-enmarcadora-principal rounded pl-2 py-0.5 w-96"
+            type="number"
+            formControlName="price"
+          />
+        </section>
+        <button
+          class="flex flex-row justify-center items-center gap-2 font-semibold text-2xl"
+          [disabled]="!instalationForm.valid"
+          [ngClass]="{ 'text-red-500': !instalationForm.valid }"
+          type="submit"
+        >
+          <svg
+            class="w-14"
+            viewBox="0 0 32 32"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"
+          >
+            <g
+              id="Page-1"
+              stroke="none"
+              stroke-width="1"
+              fill="currentColor"
+              fill-rule="evenodd"
+              sketch:type="MSPage"
+            >
+              <g
+                id="Icon-Set"
+                sketch:type="MSLayerGroup"
+                transform="translate(-464.000000, -1087.000000)"
+                fill="currentColor"
+              >
+                <path
+                  d="M480,1117 C472.268,1117 466,1110.73 466,1103 C466,1095.27 472.268,1089 480,1089 C487.732,1089 494,1095.27 494,1103 C494,1110.73 487.732,1117 480,1117 L480,1117 Z M480,1087 C471.163,1087 464,1094.16 464,1103 C464,1111.84 471.163,1119 480,1119 C488.837,1119 496,1111.84 496,1103 C496,1094.16 488.837,1087 480,1087 L480,1087 Z M486,1102 L481,1102 L481,1097 C481,1096.45 480.553,1096 480,1096 C479.447,1096 479,1096.45 479,1097 L479,1102 L474,1102 C473.447,1102 473,1102.45 473,1103 C473,1103.55 473.447,1104 474,1104 L479,1104 L479,1109 C479,1109.55 479.447,1110 480,1110 C480.553,1110 481,1109.55 481,1109 L481,1104 L486,1104 C486.553,1104 487,1103.55 487,1103 C487,1102.45 486.553,1102 486,1102 L486,1102 Z"
+                  id="plus-circle"
+                  sketch:type="MSShapeGroup"
+                ></path>
+              </g>
+            </g>
+          </svg>
+          Añadir Tarjeta
+        </button>
+      </div>
+    </form>
+  </div>
+</section>

@@ -22,13 +22,19 @@ module.exports = {
       height: {
         'custom': '450px',
         'vlg': '600px',
-        'maxHeader': '1080px'
+        'maxHeader': '1080px',
+        'A4': '788px',
+        'A4-2': '608px'
       },
       width: {
         'custom': '450px',
         'vlg': '600px',
         '144p': '580px',
-        'gallryW': '1000px'
+        'orderCard': '850px',
+        'gallryW': '1000px',
+        'A4':'608px',
+        'A4-2':'900px',
+        'A4-m2':'500px'
       },
       fontFamily: {
         dancing: ['Dancing Script'],
