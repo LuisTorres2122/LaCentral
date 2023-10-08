@@ -1,6 +1,6 @@
 <main
-  *ngIf="position && !width"
-  class="flex flex-col h-A4 w-A4 gap-2 text-enmarcadora-principal items-center justify-center mt-24 ml-14"
+  *ngIf="orientation == 'A4'"
+  class="flex flex-col h-A4 w-full gap-4 text-enmarcadora-principal items-center justify-center mt-20"
 >
   <section class="flex flex-col justify-between items-center ml-3">
     <div class="flex flex-col gap-1 mr-5 items-center">
@@ -27,13 +27,13 @@
       </div>
     </div>
   </section>
-  <section class="flex flex-col justify-center items-center mt-0">
+  <section class="flex flex-col justify-center items-center ">
     <h2 class="mr-2 font-semibold text-2xl text-enmarcadora-principal">
       Enmarcado
     </h2>
 
     <div
-      class="flex flex-row justify-center mb-5 gap-3 text-enmarcadora-principal mt-2"
+      class="flex flex-row justify-center mb-2 gap-3 text-enmarcadora-principal "
     >
       <span>20 calle 22-78, Zona 10 </span>
       <span> · </span>
@@ -99,11 +99,314 @@
           <th scope="col w-1/3">Valor</th>
         </tr>
       </thead>
-      <tbody class="h-96">
+      <tbody [style.height.px]="getLength() * 30">
         <tr *ngFor="let element of data.orderDetails" class="text-black">
           <td class="w-2/3 mr-2">{{ element.descripcion }}</td>
           <td class="w-1/3 text-center">
-            {{ element.precio | currency : "Q" }}
+            {{ setPrice(element) | currency : "Q" }}
+          </td>
+        </tr>
+        <tr class="border-t-2 border-enmarcadora-principal">
+          <td class="w-2/3 text-end text-enmarcadora-principal">Des:</td>
+          <td class="w-1/3 text-center">
+            {{ data.orderHeader.descuento | currency : "%" }}
+          </td>
+        </tr>
+        <tr class="border-t-2 border-enmarcadora-principal">
+          <td class="w-2/3 text-end text-enmarcadora-principal">Total:</td>
+          <td class="w-1/3 text-center">
+            {{ data.orderHeader.total | currency : "Q" }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section class="mx-auto uppercase text-sm text-enmarcadora-principal font-semibold">
+    <label for="des"
+      >NO NOS RESPOSABILIZAMOS POR TRABAJOS DEJADOS MAS DE 30 DIAS.</label
+    >
+  </section>
+  <section
+    class="w-full flex flex-row gap-2 justify-center border-2 border-enmarcadora-principal rounded-xl text-xs"
+  >
+    <div class="flex flex-col w-1/3 items-center">
+      <input type="text" class="border-b-2 border-enmarcadora-principal h-12" />
+      <span class="text-enmarcadora-principal">RECIBI CONFORME</span>
+    </div>
+    <div class="flex flex-col w-1/3 items-center">
+      <input
+        type="text "
+        class="border-b-2 border-enmarcadora-principal h-12"
+      />
+      <span class="text-enmarcadora-principal">FECHA DE ENTREGA</span>
+    </div>
+    <div class="self-center">
+      <span class="text-enmarcadora-principal w-1/3 font-semibold"
+        >ORDEN: {{ data.orderHeader.idPedido }}</span
+      >
+    </div>
+  </section>
+</main>
+<!--Half A4 double-->
+<main
+*ngIf="orientation == 'A4-2'"
+  class="flex flex-row h-A4-2 w-full gap-4 text-enmarcadora-principal mx-auto my-auto text-xs mt-5  mb-0"
+>
+<div class="flex flex-col w-1/2 h-full  items-center justify-center ">
+  <section class="flex flex-col justify-between items-center ml-3">
+    <div class="flex flex-col gap-1 mr-5 items-center">
+      <div class="uppercase relative font-semibold my-4">
+        <span class="absolute -rotate-90 right-12 top-8 h-5 w-20 text-center"
+          >Vidrios</span
+        >
+        <span class="absolute rotate-90 left-12 top-8 h-5 w-20 text-center"
+          >Espejos</span
+        >
+        <span class="absolute bottom-20 -left-0.5  h-5 w-20 text-center"
+          >marcos</span
+        >
+
+        <span class="absolute left-0 top-20 h-5 w-20 text-center"
+          >Aluminios</span
+        >
+
+        <img
+          src="../../../../assets/images/LogoLaCentral.png"
+          alt=""
+          class=" bg-white border-collapse rounded-full border-1p border-white w-20 "
+        />
+      </div>
+    </div>
+  </section>
+  <section class="flex flex-col justify-center items-center mt-0">
+    <h2 class="mr-2 font-semibold text-xl text-enmarcadora-principal">
+      Enmarcado
+    </h2>
+
+    <div
+      class="flex flex-row justify-center mb-3 gap-2 text-enmarcadora-principal "
+    >
+      <span>20 calle 22-78, Zona 10 </span>
+      <span> · </span>
+      <span> Tel: 23630984</span>
+      <span> · </span>
+      <span> Tel/Fax: 23335560</span>
+    </div>
+  </section>
+  <section class="grid grid-rows-2 px-2 pb-2">
+    <div class="flex flex-row h-8 gap-2">
+      <div class="w-1/3 flex gap-1">
+        <label class="self-end" for="date">Fecha:</label>
+        <input
+          class="border-b-2 border-enmarcadora-principal w-full"
+          type="text"
+          name="date"
+          disabled
+          [value]="data.orderHeader.fecha"
+        />
+      </div>
+
+      <div class="w-2/3 flex gap-1">
+        <label class="self-end" for="address">Dirección:</label>
+        <input
+          class="border-b-2 border-enmarcadora-principal w-full"
+          type="text"
+          name="address"
+          disabled
+        />
+      </div>
+    </div>
+
+    <div class="flex flex-row h-8 gap-2">
+      <div class="w-2/3 flex gap-1">
+        <label class="self-end" for="client">Cliente:</label>
+        <input
+          class="border-b-2 border-enmarcadora-principal w-full"
+          type="text"
+          name="client"
+          disabled
+          [value]="data.orderHeader.nombre"
+        />
+      </div>
+
+      <div class="w-1/3 flex gap-1">
+        <label class="self-end" for="phone">Tel:</label>
+        <input
+          class="border-b-2 border-enmarcadora-principal w-full"
+          type="text"
+          name="phone"
+          disabled
+        />
+      </div>
+    </div>
+  </section>
+  <section class="border-2 border-enmarcadora-principal rounded-xl w-full">
+    <table class="w-full">
+      <thead class="uppercase rounded-xl">
+        <tr
+          class="border-b-2 border-enmarcadora-principal text-enmarcadora-principal"
+        >
+          <th scope="col w-2/3">Descripción</th>
+          <th scope="col w-1/3">Valor</th>
+        </tr>
+      </thead>
+      <tbody 
+      [ngClass]="{'h-72': getLength() <= 5, 'max-h-[960px]': getLength() > 5}">
+        <tr *ngFor="let element of data.orderDetails" class="text-black text-xs">
+          <td class="w-2/3 mr-2">{{ element.descripcion }}</td>
+          <td class="w-1/3 text-center">
+            {{ setPrice(element) | currency : "Q" }}
+          </td>
+        </tr>
+        <tr class="border-t-2 border-enmarcadora-principal h-18 text-xs">
+          <td class="w-2/3 text-end text-enmarcadora-principal">Des:</td>
+          <td class="w-1/3 text-center">
+            {{ data.orderHeader.descuento | currency : "%" }}
+          </td>
+        </tr>
+        <tr class="border-t-2 border-enmarcadora-principal h-18 text-xs">
+          <td class="w-2/3 text-end text-enmarcadora-principal">Total:</td>
+          <td class="w-1/3 text-center">
+            {{ data.orderHeader.total | currency : "Q" }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section class="mx-auto uppercase text-enmarcadora-principal font-semibold">
+    <label for="des"
+      >NO NOS RESPOSABILIZAMOS POR TRABAJOS DEJADOS MAS DE 30 DIAS.</label
+    >
+  </section>
+  <section
+    class="w-full flex flex-row gap-5 justify-center border-2 border-enmarcadora-principal rounded-xl"
+  >
+    <div class="flex flex-col w-1/3 items-center">
+      <input
+        type="text"
+        class="border-b-2 border-enmarcadora-principal h-8"
+      />
+      <span class="text-enmarcadora-principal">RECIBI CONFORME</span>
+    </div>
+    <div class="flex flex-col w-1/3 items-center">
+      <input
+        type="text "
+        class="border-b-2 border-enmarcadora-principal h-8"
+      />
+      <span class="text-enmarcadora-principal">FECHA DE ENTREGA</span>
+    </div>
+    <div class="self-center">
+      <span class="text-enmarcadora-principal w-1/3 font-semibold"
+        >ORDEN: {{ data.orderHeader.idPedido }}</span
+      >
+    </div>
+  </section>
+</div>
+  
+
+<div class="flex flex-col w-1/2   items-center justify-center ">
+  <section class="flex flex-col justify-between items-center ml-3">
+    <div class="flex flex-col gap-1 mr-5 items-center">
+      <div class="uppercase relative font-semibold my-4">
+        <span class="absolute -rotate-90 right-12 top-8 h-5 w-20 text-center"
+          >Vidrios</span
+        >
+        <span class="absolute rotate-90 left-12 top-8 h-5 w-20 text-center"
+          >Espejos</span
+        >
+        <span class="absolute bottom-20 -left-0.5  h-5 w-20 text-center"
+          >marcos</span
+        >
+
+        <span class="absolute left-0 top-20 h-5 w-20 text-center"
+          >Aluminios</span
+        >
+
+        <img
+          src="../../../../assets/images/LogoLaCentral.png"
+          alt=""
+          class=" bg-white border-collapse rounded-full border-1p border-white w-20 "
+        />
+      </div>
+    </div>
+  </section>
+  <section class="flex flex-col justify-center items-center mt-0">
+    <h2 class="mr-2 font-semibold text-xl text-enmarcadora-principal">
+      Enmarcado
+    </h2>
+
+    <div
+      class="flex flex-row justify-center mb-3 gap-2 text-enmarcadora-principal "
+    >
+      <span>20 calle 22-78, Zona 10 </span>
+      <span> · </span>
+      <span> Tel: 23630984</span>
+      <span> · </span>
+      <span> Tel/Fax: 23335560</span>
+    </div>
+  </section>
+  <section class="grid grid-rows-2 px-2 pb-2">
+    <div class="flex flex-row h-8 gap-2">
+      <div class="w-1/3 flex gap-1">
+        <label class="self-end" for="date">Fecha:</label>
+        <input
+          class="border-b-2 border-enmarcadora-principal w-full"
+          type="text"
+          name="date"
+          disabled
+          [value]="data.orderHeader.fecha"
+        />
+      </div>
+
+      <div class="w-2/3 flex gap-1">
+        <label class="self-end" for="address">Dirección:</label>
+        <input
+          class="border-b-2 border-enmarcadora-principal w-full"
+          type="text"
+          name="address"
+          disabled
+        />
+      </div>
+    </div>
+
+    <div class="flex flex-row h-8 gap-2">
+      <div class="w-2/3 flex gap-1">
+        <label class="self-end" for="client">Cliente:</label>
+        <input
+          class="border-b-2 border-enmarcadora-principal w-full"
+          type="text"
+          name="client"
+          disabled
+          [value]="data.orderHeader.nombre"
+        />
+      </div>
+
+      <div class="w-1/3 flex gap-1">
+        <label class="self-end" for="phone">Tel:</label>
+        <input
+          class="border-b-2 border-enmarcadora-principal w-full"
+          type="text"
+          name="phone"
+          disabled
+        />
+      </div>
+    </div>
+  </section>
+  <section class="border-2 border-enmarcadora-principal rounded-xl w-full">
+    <table class="w-full">
+      <thead class="uppercase rounded-xl">
+        <tr
+          class="border-b-2 border-enmarcadora-principal text-enmarcadora-principal"
+        >
+          <th scope="col w-2/3">Descripción</th>
+          <th scope="col w-1/3">Valor</th>
+        </tr>
+      </thead>
+      <tbody [ngClass]="{'h-72': getLength() <= 5, 'max-h-[960px]': getLength() > 5}">
+        <tr *ngFor="let element of data.orderDetails" class="text-black text-xs">
+          <td class="w-2/3 mr-2">{{ element.descripcion }}</td>
+          <td class="w-1/3 text-center">
+            {{ setPrice(element) | currency : "Q" }}
           </td>
         </tr>
         <tr class="border-t-2 border-enmarcadora-principal">
@@ -130,13 +433,16 @@
     class="w-full flex flex-row gap-5 justify-center border-2 border-enmarcadora-principal rounded-xl"
   >
     <div class="flex flex-col w-1/3 items-center">
-      <input type="text" class="border-b-2 border-enmarcadora-principal h-14" />
+      <input
+        type="text"
+        class="border-b-2 border-enmarcadora-principal h-8"
+      />
       <span class="text-enmarcadora-principal">RECIBI CONFORME</span>
     </div>
     <div class="flex flex-col w-1/3 items-center">
       <input
         type="text "
-        class="border-b-2 border-enmarcadora-principal h-14"
+        class="border-b-2 border-enmarcadora-principal h-8"
       />
       <span class="text-enmarcadora-principal">FECHA DE ENTREGA</span>
     </div>
@@ -146,308 +452,5 @@
       >
     </div>
   </section>
-</main>
-<!--Half A4 double-->
-<main
-*ngIf="!position"
-  class="flex flex-row h-A4-2 w-A4-2 gap-2 text-enmarcadora-principal items-center justify-center "
->
-  <div class="flex flex-col h-full w-A4-m2 items-center justify-center ">
-    <section class="flex flex-col justify-between items-center ml-3">
-      <div class="flex flex-col gap-1 mr-5 items-center">
-        <div class="uppercase relative font-semibold my-4">
-          <span class="absolute -rotate-90 right-20 top-12 h-5 w-24 text-center"
-            >Vidrios</span
-          >
-          <span class="absolute rotate-90 left-20 top-12 h-5 w-24 text-center"
-            >Espejos</span
-          >
-          <span class="absolute bottom-28 left-2 h-5 w-24 text-center"
-            >marcos</span
-          >
-
-          <span class="absolute left-2 top-28 h-5 w-24 text-center"
-            >Aluminios</span
-          >
-
-          <img
-            src="../../../../assets/images/LogoLaCentral.png"
-            alt=""
-            class="mt-1 bg-white border-collapse rounded-full border-1p border-white w-28"
-          />
-        </div>
-      </div>
-    </section>
-    <section class="flex flex-col justify-center items-center mt-0">
-      <h2 class="mr-2 font-semibold text-2xl text-enmarcadora-principal">
-        Enmarcado
-      </h2>
-
-      <div
-        class="flex flex-row justify-center mb-5 gap-3 text-enmarcadora-principal mt-2"
-      >
-        <span>20 calle 22-78, Zona 10 </span>
-        <span> · </span>
-        <span> Tel: 23630984</span>
-        <span> · </span>
-        <span> Tel/Fax: 23335560</span>
-      </div>
-    </section>
-    <section class="grid grid-rows-2 p-2">
-      <div class="flex flex-row h-8 gap-2">
-        <div class="w-1/3 flex gap-1">
-          <label class="self-end" for="date">Fecha:</label>
-          <input
-            class="border-b-2 border-enmarcadora-principal w-full"
-            type="text"
-            name="date"
-            disabled
-            [value]="data.orderHeader.fecha"
-          />
-        </div>
-
-        <div class="w-2/3 flex gap-1">
-          <label class="self-end" for="address">Dirección:</label>
-          <input
-            class="border-b-2 border-enmarcadora-principal w-full"
-            type="text"
-            name="address"
-            disabled
-          />
-        </div>
-      </div>
-
-      <div class="flex flex-row h-8 gap-2">
-        <div class="w-2/3 flex gap-1">
-          <label class="self-end" for="client">Cliente:</label>
-          <input
-            class="border-b-2 border-enmarcadora-principal w-full"
-            type="text"
-            name="client"
-            disabled
-            [value]="data.orderHeader.nombre"
-          />
-        </div>
-
-        <div class="w-1/3 flex gap-1">
-          <label class="self-end" for="phone">Tel:</label>
-          <input
-            class="border-b-2 border-enmarcadora-principal w-full"
-            type="text"
-            name="phone"
-            disabled
-          />
-        </div>
-      </div>
-    </section>
-    <section class="border-2 border-enmarcadora-principal rounded-xl w-full">
-      <table class="w-full">
-        <thead class="uppercase rounded-xl">
-          <tr
-            class="border-b-2 border-enmarcadora-principal text-enmarcadora-principal"
-          >
-            <th scope="col w-2/3">Descripción</th>
-            <th scope="col w-1/3">Valor</th>
-          </tr>
-        </thead>
-        <tbody class="h-96">
-          <tr *ngFor="let element of data.orderDetails" class="text-black">
-            <td class="w-2/3 mr-2">{{ element.descripcion }}</td>
-            <td class="w-1/3 text-center">
-              {{ element.precio | currency : "Q" }}
-            </td>
-          </tr>
-          <tr class="border-t-2 border-enmarcadora-principal">
-            <td class="w-2/3 text-end text-enmarcadora-principal">Des:</td>
-            <td class="w-1/3 text-center">
-              {{ data.orderHeader.descuento | currency : "%" }}
-            </td>
-          </tr>
-          <tr class="border-t-2 border-enmarcadora-principal">
-            <td class="w-2/3 text-end text-enmarcadora-principal">Total:</td>
-            <td class="w-1/3 text-center">
-              {{ data.orderHeader.total | currency : "Q" }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-    <section class="mx-auto uppercase text-enmarcadora-principal font-semibold">
-      <label for="des"
-        >NO NOS RESPOSABILIZAMOS POR TRABAJOS DEJADOS MAS DE 30 DIAS.</label
-      >
-    </section>
-    <section
-      class="w-full flex flex-row gap-5 justify-center border-2 border-enmarcadora-principal rounded-xl"
-    >
-      <div class="flex flex-col w-1/3 items-center">
-        <input
-          type="text"
-          class="border-b-2 border-enmarcadora-principal h-14"
-        />
-        <span class="text-enmarcadora-principal">RECIBI CONFORME</span>
-      </div>
-      <div class="flex flex-col w-1/3 items-center">
-        <input
-          type="text "
-          class="border-b-2 border-enmarcadora-principal h-14"
-        />
-        <span class="text-enmarcadora-principal">FECHA DE ENTREGA</span>
-      </div>
-      <div class="self-center">
-        <span class="text-enmarcadora-principal w-1/3 font-semibold"
-          >ORDEN: {{ data.orderHeader.idPedido }}</span
-        >
-      </div>
-    </section>
-  </div>
-  <div class="flex flex-col h-full w-A4-m2 items-center justify-center ">
-    <section class="flex flex-col justify-between items-center ml-3">
-      <div class="flex flex-col gap-1 mr-5 items-center">
-        <div class="uppercase relative font-semibold my-4">
-          <span class="absolute -rotate-90 right-20 top-12 h-5 w-24 text-center"
-            >Vidrios</span
-          >
-          <span class="absolute rotate-90 left-20 top-12 h-5 w-24 text-center"
-            >Espejos</span
-          >
-          <span class="absolute bottom-28 left-2 h-5 w-24 text-center"
-            >marcos</span
-          >
-
-          <span class="absolute left-2 top-28 h-5 w-24 text-center"
-            >Aluminios</span
-          >
-
-          <img
-            src="../../../../assets/images/LogoLaCentral.png"
-            alt=""
-            class="mt-1 bg-white border-collapse rounded-full border-1p border-white w-28"
-          />
-        </div>
-      </div>
-    </section>
-    <section class="flex flex-col justify-center items-center mt-0">
-      <h2 class="mr-2 font-semibold text-2xl text-enmarcadora-principal">
-        Enmarcado
-      </h2>
-
-      <div
-        class="flex flex-row justify-center mb-5 gap-3 text-enmarcadora-principal mt-2"
-      >
-        <span>20 calle 22-78, Zona 10 </span>
-        <span> · </span>
-        <span> Tel: 23630984</span>
-        <span> · </span>
-        <span> Tel/Fax: 23335560</span>
-      </div>
-    </section>
-    <section class="grid grid-rows-2 p-2">
-      <div class="flex flex-row h-8 gap-2">
-        <div class="w-1/3 flex gap-1">
-          <label class="self-end" for="date">Fecha:</label>
-          <input
-            class="border-b-2 border-enmarcadora-principal w-full"
-            type="text"
-            name="date"
-            disabled
-            [value]="data.orderHeader.fecha"
-          />
-        </div>
-
-        <div class="w-2/3 flex gap-1">
-          <label class="self-end" for="address">Dirección:</label>
-          <input
-            class="border-b-2 border-enmarcadora-principal w-full"
-            type="text"
-            name="address"
-            disabled
-          />
-        </div>
-      </div>
-
-      <div class="flex flex-row h-8 gap-2">
-        <div class="w-2/3 flex gap-1">
-          <label class="self-end" for="client">Cliente:</label>
-          <input
-            class="border-b-2 border-enmarcadora-principal w-full"
-            type="text"
-            name="client"
-            disabled
-            [value]="data.orderHeader.nombre"
-          />
-        </div>
-
-        <div class="w-1/3 flex gap-1">
-          <label class="self-end" for="phone">Tel:</label>
-          <input
-            class="border-b-2 border-enmarcadora-principal w-full"
-            type="text"
-            name="phone"
-            disabled
-          />
-        </div>
-      </div>
-    </section>
-    <section class="border-2 border-enmarcadora-principal rounded-xl w-full">
-      <table class="w-full">
-        <thead class="uppercase rounded-xl">
-          <tr
-            class="border-b-2 border-enmarcadora-principal text-enmarcadora-principal"
-          >
-            <th scope="col w-2/3">Descripción</th>
-            <th scope="col w-1/3">Valor</th>
-          </tr>
-        </thead>
-        <tbody class="h-96">
-          <tr *ngFor="let element of data.orderDetails" class="text-black">
-            <td class="w-2/3 mr-2">{{ element.descripcion }}</td>
-            <td class="w-1/3 text-center">
-              {{ element.precio | currency : "Q" }}
-            </td>
-          </tr>
-          <tr class="border-t-2 border-enmarcadora-principal">
-            <td class="w-2/3 text-end text-enmarcadora-principal">Des:</td>
-            <td class="w-1/3 text-center">
-              {{ data.orderHeader.descuento | currency : "%" }}
-            </td>
-          </tr>
-          <tr class="border-t-2 border-enmarcadora-principal">
-            <td class="w-2/3 text-end text-enmarcadora-principal">Total:</td>
-            <td class="w-1/3 text-center">
-              {{ data.orderHeader.total | currency : "Q" }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-    <section class="mx-auto uppercase text-enmarcadora-principal font-semibold">
-      <label for="des"
-        >NO NOS RESPOSABILIZAMOS POR TRABAJOS DEJADOS MAS DE 30 DIAS.</label
-      >
-    </section>
-    <section
-      class="w-full flex flex-row gap-5 justify-center border-2 border-enmarcadora-principal rounded-xl"
-    >
-      <div class="flex flex-col w-1/3 items-center">
-        <input
-          type="text"
-          class="border-b-2 border-enmarcadora-principal h-14"
-        />
-        <span class="text-enmarcadora-principal">RECIBI CONFORME</span>
-      </div>
-      <div class="flex flex-col w-1/3 items-center">
-        <input
-          type="text "
-          class="border-b-2 border-enmarcadora-principal h-14"
-        />
-        <span class="text-enmarcadora-principal">FECHA DE ENTREGA</span>
-      </div>
-      <div class="self-center">
-        <span class="text-enmarcadora-principal w-1/3 font-semibold"
-          >ORDEN: {{ data.orderHeader.idPedido }}</span
-        >
-      </div>
-    </section>
-  </div>
+</div>
 </main>

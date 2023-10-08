@@ -33,8 +33,8 @@ module.exports = {
         'orderCard': '850px',
         'gallryW': '1000px',
         'A4':'608px',
-        'A4-2':'788px',
-        'A4-m2':'391px'
+        'A4-2':'900px',
+        'A4-m2':'500px'
       },
       fontFamily: {
         dancing: ['Dancing Script'],

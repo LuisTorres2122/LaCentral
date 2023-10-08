@@ -96,6 +96,10 @@ export class CardManagementComponent implements OnInit {
     }, 3000);
   }
 
+  closeSheet(show: boolean){
+    this.showOrderSheet = show;
+  }
+
   recieveCard(card: Card): void {
     this.cards.push(card);
     this.total += card.total;

@@ -147,6 +147,7 @@ export class OrdersComponent {
 
   clearClient():void {
     this.client = "";
+    this.clientDisabled = false;
   }
 
   findClient(): void {

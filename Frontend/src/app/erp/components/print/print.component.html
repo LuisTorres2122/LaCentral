@@ -1,5 +1,5 @@
 <main class="h-screen w-full">
-  <section class="h-20 mt-5">
+  <section class="h-20 mt-5 flex flex-col">
     <nav class="flex flex-row justify-evenly h-14 p-3">
       <button
       (click)="closeShow()"
@@ -27,11 +27,36 @@
         Imprimir
       </button>
     </nav>
+    <div class="flex flex-col items-start ml-5">
+      <div class="">
+        <input
+          class="checked:bg-enmarcadora-principal"
+          type="checkbox"
+          id="A4-2"
+          [(ngModel)]="checkboxSeleccionado"
+          [checked]="checkboxSeleccionado === 'A4-2'"
+          (change)="seleccionarCheckbox('A4-2')"
+        />
+        <label class="ml-2 font-bold" for="A4-2">Media Carta</label>
+      </div>
+      <div class="z-10">
+        <input
+          class="checked:bg-enmarcadora-principal"
+          type="checkbox"
+          id="A4"
+          [(ngModel)]="checkboxSeleccionado"
+          [checked]="checkboxSeleccionado === 'A4'"
+          (change)="seleccionarCheckbox('A4')"
+        />
+        <label class="ml-2 font-bold" for="A4">Carta</label>
+      </div>
+    </div>
   </section>
   <section class="flex justify-center">
     <app-order-sheet
      id="orderSheet"
      [data]="data"
+     [orientation]="checkboxSeleccionado"
      ></app-order-sheet>
   </section>
 </main>
