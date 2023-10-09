@@ -6,12 +6,13 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { User } from 'src/app/erp/models/user.model';
 import { UserService } from 'src/app/erp/services/user.service';
 
 @Component({
   selector: 'app-change-password',
-  templateUrl: './change-password.component.html'
+  templateUrl: './change-password.component.html',
 })
 export class ChangePasswordComponent implements OnInit {
   show: boolean = false;
@@ -20,10 +21,11 @@ export class ChangePasswordComponent implements OnInit {
   WorseNotify: string = '';
   users: User[] = [];
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private titleService: Title) {}
 
   ngOnInit(): void {
     this.chargeUsers();
+    this.titleService.setTitle('Cambiar Contraseña');
   }
 
   showPassword() {

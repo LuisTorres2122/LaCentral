@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -6,20 +6,25 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { User } from 'src/app/erp/models/user.model';
 import { UserService } from 'src/app/erp/services/user.service';
 
 @Component({
   selector: 'app-register',
-  templateUrl: './register.component.html'
+  templateUrl: './register.component.html',
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   notify: string = '';
   badNotify: string = '';
   WorseNotify: string = '';
   show: boolean = false;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private titleService: Title) {}
+  ngOnInit(): void {
+    this.titleService.setTitle('Registrar Usuarios');
+  }
+
   showPassword() {
     this.show = !this.show;
   }
@@ -28,7 +33,7 @@ export class RegisterComponent {
     setTimeout(() => {
       this.notify = '';
       this.badNotify = '';
-      this.WorseNotify='';
+      this.WorseNotify = '';
     }, 3000);
   }
 
@@ -80,15 +85,14 @@ export class RegisterComponent {
             this.deleteNotify();
           },
           error: (err) => {
-
-
-            if(err.error.message == `User ${newUser.emailUsuario} already exist`)
-            {
+            if (
+              err.error.message == `User ${newUser.emailUsuario} already exist`
+            ) {
               this.WorseNotify = 'El email ya existe';
-            }else{
+            } else {
               this.badNotify = 'creación de usuario';
             }
-            
+
             this.deleteNotify();
           },
         });

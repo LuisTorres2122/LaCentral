@@ -1,365 +1,359 @@
-
-        <section
-          class="w-full  h-100vh md:h-[calc(100vh-175px)] my-10 border bg-gradient-to-t from-enmarcadora-principal to-white flex flex-col items-center gap-2 md:flex-row md:justify-center md:gap-0"
-        >
-          <div
-            class="w-40 md:w-80 lg:w-80 md:h-[calc(100vh/2)] lg:h-[calc(100vh/1.5)] xl:h-[calc(100vh/2)] m-3 shadow-lg p-4 border bg-opacity-100 my-auto mb-4 md:mb-auto hover:bg-gradient-to-b from-enmarcadora-principal to-white text-white hover:text-enmarcadora-principal"
-          >
-            <button
-              (click)="scrollToSection('enmarcado')"
-              class="w-full h-full flex flex-col items-center justify-between font-semibold font-playfair"
-            >
-              <img
-                class="w-3/4 my-auto h-4/6"
-                lazyLoad="../../../../assets/images/enmarcado/enmarcado/mujer.jpg"
-                alt="imagen cuadro de mujer"
-              />
-              <h3 class="text-2xl md:text-4xl mb-0">Enmarcado</h3>
-            </button>
-          </div>
-          <div
-            class="w-40 md:w-80 lg:w-80 md:h-[calc(100vh/2)] lg:h-[calc(100vh/1.5)] xl:h-[calc(100vh/2)] m-3 shadow-lg p-4 border bg-opacity-100 my-auto mb-4 md:mb-auto hover:bg-gradient-to-b from-enmarcadora-principal to-white text-white hover:text-enmarcadora-principal"
-          >
-            <button
-            (click)="scrollToSection('servicio')"
-              class="w-full h-full flex flex-col items-center justify-between font-semibold font-playfair"
-            >
-              <img
-                class="w-3/4 my-auto h-4/6"
-                lazyLoad="../../../../assets/images/enmarcado/servicios/instalacion1.jpg"
-                alt="imagen cuadro de mujer"
-              />
-              <h3 class="text-2xl md:text-4xl mb-0">Servicios</h3>
-            </button>
-          </div>
-          <div
-            class="w-40 md:w-80 lg:w-80 md:h-[calc(100vh/2)] lg:h-[calc(100vh/1.5)] xl:h-[calc(100vh/2)] m-3 shadow-lg p-4 border bg-opacity-100 my-auto mb-4 md:mb-auto hover:bg-gradient-to-b from-enmarcadora-principal to-white text-white hover:text-enmarcadora-principal"
-          >
-            <button
-              (click)="scrollToSection('mol')"
-              class="w-full h-full flex flex-col items-center justify-between font-semibold font-playfair"
-            >
-              <img
-                class="w-3/4 my-auto h-4/6"
-                lazyLoad="../../../../assets/images/enmarcado/molduras/mol4.jpg"
-                alt="imagen cuadro de mujer"
-              />
-              <h3 class="text-2xl md:text-4xl mb-0">Molduras</h3>
-            </button>
-          </div>
-        </section>
-        <div id="enmarcado" class="h-14"></div>
-  
-        <section
-          class="w-3/4 lg:w-full mx-auto mb-10 flex flex-col lg:flex-row m-5 lg:justify-center lg:items-center gap-2"
-        >
-          <aside class="order-2 lg:order-1 m-2 lg:ml-10">
-            <img
-            lazyLoad="../../../../assets/images/enmarcado/enmarcado/ciudad.jpg"
-              alt="imagen cuadro ciudad"
-              class="w-2/3 md:h-64 md:w-60 mx-auto transition duration-300 hover:scale-105"
-              (click)="
-                changePictureRoute(
-                  '../../../../assets/images/enmarcado/enmarcado/ciudad.jpg'
-                )
-              "
-            />
-            <img
-            lazyLoad="../../../../assets/images/enmarcado/enmarcado/doscaras.jpg"
-              alt="imagen cuadro doscaras"
-              class="w-2/3 md:h-64 md:w-60 mx-auto my-2 transition duration-300 hover:scale-105"
-              (click)="
-                changePictureRoute(
-                  '../../../../assets/images/enmarcado/enmarcado/doscaras.jpg'
-                )
-              "
-            />
-          </aside>
-          <div class="w-full lg:w-7/12 order-1 lg:order-2 mb-4 mx-auto">
-            <h3
-              class="font-semibold text-2xl md:text-3xl capitalize first-letter:text-5xl"
-            >
-              Enmarcado
-            </h3>
-            <p class="text-xl">
-              El Enmarcado es una tecnica complementario de las artes visuales, si
-              bien la pintura u objeto es el interés principal, el enmarcado
-              armoniza, protege y reluce como accesorio del ente principal para
-              poder dar una mejor imagen y percepción la obra expuesta. Por ello
-              el enmarcado es un proceso riguroso y metódico con el fin de poder
-              lucir la obra de una manera única y especial, según como lo desee el
-              cliente.
-            </p>
-            <br />
-            <span class="text-2xl">Algunos Tips...</span>
-            <br />
-            <p class="text-xl">
-              Enmarca tus obra para protegerlas del desgaste, si es en papel estas
-              suelen durar mucho menos en ambientes húmedos y muy luminosos Usa
-              vidrio y así alargaras la vida de tus obras y fotografías preferidas
-              Usa paspartú para evitar que fotografias, acuarelas o grabados se
-              peguen y se dañen sobre el vidrio Pide que utilicen cintas libre de
-              acido para que no desgaste y dañe el papel de tus obras.
-            </p>
-          </div>
-          <aside class="order-3 m-2 lg:mr-10">
-            <img
-            lazyLoad="../../../../assets/images/enmarcado/enmarcado/mujer.jpg"
-              alt="imagen cuadro mujer"
-              class="w-2/3 md:h-64 md:w-60 mx-auto transition duration-300 hover:scale-105"
-              (click)="
-                changePictureRoute(
-                  '../../../../assets/images/enmarcado/enmarcado/mujer.jpg'
-                )
-              "
-            />
-            <img
-            lazyLoad="../../../../assets/images/enmarcado/enmarcado/Toro-.png"
-              alt="imagen cuadro Toro"
-              class="w-2/3 md:h-64 md:w-60 mx-auto my-2 transition duration-300 hover:scale-105"
-              (click)="
-                changePictureRoute(
-                  '../../../../assets/images/enmarcado/enmarcado/Toro-.png'
-                )
-              "
-            />
-          </aside>
-        </section>
-        <hr />
-        
-        <section class="w-full mt-5 h-full">
-          <div class="flex flex-col md:flex-row m-5 justify-center items-center  ">
-            <h3
-              class="font-semibold text-2xl md:text-3xl capitalize first-letter:text-5xl "
-            >
-              Servicios
-              <div id="servicio" ></div>
-            </h3>
-          </div>
-         
-          <div
-            class="flex flex-col md:flex-row m-5 h-100vh md:h-screen justify-center items-center"
-          >
-            <div class="w-full my-auto">
-              <div class="flex justify-center">
-                <h4
-                  class="font-semibold text-xl md:text-2xl capitalize first-letter:text-4xl mb-5"
-                >
-                  Instalación
-                </h4>
-              </div>
-              
-              <p class="text-xl m-5">
-                Dentro de nuestra empresa, ofrecemos el servicio de instalación
-                para aquellos trabajos u exposiciones que deseen colocarse de una
-                forma más profesional y técnica.
-              </p>
-            </div>
-         
-            <div class="w-full h-full grid grid-cols-2 gap-1 justify-end">
-              <img
-              lazyLoad="../../../../assets/images/enmarcado/servicios/instalacion1.jpg "
-                alt="imagen instalación"
-                class="w-60 h-72 lg:w-72 lg:h-80 self-end justify-self-end transition duration-300 hover:scale-105"
-                (click)="
-                  changePictureRoute(
-                    '../../../../assets/images/enmarcado/servicios/instalacion1.jpg'
-                  )
-                "
-              />
-              <img
-              lazyLoad="../../../../assets/images/enmarcado/servicios/instalacion3.jpg "
-                alt="imagen instalación"
-                class="w-60 h-72 lg:w-72 lg:h-80 self-end transition duration-300 hover:scale-105"
-                (click)="
-                  changePictureRoute(
-                    '../../../../assets/images/enmarcado/servicios/instalacion3.jpg'
-                  )
-                "
-              />
-              <img
-              lazyLoad="../../../../assets/images/enmarcado/servicios/instalacion4.jpg "
-                alt="imagen instalación"
-                class="w-60 h-72 lg:w-72 md:h-full self-start justify-self-end transition duration-300 hover:scale-105"
-                (click)="
-                  changePictureRoute(
-                    '../../../../assets/images/enmarcado/servicios/instalacion4.jpg'
-                  )
-                "
-              />
-              <img
-              lazyLoad="../../../../assets/images/enmarcado/servicios/instalacion5.jpg "
-                alt="imagen instalación"
-                class="w-60 h-72 md:w-72 md:h-full transition duration-300 hover:scale-105"
-                (click)="
-                  changePictureRoute(
-                    '../../../../assets/images/enmarcado/servicios/instalacion5.jpg'
-                  )
-                "
-              />
-              <img
-              lazyLoad="../../../../assets/images/enmarcado/servicios/instalacion2.jpg "
-                alt="imagen instalación"
-                class="w-full lg:w-144p lg:h-full justify-self-center col-span-2 transition duration-300 hover:scale-105"
-                (click)="
-                  changePictureRoute(
-                    '../../../../assets/images/enmarcado/servicios/instalacion2.jpg'
-                  )
-                "
-              />
-            </div>
-          </div>
-  
-          <br />
-          <br />
-  
-          <div
-            class="flex flex-col md:flex-row m-5 h-full justify-center items-center"
-          >
-            <div
-              class="w-full h-full grid grid-cols-2 gap-1 justify-end order-2 md:order-1"
-            >
-              <img
-              lazyLoad="../../../../assets/images/enmarcado/servicios/enmarcado1.jpg"
-                alt="imagen cuadro 1"
-                class="w-60 h-72 lg:w-72 lg:h-80 self-end justify-self-end transition duration-300 hover:scale-105"
-                (click)="
-                  changePictureRoute(
-                    '../../../../assets/images/enmarcado/servicios/enmarcado1.jpg'
-                  )
-                "
-              />
-              <img
-              lazyLoad="../../../../assets/images/enmarcado/servicios/enmarcado2.jpg "
-                alt="imagen cuadro 2"
-                class="w-60 h-72 lg:w-72 lg:h-80 self-end transition duration-300 hover:scale-105"
-                (click)="
-                  changePictureRoute(
-                    '../../../../assets/images/enmarcado/servicios/enmarcado2.jpg'
-                  )
-                "
-              />
-              <img
-              lazyLoad="../../../../assets/images/enmarcado/servicios/enmarcado3.jpg "
-                alt="imagen cuadro 3"
-                class="w-60 h-72 lg:w-72 lg:h-80 self-start justify-self-end transition duration-300 hover:scale-105"
-                (click)="
-                  changePictureRoute(
-                    '../../../../assets/images/enmarcado/servicios/enmarcado3.jpg'
-                  )
-                "
-              />
-              <img
-              lazyLoad="../../../../assets/images/enmarcado/servicios/enmarcado4.jpg "
-                alt="imagen cuadro 4"
-                class="w-60 h-72 lg:w-72 lg:h-80 transition duration-300 hover:scale-105"
-                (click)="
-                  changePictureRoute(
-                    '../../../../assets/images/enmarcado/servicios/enmarcado4.jpg'
-                  )
-                "
-              />
-              <img
-              lazyLoad="../../../../assets/images/enmarcado/servicios/enmarcado5.jpg "
-                alt="imagen cuadro 5"
-                class="w-60 h-72 lg:w-72 lg:h-80 self-start justify-self-end transition duration-300 hover:scale-105"
-                (click)="
-                  changePictureRoute(
-                    '../../../../assets/images/enmarcado/servicios/enmarcado5.jpg'
-                  )
-                "
-              />
-              <img
-              lazyLoad="../../../../assets/images/enmarcado/servicios/enmarcado6.jpg "
-                alt="imagen cuadro 6"
-                class="w-60 h-72 lg:w-72 lg:h-80 transition duration-300 hover:scale-105"
-                (click)="
-                  changePictureRoute(
-                    '../../../../assets/images/enmarcado/servicios/enmarcado6.jpg'
-                  )
-                "
-              />
-              <img
-              lazyLoad="../../../../assets/images/enmarcado/servicios/enmarcado9.jpg "
-                alt="imagen cuadro 9"
-                class="w-60 h-72 lg:w-72 lg:h-80 self-start justify-self-end transition duration-300 hover:scale-105"
-                (click)="
-                  changePictureRoute(
-                    '../../../../assets/images/enmarcado/servicios/enmarcado9.jpg'
-                  )
-                "
-              />
-              <img
-              lazyLoad="../../../../assets/images/enmarcado/servicios/enmarcado8.jpg "
-                alt="imagen cuadro 8"
-                class="w-60 h-72 lg:w-72 lg:h-80 transition duration-300 hover:scale-105"
-                (click)="
-                  changePictureRoute(
-                    '../../../../assets/images/enmarcado/servicios/enmarcado8.jpg'
-                  )
-                "
-              />
-              <img
-              lazyLoad="../../../../assets/images/enmarcado/servicios/enmarcado7.jpg "
-                alt="imagen cuadro 7"
-                class="w-full lg:w-144p justify-self-center col-span-2 transition duration-300 hover:scale-105"
-                (click)="
-                  changePictureRoute(
-                    '../../../../assets/images/enmarcado/servicios/enmarcado7.jpg'
-                  )
-                "
-              />
-            </div>
-            <div class="w-full my-auto order-1 md:order-2">
-              <div class="flex justify-center">
-                <h4
-                  class="font-semibold text-xl md:text-2xl capitalize first-letter:text-4xl mb-5"
-                >
-                  Enmarcado Personalizado
-                </h4>
-              </div>
-              <p class="text-xl m-5">
-                Tienes una idea diferente para el enmarcado? Acércate, con el
-                asesoramiento adecuado podemos realizar nuevos proyectos que se
-                adapten a tu visión final de la obra y obtener un resultado
-                innovador y de calidad.
-              </p>
-            </div>
-          </div>
-        </section>
-        <hr />
-        <br />
-        <div id="mol" class="h-20"></div>
-        <section class="w-full mt-5 h-100vh md:h-screen">
-          <div class="flex justify-center">
-            <h3
-              class="font-semibold text-2xl md:text-3xl capitalize first-letter:text-5xl"
-            >
-              Molduras
-            </h3>
-          </div>
-  
-          <div class="flex flex-col w-full md:w-2/3 mx-auto">
-            <p class="text-xl m-5">
-              Nuestra cuidadosa colección de molduras ofrece una combinación
-              perfecta de estilo y funcionalidad, diseñadas para resaltar y
-              proteger tus tesoros más preciados. Desde molduras clásicas y
-              elegantes hasta opciones modernas y audaces, estamos seguros de que
-              encontrarás la moldura ideal para complementar tu estilo personal y
-              embellecer cualquier espacio. Descubre cómo nuestras molduras pueden
-              dar vida y carácter a tus creaciones, ofreciéndote una presentación
-              estética única que perdurará en el tiempo. ¡Explora nuestra variedad
-              de opciones y déjanos ayudarte a enmarcar tus recuerdos con
-              distinción y sofisticación!
-            </p>
-            <app-frame></app-frame>
-          </div>
-        </section>
-       
-  <div [ngClass]="{ 'hidden ': !show }" (click)="hidePicture()">
-    <app-show-picture
-      [image]="pictureRoute"
-      [stateImage]="true"
-    ></app-show-picture>
+<section
+  class="w-full h-100vh md:h-[calc(100vh-175px)] my-10 border bg-gradient-to-t from-enmarcadora-principal to-white flex flex-col items-center gap-2 md:flex-row md:justify-center md:gap-0"
+>
+  <div
+    class="w-40 md:w-80 lg:w-80 md:h-[calc(100vh/2)] lg:h-[calc(100vh/1.5)] xl:h-[calc(100vh/2)] m-3 shadow-lg p-4 border bg-opacity-100 my-auto mb-4 md:mb-auto hover:bg-gradient-to-b from-enmarcadora-principal to-white text-white hover:text-enmarcadora-principal"
+  >
+    <button
+      (click)="scrollToSection('enmarcado')"
+      class="w-full h-full flex flex-col items-center justify-between font-semibold font-playfair"
+    >
+      <img
+        class="w-3/4 my-auto h-4/6"
+        lazyLoad="../../../../assets/images/enmarcado/enmarcado/mujer.jpg"
+        alt="imagen cuadro de mujer"
+      />
+      <h3 class="text-2xl md:text-4xl mb-0">Enmarcado</h3>
+    </button>
   </div>
-  
+  <div
+    class="w-40 md:w-80 lg:w-80 md:h-[calc(100vh/2)] lg:h-[calc(100vh/1.5)] xl:h-[calc(100vh/2)] m-3 shadow-lg p-4 border bg-opacity-100 my-auto mb-4 md:mb-auto hover:bg-gradient-to-b from-enmarcadora-principal to-white text-white hover:text-enmarcadora-principal"
+  >
+    <button
+      (click)="scrollToSection('servicio')"
+      class="w-full h-full flex flex-col items-center justify-between font-semibold font-playfair"
+    >
+      <img
+        class="w-3/4 my-auto h-4/6"
+        lazyLoad="../../../../assets/images/enmarcado/servicios/instalacion1.jpg"
+        alt="imagen cuadro de mujer"
+      />
+      <h3 class="text-2xl md:text-4xl mb-0">Servicios</h3>
+    </button>
+  </div>
+  <div
+    class="w-40 md:w-80 lg:w-80 md:h-[calc(100vh/2)] lg:h-[calc(100vh/1.5)] xl:h-[calc(100vh/2)] m-3 shadow-lg p-4 border bg-opacity-100 my-auto mb-4 md:mb-auto hover:bg-gradient-to-b from-enmarcadora-principal to-white text-white hover:text-enmarcadora-principal"
+  >
+    <button
+      (click)="scrollToSection('mol')"
+      class="w-full h-full flex flex-col items-center justify-between font-semibold font-playfair"
+    >
+      <img
+        class="w-3/4 my-auto h-4/6"
+        lazyLoad="../../../../assets/images/enmarcado/molduras/mol4.jpg"
+        alt="imagen cuadro de mujer"
+      />
+      <h3 class="text-2xl md:text-4xl mb-0">Molduras</h3>
+    </button>
+  </div>
+</section>
+<div id="enmarcado" class="h-14"></div>
+
+<section
+  class="w-3/4 lg:w-full mx-auto mb-10 flex flex-col lg:flex-row m-5 lg:justify-center lg:items-center gap-2"
+>
+  <aside class="order-2 lg:order-1 m-2 lg:ml-10">
+    <img
+      lazyLoad="../../../../assets/images/enmarcado/enmarcado/ciudad.jpg"
+      alt="imagen cuadro ciudad"
+      class="w-2/3 md:h-64 md:w-60 mx-auto transition duration-300 hover:scale-105"
+      (click)="
+        changePictureRoute(
+          '../../../../assets/images/enmarcado/enmarcado/ciudad.jpg'
+        )
+      "
+    />
+    <img
+      lazyLoad="../../../../assets/images/enmarcado/enmarcado/doscaras.jpg"
+      alt="imagen cuadro doscaras"
+      class="w-2/3 md:h-64 md:w-60 mx-auto my-2 transition duration-300 hover:scale-105"
+      (click)="
+        changePictureRoute(
+          '../../../../assets/images/enmarcado/enmarcado/doscaras.jpg'
+        )
+      "
+    />
+  </aside>
+  <div class="w-full lg:w-7/12 order-1 lg:order-2 mb-4 mx-auto">
+    <h3
+      class="font-semibold text-2xl md:text-3xl capitalize first-letter:text-5xl"
+    >
+      Enmarcado
+    </h3>
+    <p class="text-xl">
+      El Enmarcado es una tecnica complementario de las artes visuales, si bien
+      la pintura u objeto es el interés principal, el enmarcado armoniza,
+      protege y reluce como accesorio del ente principal para poder dar una
+      mejor imagen y percepción la obra expuesta. Por ello el enmarcado es un
+      proceso riguroso y metódico con el fin de poder lucir la obra de una
+      manera única y especial, según como lo desee el cliente.
+    </p>
+    <br />
+    <span class="text-2xl">Algunos Tips...</span>
+    <br />
+    <p class="text-xl">
+      Enmarca tus obra para protegerlas del desgaste, si es en papel estas
+      suelen durar mucho menos en ambientes húmedos y muy luminosos Usa vidrio y
+      así alargaras la vida de tus obras y fotografías preferidas Usa paspartú
+      para evitar que fotografias, acuarelas o grabados se peguen y se dañen
+      sobre el vidrio Pide que utilicen cintas libre de acido para que no
+      desgaste y dañe el papel de tus obras.
+    </p>
+  </div>
+  <aside class="order-3 m-2 lg:mr-10">
+    <img
+      lazyLoad="../../../../assets/images/enmarcado/enmarcado/mujer.jpg"
+      alt="imagen cuadro mujer"
+      class="w-2/3 md:h-64 md:w-60 mx-auto transition duration-300 hover:scale-105"
+      (click)="
+        changePictureRoute(
+          '../../../../assets/images/enmarcado/enmarcado/mujer.jpg'
+        )
+      "
+    />
+    <img
+      lazyLoad="../../../../assets/images/enmarcado/enmarcado/Toro-.png"
+      alt="imagen cuadro Toro"
+      class="w-2/3 md:h-64 md:w-60 mx-auto my-2 transition duration-300 hover:scale-105"
+      (click)="
+        changePictureRoute(
+          '../../../../assets/images/enmarcado/enmarcado/Toro-.png'
+        )
+      "
+    />
+  </aside>
+</section>
+<hr />
+
+<section class="w-full mt-5 h-full">
+  <div class="flex flex-col md:flex-row m-5 justify-center items-center">
+    <h3
+      class="font-semibold text-2xl md:text-3xl capitalize first-letter:text-5xl"
+    >
+      Servicios
+      <div id="servicio"></div>
+    </h3>
+  </div>
+
+  <div
+    class="flex flex-col md:flex-row m-5 h-100vh md:h-screen justify-center items-center"
+  >
+    <div class="w-full my-auto">
+      <div class="flex justify-center">
+        <h4
+          class="font-semibold text-xl md:text-2xl capitalize first-letter:text-4xl mb-5"
+        >
+          Instalación
+        </h4>
+      </div>
+
+      <p class="text-xl m-5">
+        Dentro de nuestra empresa, ofrecemos el servicio de instalación para
+        aquellos trabajos u exposiciones que deseen colocarse de una forma más
+        profesional y técnica.
+      </p>
+    </div>
+
+    <div class="w-full h-full grid grid-cols-2 gap-1 justify-end">
+      <img
+        lazyLoad="../../../../assets/images/enmarcado/servicios/instalacion1.jpg "
+        alt="imagen instalación"
+        class="w-60 h-72 lg:w-72 lg:h-80 self-end justify-self-end transition duration-300 hover:scale-105"
+        (click)="
+          changePictureRoute(
+            '../../../../assets/images/enmarcado/servicios/instalacion1.jpg'
+          )
+        "
+      />
+      <img
+        lazyLoad="../../../../assets/images/enmarcado/servicios/instalacion3.jpg "
+        alt="imagen instalación"
+        class="w-60 h-72 lg:w-72 lg:h-80 self-end transition duration-300 hover:scale-105"
+        (click)="
+          changePictureRoute(
+            '../../../../assets/images/enmarcado/servicios/instalacion3.jpg'
+          )
+        "
+      />
+      <img
+        lazyLoad="../../../../assets/images/enmarcado/servicios/instalacion4.jpg "
+        alt="imagen instalación"
+        class="w-60 h-72 lg:w-72 md:h-full self-start justify-self-end transition duration-300 hover:scale-105"
+        (click)="
+          changePictureRoute(
+            '../../../../assets/images/enmarcado/servicios/instalacion4.jpg'
+          )
+        "
+      />
+      <img
+        lazyLoad="../../../../assets/images/enmarcado/servicios/instalacion5.jpg "
+        alt="imagen instalación"
+        class="w-60 h-72 md:w-72 md:h-full transition duration-300 hover:scale-105"
+        (click)="
+          changePictureRoute(
+            '../../../../assets/images/enmarcado/servicios/instalacion5.jpg'
+          )
+        "
+      />
+      <img
+        lazyLoad="../../../../assets/images/enmarcado/servicios/instalacion2.jpg "
+        alt="imagen instalación"
+        class="w-full lg:w-144p lg:h-full justify-self-center col-span-2 transition duration-300 hover:scale-105"
+        (click)="
+          changePictureRoute(
+            '../../../../assets/images/enmarcado/servicios/instalacion2.jpg'
+          )
+        "
+      />
+    </div>
+  </div>
+
+  <br />
+  <br />
+
+  <div class="flex flex-col md:flex-row m-5 h-full justify-center items-center">
+    <div
+      class="w-full h-full grid grid-cols-2 gap-1 justify-end order-2 md:order-1"
+    >
+      <img
+        lazyLoad="../../../../assets/images/enmarcado/servicios/enmarcado1.jpg"
+        alt="imagen cuadro 1"
+        class="w-60 h-72 lg:w-72 lg:h-80 self-end justify-self-end transition duration-300 hover:scale-105"
+        (click)="
+          changePictureRoute(
+            '../../../../assets/images/enmarcado/servicios/enmarcado1.jpg'
+          )
+        "
+      />
+      <img
+        lazyLoad="../../../../assets/images/enmarcado/servicios/enmarcado2.jpg "
+        alt="imagen cuadro 2"
+        class="w-60 h-72 lg:w-72 lg:h-80 self-end transition duration-300 hover:scale-105"
+        (click)="
+          changePictureRoute(
+            '../../../../assets/images/enmarcado/servicios/enmarcado2.jpg'
+          )
+        "
+      />
+      <img
+        lazyLoad="../../../../assets/images/enmarcado/servicios/enmarcado3.jpg "
+        alt="imagen cuadro 3"
+        class="w-60 h-72 lg:w-72 lg:h-80 self-start justify-self-end transition duration-300 hover:scale-105"
+        (click)="
+          changePictureRoute(
+            '../../../../assets/images/enmarcado/servicios/enmarcado3.jpg'
+          )
+        "
+      />
+      <img
+        lazyLoad="../../../../assets/images/enmarcado/servicios/enmarcado4.jpg "
+        alt="imagen cuadro 4"
+        class="w-60 h-72 lg:w-72 lg:h-80 transition duration-300 hover:scale-105"
+        (click)="
+          changePictureRoute(
+            '../../../../assets/images/enmarcado/servicios/enmarcado4.jpg'
+          )
+        "
+      />
+      <img
+        lazyLoad="../../../../assets/images/enmarcado/servicios/enmarcado5.jpg "
+        alt="imagen cuadro 5"
+        class="w-60 h-72 lg:w-72 lg:h-80 self-start justify-self-end transition duration-300 hover:scale-105"
+        (click)="
+          changePictureRoute(
+            '../../../../assets/images/enmarcado/servicios/enmarcado5.jpg'
+          )
+        "
+      />
+      <img
+        lazyLoad="../../../../assets/images/enmarcado/servicios/enmarcado6.jpg "
+        alt="imagen cuadro 6"
+        class="w-60 h-72 lg:w-72 lg:h-80 transition duration-300 hover:scale-105"
+        (click)="
+          changePictureRoute(
+            '../../../../assets/images/enmarcado/servicios/enmarcado6.jpg'
+          )
+        "
+      />
+      <img
+        lazyLoad="../../../../assets/images/enmarcado/servicios/enmarcado9.jpg "
+        alt="imagen cuadro 9"
+        class="w-60 h-72 lg:w-72 lg:h-80 self-start justify-self-end transition duration-300 hover:scale-105"
+        (click)="
+          changePictureRoute(
+            '../../../../assets/images/enmarcado/servicios/enmarcado9.jpg'
+          )
+        "
+      />
+      <img
+        lazyLoad="../../../../assets/images/enmarcado/servicios/enmarcado8.jpg "
+        alt="imagen cuadro 8"
+        class="w-60 h-72 lg:w-72 lg:h-80 transition duration-300 hover:scale-105"
+        (click)="
+          changePictureRoute(
+            '../../../../assets/images/enmarcado/servicios/enmarcado8.jpg'
+          )
+        "
+      />
+      <img
+        lazyLoad="../../../../assets/images/enmarcado/servicios/enmarcado7.jpg "
+        alt="imagen cuadro 7"
+        class="w-full lg:w-144p justify-self-center col-span-2 transition duration-300 hover:scale-105"
+        (click)="
+          changePictureRoute(
+            '../../../../assets/images/enmarcado/servicios/enmarcado7.jpg'
+          )
+        "
+      />
+    </div>
+    <div class="w-full my-auto order-1 md:order-2">
+      <div class="flex justify-center">
+        <h4
+          class="font-semibold text-xl md:text-2xl capitalize first-letter:text-4xl mb-5"
+        >
+          Enmarcado Personalizado
+        </h4>
+      </div>
+      <p class="text-xl m-5">
+        Tienes una idea diferente para el enmarcado? Acércate, con el
+        asesoramiento adecuado podemos realizar nuevos proyectos que se adapten
+        a tu visión final de la obra y obtener un resultado innovador y de
+        calidad.
+      </p>
+    </div>
+  </div>
+</section>
+<hr />
+<br />
+<div id="mol" class="h-20"></div>
+<section class="w-full mt-5 h-100vh md:h-screen">
+  <div class="flex justify-center">
+    <h3
+      class="font-semibold text-2xl md:text-3xl capitalize first-letter:text-5xl"
+    >
+      Molduras
+    </h3>
+  </div>
+
+  <div class="flex flex-col w-full md:w-2/3 mx-auto">
+    <p class="text-xl m-5">
+      Nuestra cuidadosa colección de molduras ofrece una combinación perfecta de
+      estilo y funcionalidad, diseñadas para resaltar y proteger tus tesoros más
+      preciados. Desde molduras clásicas y elegantes hasta opciones modernas y
+      audaces, estamos seguros de que encontrarás la moldura ideal para
+      complementar tu estilo personal y embellecer cualquier espacio. Descubre
+      cómo nuestras molduras pueden dar vida y carácter a tus creaciones,
+      ofreciéndote una presentación estética única que perdurará en el tiempo.
+      ¡Explora nuestra variedad de opciones y déjanos ayudarte a enmarcar tus
+      recuerdos con distinción y sofisticación!
+    </p>
+    <app-frame></app-frame>
+  </div>
+</section>
+
+<div [ngClass]="{ 'hidden ': !show }" (click)="hidePicture()">
+  <app-show-picture
+    [image]="pictureRoute"
+    [stateImage]="true"
+  ></app-show-picture>
+</div>

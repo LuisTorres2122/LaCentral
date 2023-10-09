@@ -1,3 +1,3 @@
 export const environment = {
-    apiurl: 'https://localhost:7236'
+    apiurl: 'http://www.apilacentral.somee.com'
 };

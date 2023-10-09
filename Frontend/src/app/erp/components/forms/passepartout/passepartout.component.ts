@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Materials } from 'src/app/erp/models/materials.model';
 import { Passepartout, SPassepartout } from 'src/app/erp/models/passepartout.model';
 import { ResponseCRUD } from 'src/app/erp/models/responseCRUD.model';
@@ -31,7 +32,7 @@ export class PassepartoutComponent {
   ];
 
 
-  constructor(private PassService: PassepartoutService) {}
+  constructor(private PassService: PassepartoutService, private titleService: Title) {}
 
   deleteNotify() {
     setTimeout(() => {
@@ -55,6 +56,7 @@ export class PassepartoutComponent {
   ngOnInit(): void {
     this.chargePass();
     this.getMaterial();
+    this.titleService.setTitle('Passepartouts');
   }
 
   configureMaterial(): number {

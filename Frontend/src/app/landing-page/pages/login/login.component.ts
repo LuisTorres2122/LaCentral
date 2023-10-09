@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { tokenUser } from '../../models/user.model';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,11 @@ export class LoginComponent {
   currentImage: string = '';
   showImage: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private titleService: Title
+  ) {}
 
   images = [
     './../../../assets/images/enmarcado/enmarcado/mujer.jpg',
@@ -28,6 +33,7 @@ export class LoginComponent {
   ngOnInit(): void {
     this.currentImage = this.images[this.currentIndex];
     this.showImage = true;
+    this.titleService.setTitle('Login');
     setInterval(() => {
       this.changeImage();
     }, 3000);
@@ -72,7 +78,6 @@ export class LoginComponent {
       next: (res) => {
         console.log(`Bienvenido ${params.email}`);
         console.log(res);
-
       },
       error: (err) => {
         console.log(err);

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Piece } from 'src/app/erp/models/piece.model';
 import { ResponseCRUD } from 'src/app/erp/models/responseCRUD.model';
 import { PieceService } from 'src/app/erp/services/piece.service';
@@ -52,7 +53,10 @@ export class PieceComponent {
     'importanciaObra',
   ];
 
-  constructor(private pieceService: PieceService) {}
+  constructor(
+    private pieceService: PieceService,
+    private titleService: Title
+  ) {}
 
   deleteNotify() {
     setTimeout(() => {
@@ -92,6 +96,7 @@ export class PieceComponent {
   });
   ngOnInit(): void {
     this.chargeClients();
+    this.titleService.setTitle('Obras');
   }
 
   recieveToggle(toggle: boolean): void {
@@ -211,7 +216,6 @@ export class PieceComponent {
         if (this.pieces.length > 0) {
           const lastElement = this.pieces[this.pieces.length - 1];
           newPiece.pkIdObra = lastElement.pkIdObra + 1;
-          
         } else {
           newPiece.pkIdObra = 1;
         }

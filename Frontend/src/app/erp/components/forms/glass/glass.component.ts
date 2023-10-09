@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Glass, SGlass } from 'src/app/erp/models/glass.model';
 import { Materials } from 'src/app/erp/models/materials.model';
 import { ResponseCRUD } from 'src/app/erp/models/responseCRUD.model';
@@ -30,7 +31,10 @@ export class GlassComponent {
     'precioVidrio',
   ];
 
-  constructor(private glassService: GlassService) {}
+  constructor(
+    private glassService: GlassService,
+    private titleService: Title
+  ) {}
 
   deleteNotify() {
     setTimeout(() => {
@@ -54,6 +58,7 @@ export class GlassComponent {
   ngOnInit(): void {
     this.chargeGlasses();
     this.getMaterial();
+    this.titleService.setTitle('Vidrios');
   }
 
   configureMaterial(): number {

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Frame, SFrame } from 'src/app/erp/models/frame.model';
 import { Materials } from 'src/app/erp/models/materials.model';
 import { ResponseCRUD } from 'src/app/erp/models/responseCRUD.model';
@@ -30,7 +31,10 @@ export class FrameComponent {
     'precioMarco',
   ];
 
-  constructor(private frameService: FrameService) {}
+  constructor(
+    private frameService: FrameService,
+    private titleService: Title
+  ) {}
 
   deleteNotify() {
     setTimeout(() => {
@@ -54,6 +58,7 @@ export class FrameComponent {
   ngOnInit(): void {
     this.chargeFrames();
     this.getMaterial();
+    this.titleService.setTitle('Marcos');
   }
 
   configureMaterial(): number {
