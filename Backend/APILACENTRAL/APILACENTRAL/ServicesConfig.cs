@@ -26,7 +26,7 @@ namespace APILACENTRAL
             servicios.AddDbContext<LaCentralContext>(opt =>
             {
                 var connectionString = configuration.GetConnectionString("cadenaMysql");
-                var serverVersion = new MySqlServerVersion(new Version(8, 0, 26));
+                var serverVersion = new MySqlServerVersion(new Version(8, 0, 0));
 
                 opt.UseMySql(connectionString, serverVersion);
             });
