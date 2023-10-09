@@ -3,6 +3,7 @@ import { Order } from '../../models/order.model';
 import { OrderService } from '../../services/order.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { reportRequest } from '../../models/orderHelper.model';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -24,23 +25,17 @@ export class ReportComponent {
   toggleOpts: boolean[] = [];
   resume: string[] = [];
   showPrint: boolean = false;
-  constructor(private orderService: OrderService) {}
+  constructor(private orderService: OrderService,
+    private titleService: Title) {}
+    ngOnInit(): void {
+      this.titleService.setTitle('Reporte Pedido');
+    }
+  
 
   reportForm = new FormGroup({
     firstDate: new FormControl('', Validators.required),
     lastDate: new FormControl('', Validators.required),
   });
-
-  /*print():void{
-    const tabla = document.getElementById('contentTable');
-  if (tabla) {
-    const ventana = window.open('', '', 'width=600,height=600');
-    ventana?.document.write('<html><head><title>Imprimir Tabla</title></head><body>');
-    ventana?.document.write(tabla.outerHTML);
-    ventana?.document.write('</body></html>');
-    ventana?.document.close();
-    ventana?.print();
-  }}*/
 
   chargeData(): void {
     let dates = new reportRequest();

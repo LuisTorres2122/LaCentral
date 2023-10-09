@@ -22,6 +22,7 @@ import {
 import { DefaultUrlSerializer } from '@angular/router';
 import { OrdersComponent } from '../../pages/orders/orders.component';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-card-management',
@@ -70,6 +71,7 @@ export class CardManagementComponent implements OnInit {
     this.chargeUtility();
     this.chargeClients();
     this.getLastId();
+    this.titleService.setTitle('Pedidos');
     this.getLastIdDetail();
     this.labourSubject.pipe(
       debounceTime(1000), // Espera 1 segundo después de la última emisión
@@ -86,7 +88,8 @@ export class CardManagementComponent implements OnInit {
     private glassService: GlassService,
     private utilityService: UtilityService,
     private clientService: ClientService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private titleService: Title
   ) {}
 
 

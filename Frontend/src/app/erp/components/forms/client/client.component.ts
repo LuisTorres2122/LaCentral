@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Client } from 'src/app/erp/models/client.model';
 import { ResponseCRUD } from 'src/app/erp/models/responseCRUD.model';
 import { ClientService } from 'src/app/erp/services/client.service';
@@ -28,7 +29,10 @@ export class ClientComponent {
     'direccionCliente',
   ];
 
-  constructor(private clientService: ClientService) {}
+  constructor(
+    private clientService: ClientService,
+    private titleService: Title
+  ) {}
 
   deleteNotify() {
     setTimeout(() => {
@@ -52,6 +56,7 @@ export class ClientComponent {
   });
   ngOnInit(): void {
     this.chargeClients();
+    this.titleService.setTitle('Clientes');
   }
 
   recieveToggle(toggle: boolean): void {
@@ -93,7 +98,6 @@ export class ClientComponent {
         if (this.clients.length > 0) {
           const lastElement = this.clients[this.clients.length - 1];
           newClient.pkIdCliente = lastElement.pkIdCliente + 1;
-          
         } else {
           newClient.pkIdCliente = 1;
         }
@@ -107,7 +111,6 @@ export class ClientComponent {
         console.log(err);
         this.badNotify = 'creación de cliente';
         this.deleteNotify();
-        
       },
     });
     this.clearInputs();

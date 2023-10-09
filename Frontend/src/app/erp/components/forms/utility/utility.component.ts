@@ -1,14 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { ResponseCRUD } from 'src/app/erp/models/responseCRUD.model';
 import { Utility } from 'src/app/erp/models/utility.models';
 import { UtilityService } from 'src/app/erp/services/utility.service';
 
 @Component({
   selector: 'app-utility',
-  templateUrl: './utility.component.html'
+  templateUrl: './utility.component.html',
 })
-export class UtilityComponent {
+export class UtilityComponent implements OnInit {
   title: string = 'Utilidad';
   notify: string = '';
   badNotify: string = '';
@@ -20,7 +21,12 @@ export class UtilityComponent {
   header: string[] = ['Id', 'Nombre', 'Valor', ' '];
   elementsUtility: string[] = ['pkUtilidad', 'nombreUtilidad', 'valorUtilidad'];
 
-  constructor(private utilityService: UtilityService) {}
+  constructor(
+    private utilityService: UtilityService,
+    private titleService: Title
+  ) {}
+
+ 
 
   deleteNotify() {
     setTimeout(() => {
@@ -35,7 +41,8 @@ export class UtilityComponent {
   });
 
   ngOnInit(): void {
-    this.chargeUtility(); 
+    this.chargeUtility();
+    this.titleService.setTitle('Utilidades');
   }
 
   recieveToggle(toggle: boolean): void {
@@ -59,7 +66,6 @@ export class UtilityComponent {
       value: response.element.valorUtilidad,
     });
     this.lastIdUpdated = response.id;
-    
   }
 
   updateUtility(): void {

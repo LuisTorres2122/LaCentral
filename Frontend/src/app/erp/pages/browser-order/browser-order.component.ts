@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Order, OrderDetails } from '../../models/order.model';
 import { OrderService } from '../../services/order.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-browser-order',
   templateUrl: './browser-order.component.html'
 })
-export class BrowserOrderComponent {
+export class BrowserOrderComponent implements OnInit {
   headers: string[]=["idPedido","idCliente","nombre","fecha", "descuento", "total", "abono", "estatus" ];
   headersDetails: string[] =["idDetallePedido", "idPedido", "descripcion", "precio"]
   elements: Order [] = [];
@@ -16,7 +17,12 @@ export class BrowserOrderComponent {
   search: string = "";
   colspanValue: number = 0;
 
-  constructor(private orderService: OrderService){}
+  constructor(private orderService: OrderService,
+    private titleService: Title){}
+
+    ngOnInit(): void {
+      this.titleService.setTitle('Buscar Pedido');
+    }
 
   buscarElements():void{
     this.elements = [];

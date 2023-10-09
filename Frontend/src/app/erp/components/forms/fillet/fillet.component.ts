@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Fillet, SFillet } from 'src/app/erp/models/fillet.model';
 import { Materials } from 'src/app/erp/models/materials.model';
 import { ResponseCRUD } from 'src/app/erp/models/responseCRUD.model';
@@ -30,7 +31,7 @@ export class FilletComponent {
     'precioFilete',
   ];
 
-  constructor(private filletService: FilletService) {}
+  constructor(private filletService: FilletService,  private titleService: Title) {}
 
   deleteNotify() {
     setTimeout(() => {
@@ -54,6 +55,7 @@ export class FilletComponent {
   ngOnInit(): void {
     this.chargeFillets();
     this.getMaterial();
+    this.titleService.setTitle('Filetes');
   }
 
   configureMaterial(): number {
