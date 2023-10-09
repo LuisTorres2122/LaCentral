@@ -2,9 +2,11 @@
 using APILACENTRAL.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Cors;
 
 namespace APILACENTRAL.Controllers
 {
+   
     [Route("Obra")]
     [ApiController]
     public class PieceController:ControllerBase
