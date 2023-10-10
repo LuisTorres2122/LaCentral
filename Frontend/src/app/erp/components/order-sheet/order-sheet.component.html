@@ -304,7 +304,7 @@
 </div>
   
 
-<div class="flex flex-col w-1/2   items-center justify-center ">
+<div class="flex flex-col w-1/2 h-full  items-center justify-center ">
   <section class="flex flex-col justify-between items-center ml-3">
     <div class="flex flex-col gap-1 mr-5 items-center">
       <div class="uppercase relative font-semibold my-4">
@@ -402,20 +402,21 @@
           <th scope="col w-1/3">Valor</th>
         </tr>
       </thead>
-      <tbody [ngClass]="{'h-72': getLength() <= 5, 'max-h-[960px]': getLength() > 5}">
+      <tbody 
+      [ngClass]="{'h-72': getLength() <= 5, 'max-h-[960px]': getLength() > 5}">
         <tr *ngFor="let element of data.orderDetails" class="text-black text-xs">
           <td class="w-2/3 mr-2">{{ element.descripcion }}</td>
           <td class="w-1/3 text-center">
             {{ setPrice(element) | currency : "Q" }}
           </td>
         </tr>
-        <tr class="border-t-2 border-enmarcadora-principal">
+        <tr class="border-t-2 border-enmarcadora-principal h-18 text-xs">
           <td class="w-2/3 text-end text-enmarcadora-principal">Des:</td>
           <td class="w-1/3 text-center">
             {{ data.orderHeader.descuento | currency : "%" }}
           </td>
         </tr>
-        <tr class="border-t-2 border-enmarcadora-principal">
+        <tr class="border-t-2 border-enmarcadora-principal h-18 text-xs">
           <td class="w-2/3 text-end text-enmarcadora-principal">Total:</td>
           <td class="w-1/3 text-center">
             {{ data.orderHeader.total | currency : "Q" }}
