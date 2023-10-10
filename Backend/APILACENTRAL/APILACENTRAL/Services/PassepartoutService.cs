@@ -56,8 +56,7 @@ namespace APILACENTRAL.Services
         public async Task updatePassepartout(int id, PassepartoutDTO passepartout)
         {
             var PassepartoutFound = await getPassepartout(id);
-            var materialFound = await findMaterial(id);
-            if (PassepartoutFound is not null && materialFound)
+            if (PassepartoutFound is not null )
             {
                 PassepartoutFound.FKIdMaterial = passepartout.FKIdMaterial;
                 PassepartoutFound.CodigoPassepartout = passepartout.CodigoPassepartout;
@@ -71,12 +70,11 @@ namespace APILACENTRAL.Services
         public async Task deletePassepartout(int id)
         {
             var passepartoutFound = await getPassepartout(id);
-            var materialFound = await findMaterial(id);
-            if (passepartoutFound is not null && materialFound)
-            {
+            
+           
                 _laCentralContext.Tblpassepartouts.Remove(passepartoutFound);
                 await _laCentralContext.SaveChangesAsync();
-            }
+            
         }
 
         public async Task<bool> findMaterial(int id)

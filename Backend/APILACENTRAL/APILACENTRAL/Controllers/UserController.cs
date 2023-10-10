@@ -73,7 +73,7 @@ namespace APILACENTRAL.Controllers
             return Ok(user);
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> postUser(Tblusuario user)
         {

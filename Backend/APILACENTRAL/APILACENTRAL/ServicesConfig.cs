@@ -59,7 +59,7 @@ namespace APILACENTRAL
             {
                 options.AddPolicy("newPolicy", app =>
                 {
-                    app.WithOrigins("http://localhost:4200")
+                    app.AllowAnyOrigin()
                     .AllowAnyHeader()
                     .AllowAnyMethod();
                 });
